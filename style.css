@@ -5,37 +5,125 @@ body {
     line-height: 1.6;
     margin: 0;
     padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
 }
 
 .container {
-    max-width: 800px;
-    padding: 40px 20px;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 24px 60px;
+}
+
+/* Header */
+.cv-header {
     text-align: center;
+    margin-bottom: 40px;
+    border-bottom: 1px solid #1e1e1e;
+    padding-bottom: 24px;
 }
 
 h1 {
     color: #ff5e87;
-    margin-bottom: 10px;
-    text-align: center;
     font-size: 48px;
+    margin: 0 0 6px;
+}
+
+.subtitle {
+    color: #91e4ff;
+    font-size: 16px;
+    margin: 0 0 12px;
+}
+
+.contact-info {
+    font-size: 14px;
+    color: #888;
+}
+
+.contact-info a {
+    color: #4a9eff;
+    text-decoration: none;
+}
+
+.contact-info a:hover {
+    color: #66b3ff;
+    text-decoration: underline;
+}
+
+/* Sections */
+section {
+    margin-bottom: 32px;
 }
 
 h2 {
     color: #91e4ff;
-    margin-top: 10px;
-    text-align: left;
-    white-space: pre-line;
+    margin: 0 0 12px;
+    font-size: 20px;
+    border-bottom: 1px solid #1a1a1a;
+    padding-bottom: 4px;
 }
 
 p {
     color: #5eff86;
-    margin: 20px 0;
-    font-size: 18px;
-    text-align: left;
+    margin: 8px 0;
+    font-size: 15px;
+    text-align: justify;
+}
+
+ul {
+    color: #5eff86;
+    font-size: 15px;
+    padding-left: 20px;
+    margin: 8px 0;
+}
+
+ul li {
+    margin-bottom: 4px;
+}
+
+/* Two column layout */
+.two-col {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: 40px;
+    align-items: start;
+}
+
+/* Tech labels */
+.tech-label {
+    color: #ff5e87;
+    font-size: 13px;
+    margin: 12px 0 2px;
+    font-weight: 700;
+}
+
+/* Experience / education entries */
+.entry {
+    margin-bottom: 20px;
+}
+
+.entry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.entry-title {
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 15px;
+}
+
+.entry-role {
+    color: #91e4ff;
+    font-size: 13px;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.entry-date {
+    color: #888;
+    font-size: 13px;
 }
 
 a {
@@ -49,11 +137,28 @@ a:hover {
     text-decoration: underline;
 }
 
-.social-links {
-    margin-top: 20px;
-    font-size: 20px;
+strong {
+    color: #ffffff;
 }
 
-.social-links a {
-    margin: 0 5px;
+.two-col-hobbies {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+}
+
+@media (max-width: 680px) {
+    h1 {
+        font-size: 32px;
+    }
+
+    .two-col {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .two-col-hobbies {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
 }
