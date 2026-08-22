@@ -1,3 +1,17 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+html, body {
+    height: 100%;
+}
+
 body {
     background-color: #070707;
     color: #ffffff;
@@ -5,10 +19,11 @@ body {
     line-height: 1.6;
     margin: 0;
     padding: 0;
+    overflow-x: hidden;
 }
 
 .container {
-    max-width: 960px;
+    max-width: 1008px;
     margin: 0 auto;
     padding: 40px 24px 60px;
 }
@@ -25,12 +40,14 @@ h1 {
     color: #ff5e87;
     font-size: 48px;
     margin: 0 0 6px;
+    text-align: center;
 }
 
 .subtitle {
     color: #91e4ff;
     font-size: 16px;
     margin: 0 0 12px;
+    text-align: center;
 }
 
 .contact-info {
@@ -145,6 +162,355 @@ strong {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 40px;
+}
+
+/* Hero / landing page */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 24px;
+}
+
+.hero-greeting {
+    color: #91e4ff;
+    font-size: 20px;
+    margin: 0 0 4px;
+}
+
+.hero h1 {
+    margin: 0 0 6px;
+}
+
+.hero .subtitle {
+    margin: 0 0 28px;
+}
+
+.hero-cta {
+    color: #5eff86;
+    border: 1px solid #1e1e1e;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 15px;
+    transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.hero-cta:hover {
+    color: #ff5e87;
+    border-color: #ff5e87;
+    text-decoration: none;
+}
+
+/* Semester page: admin bar & login */
+.title-trigger {
+    cursor: pointer;
+}
+
+.text-link {
+    display: block;
+    margin: 8px auto 0;
+    background: none;
+    border: none;
+    color: #888;
+    font-family: inherit;
+    font-size: 13px;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.3s ease;
+}
+
+.text-link:hover {
+    color: #ff5e87;
+}
+
+.admin-toggle {
+    background-color: #0d0d0d;
+    border: 1px solid #1e1e1e;
+    color: #91e4ff;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 13px;
+    cursor: pointer;
+    transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.admin-toggle:hover {
+    color: #ff5e87;
+    border-color: #ff5e87;
+}
+
+.login-form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 24px;
+}
+
+.login-form input {
+    background-color: #0d0d0d;
+    border: 1px solid #1e1e1e;
+    color: #ffffff;
+    padding: 8px 10px;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 13px;
+}
+
+.login-error {
+    color: #ff5e87;
+    font-size: 12px;
+}
+
+/* Semester range */
+.semester-range form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 16px;
+    margin-top: 12px;
+}
+
+.semester-range label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    color: #888;
+    font-size: 13px;
+}
+
+.semester-range input[type="date"] {
+    background-color: #0d0d0d;
+    border: 1px solid #1e1e1e;
+    color: #ffffff;
+    padding: 8px 10px;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 13px;
+}
+
+/* Calendar */
+.calendar-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 12px;
+}
+
+.calendar-nav button {
+    background-color: #0d0d0d;
+    border: 1px solid #1e1e1e;
+    color: #91e4ff;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.calendar-nav button:hover {
+    color: #ff5e87;
+    border-color: #ff5e87;
+}
+
+#calMonthLabel {
+    min-width: 160px;
+    text-align: center;
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+}
+
+.calendar-day-label {
+    text-align: center;
+    color: #888;
+    font-size: 12px;
+    padding: 4px 0 8px;
+    text-transform: uppercase;
+}
+
+.calendar-cell {
+    position: relative;
+    aspect-ratio: 1;
+    border: 1px solid #1e1e1e;
+    border-radius: 6px;
+    padding: 6px;
+    font-size: 13px;
+    color: #5eff86;
+}
+
+.calendar-cell-empty {
+    border-color: transparent;
+}
+
+.calendar-cell-today {
+    border-color: #91e4ff;
+}
+
+.calendar-cell-in-semester {
+    background-color: rgba(145, 228, 255, 0.05);
+}
+
+.calendar-cell-has-event::after {
+    content: "";
+    position: absolute;
+    bottom: 6px;
+    right: 6px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #ff5e87;
+}
+
+/* Add event form */
+.calendar-section form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.calendar-section form input {
+    background-color: #0d0d0d;
+    border: 1px solid #1e1e1e;
+    color: #ffffff;
+    padding: 8px 10px;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 13px;
+}
+
+.calendar-section form input[type="text"] {
+    flex: 1;
+    min-width: 160px;
+}
+
+/* Event list */
+.event-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.event-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 10px;
+    border-bottom: 1px solid #1a1a1a;
+}
+
+.event-date {
+    color: #91e4ff;
+    font-size: 13px;
+    min-width: 90px;
+}
+
+.event-title {
+    color: #5eff86;
+    flex: 1;
+}
+
+.event-empty {
+    color: #888;
+    font-size: 14px;
+    padding: 8px 10px;
+}
+
+.event-delete {
+    background: none;
+    border: none;
+    color: #888;
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+    padding: 0 4px;
+    transition: color 0.3s ease;
+}
+
+.event-delete:hover {
+    color: #ff5e87;
+}
+
+/* Pages nav */
+.pages-nav {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+}
+
+.pages-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: #0d0d0d;
+    border: 1px solid #1e1e1e;
+    border-radius: 8px;
+    color: #91e4ff;
+    cursor: pointer;
+    transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.pages-toggle:hover,
+.pages-toggle[aria-expanded="true"] {
+    color: #ff5e87;
+    border-color: #ff5e87;
+}
+
+.pages-menu {
+    position: absolute;
+    top: 48px;
+    right: 0;
+    min-width: 160px;
+    background-color: #0d0d0d;
+    border: 1px solid #1e1e1e;
+    border-radius: 8px;
+    padding: 6px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.pages-menu-item {
+    display: block;
+    padding: 8px 10px;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #5eff86;
+    text-decoration: none;
+    border-left: 2px solid transparent;
+}
+
+.pages-menu-item:hover {
+    background-color: #161616;
+    text-decoration: none;
+}
+
+.pages-menu-item.active {
+    color: #ff5e87;
+    border-left-color: #ff5e87;
+}
+
+.pages-menu-item.disabled {
+    color: #555;
+    cursor: default;
+}
+
+.pages-menu-item.disabled:hover {
+    background-color: transparent;
 }
 
 @media (max-width: 680px) {

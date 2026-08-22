@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semestr — Tomáš Zvoníček</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="pages-nav">
+        <button id="pagesToggle" class="pages-toggle" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="pagesMenu" aria-label="Další stránky">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+        </button>
+        <div id="pagesMenu" class="pages-menu" role="menu" hidden>
+            <a href="index.html" class="pages-menu-item" role="menuitem">Domů</a>
+            <a href="cv.html" class="pages-menu-item" role="menuitem">CV</a>
+            <a href="semester.html" class="pages-menu-item active" role="menuitem">Semestr</a>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <header class="cv-header">
+            <h1 id="loginToggle" class="title-trigger">Semestr</h1>
+            <p class="subtitle">Přehled aktuálního semestru</p>
+            <button type="button" id="logoutButton" class="text-link" hidden>Odhlásit se</button>
+        </header>
+
+        <form id="loginForm" class="login-form" hidden>
+            <input type="email" id="loginEmail" placeholder="E-mail" autocomplete="username" required>
+            <input type="password" id="loginPassword" placeholder="Heslo" autocomplete="current-password" required>
+            <button type="submit" class="admin-toggle">Přihlásit</button>
+            <span id="loginError" class="login-error"></span>
+        </form>
+
+        <section class="semester-range">
+            <h2>Termín semestru</h2>
+            <p id="semesterRangeText">Načítání…</p>
+            <form id="semesterRangeForm" class="admin-only" hidden>
+                <label>Začátek
+                    <input type="date" id="semesterStart" required>
+                </label>
+                <label>Konec
+                    <input type="date" id="semesterEnd" required>
+                </label>
+                <button type="submit" class="admin-toggle">Uložit</button>
+            </form>
+        </section>
+
+        <section class="calendar-section">
+            <h2>Kalendář</h2>
+            <div class="calendar-nav">
+                <button type="button" id="calPrev" aria-label="Předchozí měsíc">&larr;</button>
+                <span id="calMonthLabel"></span>
+                <button type="button" id="calNext" aria-label="Další měsíc">&rarr;</button>
+            </div>
+            <div class="calendar-grid" id="calendarGrid"></div>
+
+            <form id="addEventForm" class="admin-only" hidden>
+                <input type="date" id="eventDate" required>
+                <input type="text" id="eventTitle" placeholder="Název události" required maxlength="80">
+                <button type="submit" class="admin-toggle">Přidat událost</button>
+            </form>
+        </section>
+
+        <section class="event-list-section">
+            <h2>Události</h2>
+            <ul id="eventList" class="event-list"></ul>
+        </section>
+
+    </div>
+
+    <script>
+        const pagesToggle = document.getElementById('pagesToggle');
+        const pagesMenu = document.getElementById('pagesMenu');
+
+        function closeMenu() {
+            pagesMenu.hidden = true;
+            pagesToggle.setAttribute('aria-expanded', 'false');
+        }
+
+        function openMenu() {
+            pagesMenu.hidden = false;
+            pagesToggle.setAttribute('aria-expanded', 'true');
+        }
+
+        pagesToggle.addEventListener('click', (event) => {
+            event.stopPropagation();
+            pagesMenu.hidden ? openMenu() : closeMenu();
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!pagesMenu.hidden && !pagesMenu.contains(event.target) && event.target !== pagesToggle) {
+                closeMenu();
+            }
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && !pagesMenu.hidden) {
+                closeMenu();
+                pagesToggle.focus();
+            }
+        });
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
+        import {
+            getFirestore, doc, getDoc, setDoc,
+            collection, addDoc, deleteDoc, onSnapshot, query, orderBy
+        } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
+        import {
+            getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut
+        } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCWv9Md-whrotc61qSR8ccgQZFAPFBJkR8",
+            authDomain: "semester-a8421.firebaseapp.com",
+            projectId: "semester-a8421",
+            storageBucket: "semester-a8421.firebasestorage.app",
+            messagingSenderId: "388679329463",
+            appId: "1:388679329463:web:9ebdc19bf1d896676e0f32",
+            measurementId: "G-2LLR2ZSR1X"
+        };
+
+        const ADMIN_EMAIL = "zvondatom@gmail.com";
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        const semesterDocRef = doc(db, 'semester', 'config');
+        const eventsColRef = collection(db, 'events');
+
+        let semesterRange = null;
+        let events = [];
+        let viewDate = new Date();
+        viewDate.setDate(1);
+
+        const CZ_MONTHS = ['Leden', 'Únor', 'Březen', 'Duben', 'Květen', 'Červen', 'Červenec', 'Srpen', 'Září', 'Říjen', 'Listopad', 'Prosinec'];
+        const CZ_DAYS = ['Po', 'Út', 'St', 'Čt', 'Pá', 'So', 'Ne'];
+
+        const loginToggle = document.getElementById('loginToggle');
+        const logoutButton = document.getElementById('logoutButton');
+        const loginForm = document.getElementById('loginForm');
+        const loginEmail = document.getElementById('loginEmail');
+        const loginPassword = document.getElementById('loginPassword');
+        const loginError = document.getElementById('loginError');
+        const adminOnlyEls = document.querySelectorAll('.admin-only');
+
+        const semesterRangeText = document.getElementById('semesterRangeText');
+        const semesterRangeForm = document.getElementById('semesterRangeForm');
+        const semesterStartInput = document.getElementById('semesterStart');
+        const semesterEndInput = document.getElementById('semesterEnd');
+
+        const calendarGrid = document.getElementById('calendarGrid');
+        const calMonthLabel = document.getElementById('calMonthLabel');
+        const calPrev = document.getElementById('calPrev');
+        const calNext = document.getElementById('calNext');
+
+        const addEventForm = document.getElementById('addEventForm');
+        const eventDateInput = document.getElementById('eventDate');
+        const eventTitleInput = document.getElementById('eventTitle');
+        const eventList = document.getElementById('eventList');
+
+        function isAdminNow() {
+            return !!auth.currentUser && auth.currentUser.email === ADMIN_EMAIL;
+        }
+
+        function formatDateCz(iso) {
+            const [y, m, d] = iso.split('-');
+            return `${parseInt(d, 10)}. ${parseInt(m, 10)}. ${y}`;
+        }
+
+        function toISODate(date) {
+            const y = date.getFullYear();
+            const m = String(date.getMonth() + 1).padStart(2, '0');
+            const d = String(date.getDate()).padStart(2, '0');
+            return `${y}-${m}-${d}`;
+        }
+
+        // Auth
+
+        loginToggle.addEventListener('click', () => {
+            if (isAdminNow()) return;
+            loginForm.hidden = !loginForm.hidden;
+        });
+
+        loginForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            loginError.textContent = '';
+            try {
+                await signInWithEmailAndPassword(auth, loginEmail.value.trim(), loginPassword.value);
+                loginForm.reset();
+                loginForm.hidden = true;
+            } catch (err) {
+                loginError.textContent = 'Přihlášení se nezdařilo.';
+            }
+        });
+
+        logoutButton.addEventListener('click', () => signOut(auth));
+
+        onAuthStateChanged(auth, (user) => {
+            const isAdmin = !!user && user.email === ADMIN_EMAIL;
+            if (isAdmin) loginForm.hidden = true;
+            logoutButton.hidden = !isAdmin;
+            adminOnlyEls.forEach((el) => { el.hidden = !isAdmin; });
+            renderEventList();
+        });
+
+        // Semester range
+
+        function renderSemesterRange() {
+            if (semesterRange && semesterRange.startDate && semesterRange.endDate) {
+                semesterRangeText.textContent = `${formatDateCz(semesterRange.startDate)} – ${formatDateCz(semesterRange.endDate)}`;
+                semesterStartInput.value = semesterRange.startDate;
+                semesterEndInput.value = semesterRange.endDate;
+            } else {
+                semesterRangeText.textContent = 'Termín zatím nebyl nastaven.';
+            }
+        }
+
+        async function loadSemesterRange() {
+            try {
+                const snap = await getDoc(semesterDocRef);
+                if (snap.exists()) {
+                    semesterRange = snap.data();
+                }
+            } catch (err) {
+                console.error('Nepodařilo se načíst termín semestru.', err);
+            }
+            renderSemesterRange();
+            renderCalendar();
+        }
+
+        semesterRangeForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const startDate = semesterStartInput.value;
+            const endDate = semesterEndInput.value;
+            if (!startDate || !endDate) return;
+            try {
+                await setDoc(semesterDocRef, { startDate, endDate });
+                semesterRange = { startDate, endDate };
+                renderSemesterRange();
+                renderCalendar();
+            } catch (err) {
+                console.error('Uložení termínu se nezdařilo.', err);
+            }
+        });
+
+        // Events
+
+        function renderEventList() {
+            eventList.innerHTML = '';
+            if (events.length === 0) {
+                const li = document.createElement('li');
+                li.className = 'event-empty';
+                li.textContent = 'Zatím žádné události.';
+                eventList.appendChild(li);
+                return;
+            }
+            events.forEach((ev) => {
+                const li = document.createElement('li');
+                li.className = 'event-item';
+
+                const dateSpan = document.createElement('span');
+                dateSpan.className = 'event-date';
+                dateSpan.textContent = formatDateCz(ev.date);
+
+                const titleSpan = document.createElement('span');
+                titleSpan.className = 'event-title';
+                titleSpan.textContent = ev.title;
+
+                li.appendChild(dateSpan);
+                li.appendChild(titleSpan);
+
+                if (isAdminNow()) {
+                    const delBtn = document.createElement('button');
+                    delBtn.type = 'button';
+                    delBtn.className = 'event-delete';
+                    delBtn.setAttribute('aria-label', `Smazat událost ${ev.title}`);
+                    delBtn.textContent = '×';
+                    delBtn.addEventListener('click', () => deleteDoc(doc(db, 'events', ev.id)));
+                    li.appendChild(delBtn);
+                }
+
+                eventList.appendChild(li);
+            });
+        }
+
+        addEventForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const date = eventDateInput.value;
+            const title = eventTitleInput.value.trim();
+            if (!date || !title) return;
+            try {
+                await addDoc(eventsColRef, { date, title });
+                addEventForm.reset();
+            } catch (err) {
+                console.error('Přidání události se nezdařilo.', err);
+            }
+        });
+
+        try {
+            onSnapshot(query(eventsColRef, orderBy('date')), (snapshot) => {
+                events = snapshot.docs.map((d) => ({ id: d.id, ...d.data() }));
+                renderEventList();
+                renderCalendar();
+            }, (err) => {
+                console.error('Nepodařilo se načíst události.', err);
+            });
+        } catch (err) {
+            console.error(err);
+        }
+
+        // Calendar
+
+        function renderCalendar() {
+            calendarGrid.innerHTML = '';
+            calMonthLabel.textContent = `${CZ_MONTHS[viewDate.getMonth()]} ${viewDate.getFullYear()}`;
+
+            CZ_DAYS.forEach((label) => {
+                const cell = document.createElement('div');
+                cell.className = 'calendar-day-label';
+                cell.textContent = label;
+                calendarGrid.appendChild(cell);
+            });
+
+            const firstOfMonth = new Date(viewDate.getFullYear(), viewDate.getMonth(), 1);
+            const startOffset = (firstOfMonth.getDay() + 6) % 7; // Monday = 0
+            const daysInMonth = new Date(viewDate.getFullYear(), viewDate.getMonth() + 1, 0).getDate();
+            const todayISO = toISODate(new Date());
+            const eventDates = new Set(events.map((ev) => ev.date));
+
+            for (let i = 0; i < startOffset; i++) {
+                const filler = document.createElement('div');
+                filler.className = 'calendar-cell calendar-cell-empty';
+                calendarGrid.appendChild(filler);
+            }
+
+            for (let day = 1; day <= daysInMonth; day++) {
+                const cellDate = new Date(viewDate.getFullYear(), viewDate.getMonth(), day);
+                const iso = toISODate(cellDate);
+                const cell = document.createElement('div');
+                cell.className = 'calendar-cell';
+                if (iso === todayISO) cell.classList.add('calendar-cell-today');
+                if (semesterRange && semesterRange.startDate && semesterRange.endDate &&
+                    iso >= semesterRange.startDate && iso <= semesterRange.endDate) {
+                    cell.classList.add('calendar-cell-in-semester');
+                }
+                if (eventDates.has(iso)) cell.classList.add('calendar-cell-has-event');
+
+                const num = document.createElement('span');
+                num.className = 'calendar-day-number';
+                num.textContent = String(day);
+                cell.appendChild(num);
+
+                calendarGrid.appendChild(cell);
+            }
+        }
+
+        calPrev.addEventListener('click', () => {
+            viewDate.setMonth(viewDate.getMonth() - 1);
+            renderCalendar();
+        });
+
+        calNext.addEventListener('click', () => {
+            viewDate.setMonth(viewDate.getMonth() + 1);
+            renderCalendar();
+        });
+
+        renderCalendar();
+        loadSemesterRange();
+    </script>
+</body>
+</html>
