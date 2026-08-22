@@ -268,6 +268,12 @@ strong {
 }
 
 /* Semester range */
+.exam-period-text {
+    color: #888;
+    font-size: 13px;
+    text-align: left;
+}
+
 .semester-range form {
     display: flex;
     flex-wrap: wrap;
@@ -292,6 +298,37 @@ strong {
     border-radius: 6px;
     font-family: inherit;
     font-size: 13px;
+}
+
+/* Semester progress */
+.progress-headline {
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0 0 4px;
+    text-align: left;
+}
+
+.progress-caption {
+    color: #888;
+    font-size: 13px;
+    margin: 0 0 12px;
+    text-align: left;
+}
+
+.progress-track {
+    height: 8px;
+    background-color: #1e1e1e;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background-color: #91e4ff;
+    border-radius: 999px;
+    transition: width 0.3s ease;
 }
 
 /* Calendar */
@@ -361,6 +398,11 @@ strong {
 
 .calendar-cell-in-semester {
     background-color: rgba(145, 228, 255, 0.05);
+}
+
+.calendar-cell-exam {
+    background-color: rgba(255, 94, 135, 0.08);
+    border-color: rgba(255, 94, 135, 0.3);
 }
 
 .calendar-cell-has-event::after {

@@ -44,15 +44,38 @@
         <section class="semester-range">
             <h2>Termín semestru</h2>
             <p id="semesterRangeText">Načítání…</p>
+            <p id="examWinterText" class="exam-period-text"></p>
+            <p id="examSummerText" class="exam-period-text"></p>
             <form id="semesterRangeForm" class="admin-only" hidden>
-                <label>Začátek
+                <label>Začátek semestru
                     <input type="date" id="semesterStart" required>
                 </label>
-                <label>Konec
+                <label>Konec semestru
                     <input type="date" id="semesterEnd" required>
+                </label>
+                <label>Zkouškové zimní od
+                    <input type="date" id="examWinterStart">
+                </label>
+                <label>Zkouškové zimní do
+                    <input type="date" id="examWinterEnd">
+                </label>
+                <label>Zkouškové letní od
+                    <input type="date" id="examSummerStart">
+                </label>
+                <label>Zkouškové letní do
+                    <input type="date" id="examSummerEnd">
                 </label>
                 <button type="submit" class="admin-toggle">Uložit</button>
             </form>
+        </section>
+
+        <section class="semester-progress" id="semesterProgress" hidden>
+            <h2>Průběh semestru</h2>
+            <p class="progress-headline" id="progressHeadline"></p>
+            <p class="progress-caption" id="progressCaption"></p>
+            <div class="progress-track">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
         </section>
 
         <section class="calendar-section">
@@ -157,9 +180,20 @@
         const adminOnlyEls = document.querySelectorAll('.admin-only');
 
         const semesterRangeText = document.getElementById('semesterRangeText');
+        const examWinterText = document.getElementById('examWinterText');
+        const examSummerText = document.getElementById('examSummerText');
         const semesterRangeForm = document.getElementById('semesterRangeForm');
         const semesterStartInput = document.getElementById('semesterStart');
         const semesterEndInput = document.getElementById('semesterEnd');
+        const examWinterStartInput = document.getElementById('examWinterStart');
+        const examWinterEndInput = document.getElementById('examWinterEnd');
+        const examSummerStartInput = document.getElementById('examSummerStart');
+        const examSummerEndInput = document.getElementById('examSummerEnd');
+
+        const semesterProgressSection = document.getElementById('semesterProgress');
+        const progressHeadline = document.getElementById('progressHeadline');
+        const progressCaption = document.getElementById('progressCaption');
+        const progressFill = document.getElementById('progressFill');
 
         const calendarGrid = document.getElementById('calendarGrid');
         const calMonthLabel = document.getElementById('calMonthLabel');
@@ -226,6 +260,69 @@
             } else {
                 semesterRangeText.textContent = 'Termín zatím nebyl nastaven.';
             }
+
+            if (semesterRange && semesterRange.examWinterStart && semesterRange.examWinterEnd) {
+                examWinterText.textContent = `Zkouškové zimní: ${formatDateCz(semesterRange.examWinterStart)} – ${formatDateCz(semesterRange.examWinterEnd)}`;
+                examWinterStartInput.value = semesterRange.examWinterStart;
+                examWinterEndInput.value = semesterRange.examWinterEnd;
+            } else {
+                examWinterText.textContent = 'Zkouškové zimní: zatím nenastaveno.';
+            }
+
+            if (semesterRange && semesterRange.examSummerStart && semesterRange.examSummerEnd) {
+                examSummerText.textContent = `Zkouškové letní: ${formatDateCz(semesterRange.examSummerStart)} – ${formatDateCz(semesterRange.examSummerEnd)}`;
+                examSummerStartInput.value = semesterRange.examSummerStart;
+                examSummerEndInput.value = semesterRange.examSummerEnd;
+            } else {
+                examSummerText.textContent = 'Zkouškové letní: zatím nenastaveno.';
+            }
+        }
+
+        function czDny(n) {
+            const abs = Math.abs(n);
+            if (abs === 1) return 'den';
+            if (abs >= 2 && abs <= 4) return 'dny';
+            return 'dní';
+        }
+
+        function renderSemesterProgress() {
+            if (!semesterRange || !semesterRange.startDate || !semesterRange.endDate) {
+                semesterProgressSection.hidden = true;
+                return;
+            }
+            semesterProgressSection.hidden = false;
+
+            const start = new Date(`${semesterRange.startDate}T00:00:00`);
+            const end = new Date(`${semesterRange.endDate}T00:00:00`);
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const msPerDay = 24 * 60 * 60 * 1000;
+            const totalDays = Math.round((end - start) / msPerDay) + 1;
+            const totalWeeks = Math.max(1, Math.ceil(totalDays / 7));
+
+            if (today < start) {
+                const daysUntilStart = Math.round((start - today) / msPerDay);
+                progressHeadline.textContent = `Semestr začíná za ${daysUntilStart} ${czDny(daysUntilStart)}`;
+                progressCaption.textContent = `1. týden z ${totalWeeks}`;
+                progressFill.style.width = '0%';
+                return;
+            }
+
+            if (today > end) {
+                progressHeadline.textContent = 'Semestr skončil';
+                progressCaption.textContent = `${totalWeeks}. týden z ${totalWeeks} • 100 %`;
+                progressFill.style.width = '100%';
+                return;
+            }
+
+            const elapsedDays = Math.round((today - start) / msPerDay);
+            const currentWeek = Math.min(totalWeeks, Math.floor(elapsedDays / 7) + 1);
+            const daysRemaining = Math.round((end - today) / msPerDay);
+            const percent = Math.round(((elapsedDays + 1) / totalDays) * 100);
+
+            progressHeadline.textContent = `${currentWeek}. týden z ${totalWeeks}`;
+            progressCaption.textContent = `Zbývá ${daysRemaining} ${czDny(daysRemaining)} do konce semestru • ${percent} %`;
+            progressFill.style.width = `${percent}%`;
         }
 
         async function loadSemesterRange() {
@@ -238,6 +335,7 @@
                 console.error('Nepodařilo se načíst termín semestru.', err);
             }
             renderSemesterRange();
+            renderSemesterProgress();
             renderCalendar();
         }
 
@@ -246,10 +344,19 @@
             const startDate = semesterStartInput.value;
             const endDate = semesterEndInput.value;
             if (!startDate || !endDate) return;
+            const updated = {
+                startDate,
+                endDate,
+                examWinterStart: examWinterStartInput.value || null,
+                examWinterEnd: examWinterEndInput.value || null,
+                examSummerStart: examSummerStartInput.value || null,
+                examSummerEnd: examSummerEndInput.value || null
+            };
             try {
-                await setDoc(semesterDocRef, { startDate, endDate });
-                semesterRange = { startDate, endDate };
+                await setDoc(semesterDocRef, updated);
+                semesterRange = updated;
                 renderSemesterRange();
+                renderSemesterProgress();
                 renderCalendar();
             } catch (err) {
                 console.error('Uložení termínu se nezdařilo.', err);
@@ -355,6 +462,14 @@
                 if (semesterRange && semesterRange.startDate && semesterRange.endDate &&
                     iso >= semesterRange.startDate && iso <= semesterRange.endDate) {
                     cell.classList.add('calendar-cell-in-semester');
+                }
+                if (semesterRange && semesterRange.examWinterStart && semesterRange.examWinterEnd &&
+                    iso >= semesterRange.examWinterStart && iso <= semesterRange.examWinterEnd) {
+                    cell.classList.add('calendar-cell-exam');
+                }
+                if (semesterRange && semesterRange.examSummerStart && semesterRange.examSummerEnd &&
+                    iso >= semesterRange.examSummerStart && iso <= semesterRange.examSummerEnd) {
+                    cell.classList.add('calendar-cell-exam');
                 }
                 if (eventDates.has(iso)) cell.classList.add('calendar-cell-has-event');
 
