@@ -320,7 +320,9 @@
             const daysRemaining = Math.round((end - today) / msPerDay);
             const percent = Math.round(((elapsedDays + 1) / totalDays) * 100);
 
-            progressHeadline.textContent = `${currentWeek}. týden z ${totalWeeks}`;
+            let weekType = toISODate(today) >= semesterRange.startDate ? (currentWeek % 2 === 1 ? 'lichý' : 'sudý') : ''
+
+            progressHeadline.textContent = `${currentWeek}. týden z ${totalWeeks}. Týden je ${weekType}.`;
             progressCaption.textContent = `Zbývá ${daysRemaining} ${czDny(daysRemaining)} do konce semestru • ${percent} %`;
             progressFill.style.width = `${percent}%`;
         }
