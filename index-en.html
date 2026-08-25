@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tomáš Zvoníček</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="pages-nav">
+        <a href="index.html" class="lang-toggle" aria-label="Přepnout do češtiny">CZ</a>
+        <button id="pagesToggle" class="pages-toggle" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="pagesMenu" aria-label="More pages">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+        </button>
+        <div id="pagesMenu" class="pages-menu" role="menu" hidden>
+            <a href="index-en.html" class="pages-menu-item active" role="menuitem">Home</a>
+            <a href="cv-en.html" class="pages-menu-item" role="menuitem">CV</a>
+            <a href="semester-en.html" class="pages-menu-item" role="menuitem">Semester</a>
+            <a href="job-pay-en.html" class="pages-menu-item" role="menuitem">Job Pay</a>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <p class="hero-greeting">Heya!</p>
+        <h1>Zvondis here!</h1>
+        <a class="hero-cta" href="cv-en.html">View CV &rarr;</a>
+    </div>
+
+    <script>
+        const pagesToggle = document.getElementById('pagesToggle');
+        const pagesMenu = document.getElementById('pagesMenu');
+
+        function closeMenu() {
+            pagesMenu.hidden = true;
+            pagesToggle.setAttribute('aria-expanded', 'false');
+        }
+
+        function openMenu() {
+            pagesMenu.hidden = false;
+            pagesToggle.setAttribute('aria-expanded', 'true');
+        }
+
+        pagesToggle.addEventListener('click', (event) => {
+            event.stopPropagation();
+            pagesMenu.hidden ? openMenu() : closeMenu();
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!pagesMenu.hidden && !pagesMenu.contains(event.target) && event.target !== pagesToggle) {
+                closeMenu();
+            }
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && !pagesMenu.hidden) {
+                closeMenu();
+                pagesToggle.focus();
+            }
+        });
+    </script>
+</body>
+</html>

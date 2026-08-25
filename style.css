@@ -492,6 +492,33 @@ strong {
     top: 20px;
     right: 20px;
     z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.lang-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    padding: 0 14px;
+    background-color: #0d0d0d;
+    border: 1px solid #1e1e1e;
+    border-radius: 8px;
+    color: #91e4ff;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.lang-toggle:hover {
+    color: #ff5e87;
+    border-color: #ff5e87;
+    text-decoration: none;
 }
 
 .pages-toggle {
@@ -553,6 +580,93 @@ strong {
 
 .pages-menu-item.disabled:hover {
     background-color: transparent;
+}
+
+/* Job pay calculator */
+.pay-form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 16px;
+    margin-top: 12px;
+}
+
+.pay-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    color: #888;
+    font-size: 13px;
+}
+
+.pay-form input[type="number"] {
+    background-color: #0d0d0d;
+    border: 1px solid #1e1e1e;
+    color: #ffffff;
+    padding: 8px 10px;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 13px;
+    width: 220px;
+}
+
+.pay-contract-toggle {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.pay-radio {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #91e4ff;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.pay-results {
+    background-color: #0d0d0d;
+    border: 1px solid #1e1e1e;
+    border-radius: 8px;
+    padding: 16px 20px;
+}
+
+.pay-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 6px 0;
+    color: #5eff86;
+    font-size: 14px;
+    border-bottom: 1px solid #1a1a1a;
+}
+
+.pay-row:last-child {
+    border-bottom: none;
+}
+
+.pay-row-total {
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.pay-threshold-text {
+    color: #91e4ff;
+    font-size: 13px;
+    text-align: left;
+    margin: 12px 0;
+}
+
+.pay-threshold-text.pay-threshold-over {
+    color: #ff5e87;
+}
+
+.pay-disclaimer {
+    color: #888;
+    font-size: 12px;
+    text-align: left;
 }
 
 @media (max-width: 680px) {

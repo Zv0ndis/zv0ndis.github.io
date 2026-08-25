@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Pay — Tomáš Zvoníček</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="pages-nav">
+        <a href="job-pay.html" class="lang-toggle" aria-label="Přepnout do češtiny">CZ</a>
+        <button id="pagesToggle" class="pages-toggle" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="pagesMenu" aria-label="More pages">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+        </button>
+        <div id="pagesMenu" class="pages-menu" role="menu" hidden>
+            <a href="index-en.html" class="pages-menu-item" role="menuitem">Home</a>
+            <a href="cv-en.html" class="pages-menu-item" role="menuitem">CV</a>
+            <a href="semester-en.html" class="pages-menu-item" role="menuitem">Semester</a>
+            <a href="job-pay-en.html" class="pages-menu-item active" role="menuitem">Job Pay</a>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <header class="cv-header">
+            <h1>Job Pay</h1>
+            <p class="subtitle">Part-time job payout calculator (DPP / DPČ)</p>
+        </header>
+
+        <section class="pay-form-section">
+            <h2>Input</h2>
+            <form id="payForm" class="pay-form">
+                <div class="pay-contract-toggle" role="radiogroup" aria-label="Contract type">
+                    <label class="pay-radio">
+                        <input type="radio" name="contractType" value="dpp" checked>
+                        DPP
+                    </label>
+                    <label class="pay-radio">
+                        <input type="radio" name="contractType" value="dpc">
+                        DPČ
+                    </label>
+                </div>
+
+                <label>Hourly rate (Kč/hr)
+                    <input type="number" id="hourlyRate" min="0" step="0.5" value="150" required>
+                </label>
+                <label>Hours worked — regular
+                    <input type="number" id="regularHours" min="0" step="0.25" value="0" required>
+                </label>
+                <label>Hours worked — night / weekend (+10%)
+                    <input type="number" id="nightHours" min="0" step="0.25" value="0" required>
+                </label>
+            </form>
+        </section>
+
+        <section class="pay-results-section">
+            <h2>Result</h2>
+            <div class="pay-results">
+                <div class="pay-row">
+                    <span>Regular hours</span>
+                    <span id="resRegularPay">0 Kč</span>
+                </div>
+                <div class="pay-row">
+                    <span>Night / weekend hours (+10%)</span>
+                    <span id="resNightPay">0 Kč</span>
+                </div>
+                <div class="pay-row pay-row-total">
+                    <span>Total gross pay</span>
+                    <span id="resGrossTotal">0 Kč</span>
+                </div>
+
+                <p id="resThresholdText" class="pay-threshold-text"></p>
+
+                <div class="pay-row" id="resTaxRow">
+                    <span id="resTaxLabel">Income tax (15%)</span>
+                    <span id="resTax">0 Kč</span>
+                </div>
+                <div class="pay-row pay-row-total">
+                    <span>Estimated net pay</span>
+                    <span id="resNetTotal">0 Kč</span>
+                </div>
+            </div>
+            <p class="pay-disclaimer">
+                This is a rough estimate for 2026 (student, no social/health insurance contributions).
+                It doesn't account for a signed taxpayer declaration or tax credits — actual net pay may differ.
+            </p>
+        </section>
+
+    </div>
+
+    <script>
+        const pagesToggle = document.getElementById('pagesToggle');
+        const pagesMenu = document.getElementById('pagesMenu');
+
+        function closeMenu() {
+            pagesMenu.hidden = true;
+            pagesToggle.setAttribute('aria-expanded', 'false');
+        }
+
+        function openMenu() {
+            pagesMenu.hidden = false;
+            pagesToggle.setAttribute('aria-expanded', 'true');
+        }
+
+        pagesToggle.addEventListener('click', (event) => {
+            event.stopPropagation();
+            pagesMenu.hidden ? openMenu() : closeMenu();
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!pagesMenu.hidden && !pagesMenu.contains(event.target) && event.target !== pagesToggle) {
+                closeMenu();
+            }
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && !pagesMenu.hidden) {
+                closeMenu();
+                pagesToggle.focus();
+            }
+        });
+    </script>
+
+    <script>
+        const NIGHT_WEEKEND_BONUS = 0.10;
+        const TAX_RATE = 0.15;
+        const THRESHOLDS = {
+            dpp: { limit: 12000, label: 'DPP' },
+            dpc: { limit: 4500, label: 'DPČ' }
+        };
+
+        const payForm = document.getElementById('payForm');
+        const hourlyRateInput = document.getElementById('hourlyRate');
+        const regularHoursInput = document.getElementById('regularHours');
+        const nightHoursInput = document.getElementById('nightHours');
+
+        const resRegularPay = document.getElementById('resRegularPay');
+        const resNightPay = document.getElementById('resNightPay');
+        const resGrossTotal = document.getElementById('resGrossTotal');
+        const resThresholdText = document.getElementById('resThresholdText');
+        const resTaxRow = document.getElementById('resTaxRow');
+        const resTaxLabel = document.getElementById('resTaxLabel');
+        const resTax = document.getElementById('resTax');
+        const resNetTotal = document.getElementById('resNetTotal');
+
+        function formatKc(amount) {
+            return `${Math.round(amount).toLocaleString('en-US')} Kč`;
+        }
+
+        function getContractType() {
+            return payForm.querySelector('input[name="contractType"]:checked').value;
+        }
+
+        function calculate() {
+            const rate = parseFloat(hourlyRateInput.value) || 0;
+            const regularHours = parseFloat(regularHoursInput.value) || 0;
+            const nightHours = parseFloat(nightHoursInput.value) || 0;
+
+            const regularPay = rate * regularHours;
+            const nightPay = rate * (1 + NIGHT_WEEKEND_BONUS) * nightHours;
+            const grossTotal = regularPay + nightPay;
+
+            const contractType = getContractType();
+            const { limit, label } = THRESHOLDS[contractType];
+            const overLimit = grossTotal >= limit;
+
+            const tax = grossTotal * TAX_RATE;
+            const netTotal = grossTotal - tax;
+
+            resRegularPay.textContent = formatKc(regularPay);
+            resNightPay.textContent = formatKc(nightPay);
+            resGrossTotal.textContent = formatKc(grossTotal);
+
+            if (overLimit) {
+                resThresholdText.textContent =
+                    `Gross pay has reached the ${formatKc(limit)} limit for ${label}.`;
+                resThresholdText.classList.add('pay-threshold-over');
+            } else {
+                resThresholdText.textContent =
+                    `Gross pay is below the ${formatKc(limit)} limit for ${label}.`;
+                resThresholdText.classList.remove('pay-threshold-over');
+            }
+
+            resTaxRow.hidden = !overLimit;
+            resTaxLabel.textContent = `Income tax (${Math.round(TAX_RATE * 100)}%)`;
+            resTax.textContent = formatKc(tax);
+            resNetTotal.textContent = formatKc(overLimit ? netTotal : grossTotal);
+        }
+
+        payForm.addEventListener('input', calculate);
+        payForm.addEventListener('change', calculate);
+        calculate();
+    </script>
+</body>
+</html>
