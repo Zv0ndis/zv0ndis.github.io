@@ -1,0 +1,38 @@
+name: checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Prettier formatting check
+        run: npm run format:check
+
+      - name: Build site
+        run: npm run build
+
+      - name: HTML validation
+        run: npm run lint:html
+
+      - name: Link check
+        run: |
+          npx --yes serve -l 3000 _site &
+          sleep 2
+          npx --yes linkinator http://localhost:3000 --recurse --silent \
+            --skip "fonts.googleapis.com|fonts.gstatic.com|gstatic.com/firebasejs"
