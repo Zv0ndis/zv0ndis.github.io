@@ -1,0 +1,23 @@
+# Editor / IDE
+.idea/
+.vscode/
+*.swp
+
+# Claude Code – local machine settings (keep launch.json tracked)
+.claude/settings.local.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node / Eleventy build
+node_modules/
+npm-debug.log*
+_site/
+.cache/
+
+# Local env / secrets
+*.local
+.env
+.env.*
+!.env.example
