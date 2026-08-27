@@ -1,0 +1,5 @@
+{
+  "lang": "cs",
+  "layout": "base.njk",
+  "permalink": "{{ page.fileSlug }}.html"
+}

@@ -1,0 +1,99 @@
+{%- set s = semesterui[lang] -%}
+<div class="container">
+    <header class="cv-header">
+        <h1 id="loginToggle" class="title-trigger">{{ s.h1 }}</h1>
+        <p class="subtitle">{{ s.subtitle }}</p>
+        <button type="button" id="logoutButton" class="text-link" hidden>{{ s.logout }}</button>
+    </header>
+
+    <form id="loginForm" class="login-form" hidden>
+        <input
+            type="email"
+            id="loginEmail"
+            placeholder="{{ s.loginEmail }}"
+            autocomplete="username"
+            required
+        />
+        <input
+            type="password"
+            id="loginPassword"
+            placeholder="{{ s.loginPassword }}"
+            autocomplete="current-password"
+            required
+        />
+        <button type="submit" class="admin-toggle">{{ s.loginSubmit }}</button>
+        <span id="loginError" class="login-error"></span>
+    </form>
+
+    <section class="semester-range">
+        <h2>{{ s.datesHeading }}</h2>
+        <p id="semesterRangeText">{{ s.rangeLoading }}</p>
+        <p id="examWinterText" class="exam-period-text"></p>
+        <p id="examSummerText" class="exam-period-text"></p>
+        <form id="semesterRangeForm" class="admin-only" hidden>
+            <label
+                >{{ s.semesterStart }}
+                <input type="date" id="semesterStart" required />
+            </label>
+            <label
+                >{{ s.semesterEnd }}
+                <input type="date" id="semesterEnd" required />
+            </label>
+            <label
+                >{{ s.examWinterFrom }}
+                <input type="date" id="examWinterStart" />
+            </label>
+            <label
+                >{{ s.examWinterTo }}
+                <input type="date" id="examWinterEnd" />
+            </label>
+            <label
+                >{{ s.examSummerFrom }}
+                <input type="date" id="examSummerStart" />
+            </label>
+            <label
+                >{{ s.examSummerTo }}
+                <input type="date" id="examSummerEnd" />
+            </label>
+            <button type="submit" class="admin-toggle">{{ s.save }}</button>
+        </form>
+    </section>
+
+    <section class="semester-progress" id="semesterProgress" hidden>
+        <h2>{{ s.progressHeading }}</h2>
+        <p class="progress-headline" id="progressHeadline"></p>
+        <p class="progress-caption" id="progressCaption"></p>
+        <div class="progress-track">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+    </section>
+
+    <section class="calendar-section">
+        <h2>{{ s.calendarHeading }}</h2>
+        <div class="calendar-nav">
+            <button type="button" id="calPrev" aria-label="{{ s.prevMonth }}">&larr;</button>
+            <span id="calMonthLabel"></span>
+            <button type="button" id="calNext" aria-label="{{ s.nextMonth }}">&rarr;</button>
+        </div>
+        <div class="calendar-grid" id="calendarGrid"></div>
+
+        <form id="addEventForm" class="admin-only" hidden>
+            <input type="date" id="eventDate" required />
+            <input
+                type="text"
+                id="eventTitle"
+                placeholder="{{ s.eventName }}"
+                required
+                maxlength="80"
+            />
+            <button type="submit" class="admin-toggle">{{ s.addEvent }}</button>
+        </form>
+    </section>
+
+    <section class="event-list-section">
+        <h2>{{ s.eventsHeading }}</h2>
+        <ul id="eventList" class="event-list"></ul>
+    </section>
+
+    <p class="exam-period-text">{{ s.syncNote }}</p>
+</div>

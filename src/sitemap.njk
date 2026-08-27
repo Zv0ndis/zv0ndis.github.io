@@ -1,0 +1,27 @@
+---
+permalink: /sitemap.xml
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+{%- for p in site.pages %}
+{%- if p.cs.url == p.en.url %}
+  <url>
+    <loc>{{ site.url }}/{{ p.cs.url }}</loc>
+  </url>
+{%- else %}
+  <url>
+    <loc>{{ site.url }}/{{ p.cs.url }}</loc>
+    <xhtml:link rel="alternate" hreflang="cs" href="{{ site.url }}/{{ p.cs.url }}"/>
+    <xhtml:link rel="alternate" hreflang="en" href="{{ site.url }}/{{ p.en.url }}"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="{{ site.url }}/{{ p.cs.url }}"/>
+  </url>
+  <url>
+    <loc>{{ site.url }}/{{ p.en.url }}</loc>
+    <xhtml:link rel="alternate" hreflang="cs" href="{{ site.url }}/{{ p.cs.url }}"/>
+    <xhtml:link rel="alternate" hreflang="en" href="{{ site.url }}/{{ p.en.url }}"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="{{ site.url }}/{{ p.cs.url }}"/>
+  </url>
+{%- endif %}
+{%- endfor %}
+</urlset>

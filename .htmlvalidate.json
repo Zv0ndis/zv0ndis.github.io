@@ -1,0 +1,21 @@
+{
+  "extends": ["html-validate:recommended", "html-validate:prettier"],
+  "rules": {
+    "no-inline-style": "off",
+    "require-sri": "off",
+    "script-type": "off",
+    "wcag/h32": "off"
+  },
+  "elements": [
+    "html5",
+    {
+      "site-nav": {
+        "flow": true,
+        "attributes": {
+          "data-page": { "enum": ["home", "cv", "semester", "job-pay", "privacy"] },
+          "data-lang": { "enum": ["cs", "en"] }
+        }
+      }
+    }
+  ]
+}

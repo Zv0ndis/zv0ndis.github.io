@@ -1,0 +1,66 @@
+{%- set j = jobpay[lang] -%}
+<div class="container">
+    <header class="cv-header">
+        <h1>{{ j.h1 }}</h1>
+        <p class="subtitle">{{ j.subtitle }}</p>
+    </header>
+
+    <section class="pay-form-section">
+        <h2>{{ j.formHeading }}</h2>
+        <form id="payForm" class="pay-form" onsubmit="return false">
+            <div class="pay-contract-toggle" role="radiogroup" aria-label="{{ j.contractAria }}">
+                <label class="pay-radio">
+                    <input type="radio" name="contractType" value="dpp" checked />
+                    DPP
+                </label>
+                <label class="pay-radio">
+                    <input type="radio" name="contractType" value="dpc" />
+                    DPČ
+                </label>
+            </div>
+
+            <label
+                >{{ j.hourlyRate }}
+                <input type="number" id="hourlyRate" min="0" step="0.5" value="150" required />
+            </label>
+            <label
+                >{{ j.regularHours }}
+                <input type="number" id="regularHours" min="0" step="0.25" value="0" required />
+            </label>
+            <label
+                >{{ j.nightHours }}
+                <input type="number" id="nightHours" min="0" step="0.25" value="0" required />
+            </label>
+        </form>
+    </section>
+
+    <section class="pay-results-section">
+        <h2>{{ j.resultHeading }}</h2>
+        <div class="pay-results">
+            <div class="pay-row">
+                <span>{{ j.rowRegular }}</span>
+                <span id="resRegularPay">0 Kč</span>
+            </div>
+            <div class="pay-row">
+                <span>{{ j.rowNight }}</span>
+                <span id="resNightPay">0 Kč</span>
+            </div>
+            <div class="pay-row pay-row-total">
+                <span>{{ j.rowGross }}</span>
+                <span id="resGrossTotal">0 Kč</span>
+            </div>
+
+            <p id="resThresholdText" class="pay-threshold-text"></p>
+
+            <div class="pay-row" id="resTaxRow">
+                <span id="resTaxLabel">{{ j.taxLabel }}</span>
+                <span id="resTax">0 Kč</span>
+            </div>
+            <div class="pay-row pay-row-total">
+                <span>{{ j.rowNet }}</span>
+                <span id="resNetTotal">0 Kč</span>
+            </div>
+        </div>
+        <p class="pay-disclaimer">{{ j.disclaimer }}</p>
+    </section>
+</div>

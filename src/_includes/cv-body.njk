@@ -1,0 +1,100 @@
+{%- set d = cv[lang] -%}
+<div class="container">
+    <header class="cv-header">
+        <h1>{{ site.author }}</h1>
+        <p class="subtitle">{{ d.subtitle }}</p>
+        <div class="contact-info">
+            <a href="mailto:{{ d.contact.email }}">{{ d.contact.email }}</a> &bull;
+            <a href="{{ d.contact.phoneHref }}">{{ d.contact.phone | replace(" ", "&nbsp;") | safe }}</a>
+            &bull;
+            <span>{{ d.contact.location }}</span> &bull;
+            <a href="{{ d.contact.githubUrl }}" target="_blank" rel="noopener noreferrer"
+                >{{ d.contact.githubLabel }}</a
+            >
+        </div>
+    </header>
+
+    <section>
+        <h2>{{ d.aboutHeading }}</h2>
+        {%- for p in d.about %}
+        <p>{{ p }}</p>
+        {%- endfor %}
+    </section>
+
+    <div class="two-col">
+        <div>
+            <section>
+                <h2>{{ d.skills.heading }}</h2>
+                <ul>
+                    {%- for item in d.skills.items %}
+                    <li>{{ item }}</li>
+                    {%- endfor %}
+                </ul>
+            </section>
+
+            <section>
+                <h2>{{ d.tech.heading }}</h2>
+                {%- for g in d.tech.groups %}
+                <p class="tech-label">{{ g.label }}</p>
+                <p>{{ g.value }}</p>
+                {%- endfor %}
+            </section>
+
+            <section>
+                <h2>{{ d.languages.heading }}</h2>
+                {%- for l in d.languages.items %}
+                <p><strong>{{ l.name }}</strong> — {{ l.level }}</p>
+                {%- endfor %}
+            </section>
+
+            <section>
+                <h2>{{ d.interests.heading }}</h2>
+                {%- for g in d.interests.groups %}
+                <p class="tech-label">{{ g.label }}</p>
+                <p>{{ g.value }}</p>
+                {%- endfor %}
+            </section>
+        </div>
+
+        <div>
+            <section>
+                <h2>{{ d.experience.heading }}</h2>
+                {%- for e in d.experience.entries %}
+                <div class="entry">
+                    <div class="entry-header">
+                        <span class="entry-title">{{ e.title }}</span>
+                        <span class="entry-role">{{ e.role }}</span>
+                    </div>
+                    <p>{{ e.text }}</p>
+                </div>
+                {%- endfor %}
+            </section>
+
+            <section>
+                <h2>{{ d.education.heading }}</h2>
+                {%- for e in d.education.entries %}
+                <div class="entry">
+                    <div class="entry-header">
+                        <span class="entry-title">{{ e.title }}</span>
+                        <span class="entry-date">{{ e.date }}</span>
+                    </div>
+                    <span class="entry-role">{{ e.role }}</span>
+                    <p>{{ e.text }}</p>
+                </div>
+                {%- endfor %}
+            </section>
+        </div>
+    </div>
+
+    <section>
+        <h2>{{ d.leisure.heading }}</h2>
+        <div class="two-col-hobbies">
+            {%- for e in d.leisure.entries %}
+            <div class="entry">
+                <span class="entry-title">{{ e.title }}</span>
+                <p>{{ e.text }}</p>
+            </div>
+            {%- endfor %}
+        </div>
+    </section>
+</div>

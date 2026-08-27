@@ -8,14 +8,15 @@
     display: none !important;
 }
 
-html, body {
+html,
+body {
     height: 100%;
 }
 
 body {
     background-color: #070707;
     color: #ffffff;
-    font-family: 'Fira Code', monospace;
+    font-family: "Fira Code", monospace;
     line-height: 1.6;
     margin: 0;
     padding: 0;
@@ -82,7 +83,6 @@ p {
     color: #5eff86;
     margin: 8px 0;
     font-size: 15px;
-    text-align: justify;
 }
 
 ul {
@@ -195,7 +195,9 @@ strong {
     border-radius: 8px;
     padding: 10px 20px;
     font-size: 15px;
-    transition: color 0.3s ease, border-color 0.3s ease;
+    transition:
+        color 0.3s ease,
+        border-color 0.3s ease;
 }
 
 .hero-cta:hover {
@@ -235,7 +237,9 @@ strong {
     font-family: inherit;
     font-size: 13px;
     cursor: pointer;
-    transition: color 0.3s ease, border-color 0.3s ease;
+    transition:
+        color 0.3s ease,
+        border-color 0.3s ease;
 }
 
 .admin-toggle:hover {
@@ -349,7 +353,9 @@ strong {
     border-radius: 6px;
     cursor: pointer;
     font-family: inherit;
-    transition: color 0.3s ease, border-color 0.3s ease;
+    transition:
+        color 0.3s ease,
+        border-color 0.3s ease;
 }
 
 .calendar-nav button:hover {
@@ -512,7 +518,9 @@ strong {
     font-weight: 700;
     letter-spacing: 0.5px;
     cursor: pointer;
-    transition: color 0.3s ease, border-color 0.3s ease;
+    transition:
+        color 0.3s ease,
+        border-color 0.3s ease;
 }
 
 .lang-toggle:hover {
@@ -532,7 +540,9 @@ strong {
     border-radius: 8px;
     color: #91e4ff;
     cursor: pointer;
-    transition: color 0.3s ease, border-color 0.3s ease;
+    transition:
+        color 0.3s ease,
+        border-color 0.3s ease;
 }
 
 .pages-toggle:hover,
@@ -667,6 +677,17 @@ strong {
     color: #888;
     font-size: 12px;
     text-align: left;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
 }
 
 @media (max-width: 680px) {
