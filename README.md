@@ -5,12 +5,6 @@ na GitHub Pages přes GitHub Actions (`.github/workflows/deploy.yml`).
 
 Živě: <https://zv0ndis.github.io>
 
-## ⚠️ Přepnutí nasazení (jednorázově)
-
-Repo se přesunulo z „deploy přímo z větve" na build přes Actions.
-V **Settings → Pages → Build and deployment → Source** přepni na
-**GitHub Actions**. Bez toho se po pushnutí web rozbije (v rootu už nejsou `.html`).
-
 ## Vývoj
 
 ```bash
@@ -28,34 +22,40 @@ jinak nefunguje přihlášení na stránce Semestr.
 ```
 src/
   _data/
-    site.js         # base URL, seznam stránek (jazyk → URL + label)
-    cv.js           # obsah CV pro CS i EN
-    jobpay.js        # texty kalkulačky výplaty
-    semesterui.js   # texty stránky Semestr
+    site.js            # base URL, seznam stránek (jazyk → URL + label)
+    copy/
+      cv.js            # obsah CV pro CS i EN
+      jobpay.js        # texty kalkulačky výplaty
+      semester.js      # texty stránky Semestr
   _includes/
-    base.njk        # HTML skeleton (head, meta, OG, hreflang, <site-nav>)
-    cv-body.njk     # rozložení CV (čte cv.js)
-    job-pay-body.njk
-    semester-body.njk
-  cs/               # české stránky (permalink: <slug>.html)
-  en/               # anglické stránky (permalink: <slug>-en.html)
-  assets/           # style.css, nav.js, logo.svg, *.js → kopíruje se do rootu
-  root/             # robots.txt, .nojekyll, google verifikace → root
-  .well-known/      # discord verifikace
-  sitemap.njk       # generuje sitemap.xml ze site.pages
+    layouts/base.njk   # HTML skeleton (head, meta, OG, hreflang, <site-nav>)
+    partials/
+      cv.njk           # rozložení CV (čte copy.cv)
+      job-pay.njk
+      semester.njk
+  cs/                  # české stránky (permalink: <slug>.html)
+  en/                  # anglické stránky (permalink: <slug>-en.html)
+  assets/              # style.css, nav.js, logo.svg, *.js → _site/assets/
+  static/              # robots.txt, google verifikace → _site/ (root)
+  .well-known/         # discord verifikace
+  sitemap.njk          # generuje sitemap.xml ze site.pages
   404.njk
-eleventy.config.js  # + transform: prettier na výstupní HTML
-firestore.rules     # Firebase pravidla (nasazuje se ručně, viz PROBLEM.md)
+eleventy.config.js     # + transform: prettier na výstupní HTML
+firestore.rules        # Firebase pravidla (nasazuje se ručně, viz docs/PROBLEM.md)
+docs/                  # PLAN.md, PROBLEM.md
 ```
 
 URL zůstávají stejné jako dřív (`cv.html`, `cv-en.html`, `semester.html`, …).
+Assety jsou pod `/assets/`.
 
 ## Přidání stránky
 
 1. `src/cs/<name>.njk` + `src/en/<name>.njk` s front matter
    (`page_key`, `title`, `description`).
-2. Přidat záznam do `pages` v `src/_data/site.js` (klíč = `page_key`).
-3. Delší obsah dej do `src/_data/` a renderuj přes `_includes/<name>-body.njk`.
+2. Přidat záznam do `pages` v `src/_data/site.js` (klíč = `page_key`) a do
+   `PAGES` v `src/assets/nav.js`.
+3. Delší obsah dej do `src/_data/copy/` a renderuj přes
+   `_includes/partials/<name>.njk`.
 4. Sitemap i navigace se doplní automaticky.
 
 ## Konvence
@@ -75,8 +75,8 @@ Projekt `semester-a8421`. Klientská konfigurace je veřejná – data chrání 
 npx firebase-tools deploy --only firestore:rules
 ```
 
-Kroky vyžadující konzoli viz [`PROBLEM.md`](PROBLEM.md).
+Kroky vyžadující konzoli viz [`docs/PROBLEM.md`](docs/PROBLEM.md).
 
 ## Plán rozvoje
 
-[`PLAN.md`](PLAN.md) · [`PROBLEM.md`](PROBLEM.md)
+[`docs/PLAN.md`](docs/PLAN.md) · [`docs/PROBLEM.md`](docs/PROBLEM.md)

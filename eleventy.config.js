@@ -1,10 +1,11 @@
 import prettier from "prettier";
 
 export default function (eleventyConfig) {
-    // Static assets copied verbatim to the site root (not processed as templates).
-    eleventyConfig.ignores.add("src/root/**");
-    eleventyConfig.addPassthroughCopy({ "src/assets": "." });
-    eleventyConfig.addPassthroughCopy({ "src/root": "." });
+    // src/assets/*  -> _site/assets/*   (CSS, JS, images)
+    // src/static/*  -> _site/*          (files that must sit at the site root)
+    eleventyConfig.ignores.add("src/static/**");
+    eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
+    eleventyConfig.addPassthroughCopy({ "src/static": "." });
     eleventyConfig.addPassthroughCopy("src/.well-known");
 
     // Rebuild when CSS/JS changes.
