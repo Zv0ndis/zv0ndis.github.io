@@ -30,9 +30,25 @@ jobs:
       - name: HTML validation
         run: npm run lint:html
 
+      # Crawls every page in sitemap.xml (navigation is client-rendered, so a
+      # crawler cannot discover the pages by following links from the homepage).
+      # Absolute self-URLs (canonical/hreflang/og:url) are rewritten to the local
+      # server so the check tests this build instead of the deployed site.
+      # Skipped: Google Fonts (no value, external flake) and
+      # myaccount.google.com (auth-gated, returns 401 to unauthenticated clients).
       - name: Link check
         run: |
-          npx --yes serve -l 3000 _site &
-          sleep 2
-          npx --yes linkinator http://localhost:3000 --recurse --silent \
-            --skip "fonts.googleapis.com|fonts.gstatic.com|gstatic.com/firebasejs"
+          npx --yes serve _site -l 3000 --no-clipboard &
+          for i in $(seq 30); do
+            curl -sf http://localhost:3000/index.html >/dev/null && break
+            if [ "$i" -eq 30 ]; then
+              echo "::error::local server did not come up within 30s"
+              exit 1
+            fi
+            sleep 1
+          done
+          npx --yes linkinator http://localhost:3000/index.html \
+            --recurse --sitemap --silent --retry --retry-errors \
+            --url-rewrite-search "https://zv0ndis.github.io" \
+            --url-rewrite-replace "http://localhost:3000" \
+            --skip "fonts.googleapis.com|fonts.gstatic.com|myaccount.google.com"
