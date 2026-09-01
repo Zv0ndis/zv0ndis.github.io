@@ -104,15 +104,19 @@ body::before {
     border-radius: 50%;
     background: radial-gradient(circle, rgba(255, 94, 135, 0.14), transparent 62%);
     translate: 50vw 12vh;
-    /* Long easing suits the idle drift, which only steps every 120ms. */
-    transition: translate 420ms var(--ease);
+    /* Linear, not an ease: this transition is restarted before it ever
+       finishes (every 120ms by the drift, every frame while tracking). An
+       ease-in curve would only ever replay its slow opening, so the glow would
+       crawl behind fast movement and then lurch to catch up. Linear covers a
+       fixed share of the remaining distance each time, which is a clean follow. */
+    transition: translate 420ms linear;
     will-change: translate;
 }
 
-/* While the pointer is driving, ease just enough to smooth the hand-over from
-   the drift. Anything longer reads as the glow lagging behind the cursor. */
+/* While the pointer is driving, close the gap far faster — long enough to
+   smooth the hand-over from the drift, short enough to feel attached. */
 .glow.is-tracking {
-    transition-duration: 80ms;
+    transition-duration: 90ms;
 }
 
 /* Fine film grain. Large flat fills read as dead ink on a dark screen; a
