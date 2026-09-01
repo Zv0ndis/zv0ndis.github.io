@@ -104,8 +104,15 @@ body::before {
     border-radius: 50%;
     background: radial-gradient(circle, rgba(255, 94, 135, 0.14), transparent 62%);
     translate: 50vw 12vh;
-    transition: translate 380ms var(--ease);
+    /* Long easing suits the idle drift, which only steps every 120ms. */
+    transition: translate 420ms var(--ease);
     will-change: translate;
+}
+
+/* While the pointer is driving, ease just enough to smooth the hand-over from
+   the drift. Anything longer reads as the glow lagging behind the cursor. */
+.glow.is-tracking {
+    transition-duration: 80ms;
 }
 
 /* Fine film grain. Large flat fills read as dead ink on a dark screen; a
