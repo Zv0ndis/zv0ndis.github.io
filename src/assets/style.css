@@ -89,9 +89,9 @@ body::before {
         radial-gradient(50rem 35rem at 92% 4%, rgba(127, 220, 255, 0.05), transparent 60%);
 }
 
-/* Ambient glow that trails the pointer. glow.js sets `translate` on pointer
-   move; the CSS transition does the easing on the compositor. With no script or
-   reduced motion it rests near the top, like a static ambient light. */
+/* Ambient glow. glow.js drifts it on a slow path and hands it to the pointer
+   while the pointer moves; the CSS transition below does the easing on the
+   compositor. With no script, or with reduced motion, it stays put here. */
 .glow {
     position: fixed;
     left: 0;
@@ -213,9 +213,10 @@ p:last-child {
     margin-bottom: 0;
 }
 
-/* Keep prose at a comfortable measure instead of 1000px lines */
+/* Prose fills its card. The 1040px container is already the line-length limit;
+   an extra ch cap on top of it just left a ragged column of dead space. */
 section p {
-    max-width: 72ch;
+    max-width: none;
 }
 
 strong {
@@ -377,7 +378,7 @@ section:last-child {
 .two-col-hobbies {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 28px;
+    gap: 20px 40px;
 }
 
 /* =========================================================================
@@ -385,7 +386,7 @@ section:last-child {
    ========================================================================= */
 
 .tech-label {
-    margin: 18px 0 8px;
+    margin: 22px 0 10px;
     color: var(--fg-faint);
     font-size: 11px;
     font-weight: 700;
@@ -400,8 +401,8 @@ section:last-child {
 .tag-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
-    margin: 0 0 4px;
+    gap: 8px;
+    margin: 0;
     padding: 0;
     list-style: none;
 }
@@ -413,7 +414,7 @@ section:last-child {
 
 .tag {
     display: inline-block;
-    padding: 4px 10px;
+    padding: 6px 12px;
     border: 1px solid var(--line);
     border-radius: var(--r-sm);
     background: var(--bg-elev);
