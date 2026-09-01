@@ -14,6 +14,15 @@ export default function (eleventyConfig) {
     // Look up a page definition from site.pages by its key.
     eleventyConfig.addFilter("findPage", (pages, key) => (pages || []).find((p) => p.key === key));
 
+    // "C, C#, Python" -> ["C", "C#", "Python"], so comma-separated copy can be
+    // rendered as individual tags without splitting it up in the data files.
+    eleventyConfig.addFilter("commaList", (value) =>
+        String(value || "")
+            .split(",")
+            .map((item) => item.trim())
+            .filter(Boolean),
+    );
+
     // Format generated HTML so the output is clean and diff-friendly.
     eleventyConfig.addTransform("prettier", async (content, path) => {
         if (!path || !path.endsWith(".html")) return content;
