@@ -21,3 +21,6 @@ _site/
 .env
 .env.*
 !.env.example
+
+# Lighthouse CI reports
+.lighthouseci/

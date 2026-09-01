@@ -24,6 +24,9 @@ jobs:
       - name: Prettier formatting check
         run: npm run format:check
 
+      - name: CSS lint
+        run: npm run lint:css
+
       - name: Build site
         run: npm run build
 
@@ -34,8 +37,8 @@ jobs:
       # crawler cannot discover the pages by following links from the homepage).
       # Absolute self-URLs (canonical/hreflang/og:url) are rewritten to the local
       # server so the check tests this build instead of the deployed site.
-      # Skipped: Google Fonts (no value, external flake) and
-      # myaccount.google.com (auth-gated, returns 401 to unauthenticated clients).
+      # myaccount.google.com is skipped: it is auth-gated and returns 401 to
+      # unauthenticated clients, so it can never pass.
       - name: Link check
         run: |
           npx --yes serve _site -l 3000 --no-clipboard &
@@ -51,4 +54,26 @@ jobs:
             --recurse --sitemap --silent --retry --retry-errors \
             --url-rewrite-search "https://zv0ndis.github.io" \
             --url-rewrite-replace "http://localhost:3000" \
-            --skip "fonts.googleapis.com|fonts.gstatic.com|myaccount.google.com"
+            --skip "myaccount.google.com"
+
+  # Separate job so a noisy performance number never holds up the other checks.
+  # This does not gate deploys either — deploy.yml is its own workflow.
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+      - run: npm run build
+
+      - name: Lighthouse
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          configPath: ./lighthouserc.json
+          uploadArtifacts: true
+          temporaryPublicStorage: true

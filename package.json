@@ -10,12 +10,15 @@
     "clean": "node -e \"require('fs').rmSync('_site',{recursive:true,force:true})\"",
     "format": "prettier --write \"**/*.{html,css,js,json,md,yml}\"",
     "format:check": "prettier --check \"**/*.{html,css,js,json,md,yml}\"",
+    "lint:css": "stylelint \"src/assets/**/*.css\"",
     "lint:html": "html-validate \"_site/**/*.html\"",
-    "check": "npm run build && npm run format:check && npm run lint:html"
+    "check": "npm run build && npm run format:check && npm run lint:css && npm run lint:html"
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.0.0",
     "html-validate": "^9.0.0",
-    "prettier": "^3.3.0"
+    "prettier": "^3.3.0",
+    "stylelint": "^17.14.1",
+    "stylelint-config-standard": "^40.0.0"
   }
 }
