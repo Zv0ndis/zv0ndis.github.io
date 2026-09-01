@@ -42,8 +42,10 @@
         <link rel="stylesheet" href="/assets/style.css" />
         <link rel="icon" type="image/svg+xml" href="/assets/logo.svg" />
         <script src="/assets/nav.js" defer></script>
+        <script src="/assets/glow.js" defer></script>
     </head>
     <body>
+        <div class="glow" aria-hidden="true"></div>
         {%- if page_key %}
         <site-nav data-page="{{ page_key }}" data-lang="{{ lang }}"></site-nav>
         {%- else %}

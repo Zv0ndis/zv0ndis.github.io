@@ -78,16 +78,35 @@ body {
     text-rendering: optimizeLegibility;
 }
 
-/* Faint ambient wash so the page is not a flat black rectangle */
+/* Faint fixed wash so the page is never a flat black rectangle. */
 body::before {
     content: "";
     position: fixed;
     inset: 0;
-    z-index: -1;
+    z-index: -2;
     pointer-events: none;
     background:
-        radial-gradient(60rem 40rem at 15% -10%, rgba(255, 94, 135, 0.06), transparent 60%),
-        radial-gradient(50rem 35rem at 95% 5%, rgba(127, 220, 255, 0.05), transparent 60%);
+        radial-gradient(60rem 40rem at 12% -10%, rgba(255, 94, 135, 0.05), transparent 60%),
+        radial-gradient(50rem 35rem at 92% 4%, rgba(127, 220, 255, 0.05), transparent 60%);
+}
+
+/* Ambient glow that trails the pointer. glow.js sets `translate` on pointer
+   move; the CSS transition does the easing on the compositor. With no script or
+   reduced motion it rests near the top, like a static ambient light. */
+.glow {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 60rem;
+    height: 60rem;
+    margin: -30rem 0 0 -30rem;
+    z-index: -1;
+    pointer-events: none;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 94, 135, 0.14), transparent 62%);
+    translate: 50vw 12vh;
+    transition: translate 380ms var(--ease);
+    will-change: translate;
 }
 
 ::selection {
@@ -488,33 +507,6 @@ section:last-child {
     justify-content: center;
     text-align: center;
     padding: 24px;
-}
-
-.hero::before {
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: 45%;
-    width: min(760px, 90vw);
-    aspect-ratio: 1;
-    transform: translate(-50%, -50%);
-    z-index: -1;
-    pointer-events: none;
-    background: radial-gradient(circle, rgba(255, 94, 135, 0.14), transparent 62%);
-    filter: blur(28px);
-    animation: hero-pulse 7s var(--ease) infinite;
-}
-
-@keyframes hero-pulse {
-    0%,
-    100% {
-        opacity: 0.65;
-        transform: translate(-50%, -50%) scale(1);
-    }
-    50% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1.08);
-    }
 }
 
 .hero-greeting {
