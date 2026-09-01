@@ -8,12 +8,15 @@ export default function (eleventyConfig) {
     eleventyConfig.addPassthroughCopy({ "src/static": "." });
     eleventyConfig.addPassthroughCopy("src/.well-known");
 
-    // Rebuild when a source asset changes...
+    // Copy passthrough assets into _site during `--serve` (Eleventy otherwise
+    // serves them straight from src/, so _site/assets/ would go stale)...
+    eleventyConfig.setServerPassthroughCopyBehavior("copy");
+    // ...rebuild when a source asset changes...
     eleventyConfig.addWatchTarget("src/assets/");
-    // ...and have `--serve` reload the browser when the built asset changes
-    // (CSS is hot-swapped without a full page reload).
+    // ...and have the dev server reload the browser on the rebuilt asset
+    // (CSS is hot-swapped, JS triggers a full reload).
     eleventyConfig.setServerOptions({
-        watch: ["_site/assets/**/*.css", "_site/assets/**/*.js"],
+        watch: ["_site/assets/**"],
     });
 
     // Look up a page definition from site.pages by its key.

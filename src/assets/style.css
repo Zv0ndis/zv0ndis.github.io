@@ -572,8 +572,9 @@ section:last-child {
     text-decoration: none;
 }
 
-/* Hero on the 404 page keeps a readable paragraph */
-.hero p {
+/* Hero on the 404 page keeps a readable paragraph. Scoped to unclassed <p> so
+   it does not outrank .hero-greeting / .subtitle on their own colour. */
+.hero p:not([class]) {
     max-width: 46ch;
     color: var(--fg-dim);
 }
