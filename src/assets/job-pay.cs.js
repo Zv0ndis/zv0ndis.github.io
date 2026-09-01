@@ -33,7 +33,7 @@ function calculate() {
     const nightHours = parseFloat(nightHoursInput.value) || 0;
 
     const regularPay = rate * regularHours;
-    const nightPay = rate * (NIGHT_WEEKEND_BONUS) * nightHours;
+    const nightPay = rate * NIGHT_WEEKEND_BONUS * nightHours;
     const grossTotal = regularPay + nightPay;
 
     const contractType = getContractType();
