@@ -363,6 +363,9 @@ section:last-child {
     grid-template-columns: 1fr 1.55fr;
     gap: 20px;
     align-items: start;
+    /* Same rhythm as a section: this block is a div, so it does not inherit the
+       section margin, and without it the next card sits flush against it. */
+    margin-bottom: 20px;
 }
 
 .two-col > div {
