@@ -40,11 +40,11 @@
             type="font/woff2"
             crossorigin
         />
-        <link rel="stylesheet" href="/assets/style.css" />
+        <link rel="stylesheet" href="/assets/style.css?v={{ build.rev }}" />
         <link rel="icon" type="image/svg+xml" href="/assets/logo.svg" />
-        <script src="/assets/nav.js" defer></script>
-        <script src="/assets/glow.js" defer></script>
-        <script src="/assets/reveal.js" defer></script>
+        <script src="/assets/nav.js?v={{ build.rev }}" defer></script>
+        <script src="/assets/glow.js?v={{ build.rev }}" defer></script>
+        <script src="/assets/reveal.js?v={{ build.rev }}" defer></script>
     </head>
     <body>
         <div class="glow" aria-hidden="true"></div>
@@ -56,10 +56,10 @@
 
         {{ content | safe }}
         {%- for src in (scripts or []) %}
-        <script src="/assets/{{ src }}"></script>
+        <script src="/assets/{{ src }}?v={{ build.rev }}"></script>
         {%- endfor %}
         {%- for src in (moduleScripts or []) %}
-        <script type="module" src="/assets/{{ src }}"></script>
+        <script type="module" src="/assets/{{ src }}?v={{ build.rev }}"></script>
         {%- endfor %}
     </body>
 </html>

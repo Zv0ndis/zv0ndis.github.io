@@ -197,18 +197,18 @@ function renderSemesterProgress() {
 }
 
 async function loadSemesterRange() {
-    try {
-        const snap = await getDoc(semesterDocRef);
-        if (snap.exists()) {
-            semesterRange = snap.data();
-        }
-    } catch (err) {
-        console.error("Nepodařilo se načíst termín semestru.", err);
+    // getDoc can hang on a stalled connection instead of rejecting, so cap it:
+    // an endless "Načítání…" / "Loading…" is worse than an error message.
+    const timeout = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error("timeout")), 10000),
+    );
+    const snap = await Promise.race([getDoc(semesterDocRef), timeout]);
+    if (snap.exists()) {
+        semesterRange = snap.data();
     }
     renderSemesterRange();
     renderSemesterProgress();
 }
-
 semesterRangeForm.addEventListener("submit", async (event) => {
     event.preventDefault();
     const startDate = semesterStartInput.value;
@@ -232,5 +232,11 @@ semesterRangeForm.addEventListener("submit", async (event) => {
     }
 });
 
-// Počáteční načtení termínu.
-loadSemesterRange();
+// Initial read on load. Surface a failure instead of leaving "Načítání…".
+loadSemesterRange().catch((err) => {
+    console.error("loadSemesterRange failed", err);
+    semesterRangeText.textContent =
+        err && err.message === "timeout"
+            ? "Načítání trvá dlouho – zkontroluj připojení."
+            : "Termín se nepodařilo načíst. Zkus obnovit stránku.";
+});
