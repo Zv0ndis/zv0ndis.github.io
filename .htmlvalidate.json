@@ -12,7 +12,7 @@
       "site-nav": {
         "flow": true,
         "attributes": {
-          "data-page": { "enum": ["home", "cv", "semester", "job-pay", "privacy"] },
+          "data-page": { "enum": ["home", "cv", "semester", "job-pay", "uses", "privacy"] },
           "data-lang": { "enum": ["cs", "en"] }
         }
       }

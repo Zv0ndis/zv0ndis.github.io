@@ -27,6 +27,11 @@
             en: { href: "job-pay-en.html", label: "Job Pay" },
         },
         {
+            id: "uses",
+            cs: { href: "uses.html", label: "Vybavení" },
+            en: { href: "uses-en.html", label: "Uses" },
+        },
+        {
             id: "privacy",
             cs: { href: "privacy.html", label: "Soukromí" },
             en: { href: "privacy.html", label: "Privacy" },

@@ -30,6 +30,11 @@ export default {
             en: { url: "job-pay-en.html", label: "Job Pay" },
         },
         {
+            key: "uses",
+            cs: { url: "uses.html", label: "Vybavení" },
+            en: { url: "uses-en.html", label: "Uses" },
+        },
+        {
             key: "privacy",
             cs: { url: "privacy.html", label: "Soukromí" },
             en: { url: "privacy.html", label: "Privacy" },

@@ -27,11 +27,13 @@ src/
       cv.js            # obsah CV pro CS i EN
       jobpay.js        # texty kalkulačky výplaty
       semester.js      # texty stránky Semestr
+      uses.js          # obsah stránky Vybavení
   _includes/
     layouts/base.njk   # HTML skeleton (head, meta, OG, hreflang, <site-nav>)
     partials/
       cv.njk           # rozložení CV (čte copy.cv)
       job-pay.njk
+      uses.njk         # čte copy.uses
       semester.njk
   cs/                  # české stránky (permalink: <slug>.html)
   en/                  # anglické stránky (permalink: <slug>-en.html)

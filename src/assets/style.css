@@ -500,6 +500,36 @@ section:last-child {
 }
 
 /* =========================================================================
+   Uses list
+   ========================================================================= */
+
+.uses-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* Name and note on one line while there is room, stacked once there is not,
+   so a long note never squeezes the name into a column of single letters. */
+.uses-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 12px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--line-soft);
+}
+
+.uses-row:last-child {
+    border-bottom: none;
+}
+
+.uses-note {
+    color: var(--fg-faint);
+    font-size: 12.5px;
+}
+
+/* =========================================================================
    Timeline entries (experience, education)
    ========================================================================= */
 
