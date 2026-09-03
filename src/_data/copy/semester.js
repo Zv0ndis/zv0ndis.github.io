@@ -25,6 +25,13 @@ export default {
         eventName: "Název události",
         addEvent: "Přidat událost",
         eventsHeading: "Události",
+        googleHeading: "Google Kalendář",
+        googleConnect: "Připojit Google Kalendář",
+        googleDisconnect: "Odpojit",
+        googleSync: "Synchronizovat",
+        googleCalendarLabel: "Kalendář",
+        googleNotConfigured:
+            "Synchronizace zatím není nastavená – chybí OAuth Client ID (viz docs/PROBLEM.md).",
         syncNote:
             "Kalendář se synchronizuje s Google Kalendářem prostřednictvím integrace Zvondis School Calendar Sync.",
     },
@@ -51,6 +58,13 @@ export default {
         eventName: "Event name",
         addEvent: "Add event",
         eventsHeading: "Events",
+        googleHeading: "Google Calendar",
+        googleConnect: "Connect Google Calendar",
+        googleDisconnect: "Disconnect",
+        googleSync: "Sync now",
+        googleCalendarLabel: "Calendar",
+        googleNotConfigured:
+            "Sync is not configured yet — the OAuth client ID is missing (see docs/PROBLEM.md).",
         syncNote:
             "The calendar syncs with Google Calendar via the Zvondis School Calendar Sync integration.",
     },

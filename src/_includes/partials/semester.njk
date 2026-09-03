@@ -95,5 +95,27 @@
         <ul id="eventList" class="event-list"></ul>
     </section>
 
+    <section class="google-sync admin-only" id="googleSync" hidden data-client-id="{{ site.googleClientId }}">
+        <h2>{{ s.googleHeading }}</h2>
+        <div class="google-sync-controls" id="googleSyncControls">
+            <button type="button" id="googleConnect" class="admin-toggle">
+                {{ s.googleConnect }}
+            </button>
+            <label id="googleCalendarField" hidden>
+                {{ s.googleCalendarLabel }}
+                <select id="googleCalendar"></select>
+            </label>
+            <button type="button" id="googleSyncNow" class="admin-toggle" hidden>
+                {{ s.googleSync }}
+            </button>
+            <button type="button" id="googleDisconnect" class="text-link" hidden>
+                {{ s.googleDisconnect }}
+            </button>
+        </div>
+        <p class="google-sync-status" id="googleStatus" role="status">
+            {%- if not site.googleClientId %}{{ s.googleNotConfigured }}{% endif -%}
+        </p>
+    </section>
+
     <p class="exam-period-text">{{ s.syncNote }}</p>
 </div>

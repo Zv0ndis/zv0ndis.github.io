@@ -17,6 +17,7 @@ import {
     onAuthStateChanged,
     signOut,
 } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
+import { createCalendarSync, isGoogleDoc, googleEventIdOf } from "./google-calendar.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyCWv9Md-whrotc61qSR8ccgQZFAPFBJkR8",
@@ -90,6 +91,26 @@ const addEventForm = document.getElementById("addEventForm");
 const eventDateInput = document.getElementById("eventDate");
 const eventTitleInput = document.getElementById("eventTitle");
 const eventList = document.getElementById("eventList");
+
+const SYNC_STRINGS = {
+    syncing: "Synchronizuji…",
+    synced: (imported, removed) => `Hotovo — načteno ${imported}, odebráno ${removed}.`,
+    errorAuth: "Přístup ke Google Kalendáři vypršel nebo byl odepřen.",
+    errorApi: "Google Kalendář odpověděl chybou.",
+    errorNoRange: "Nejdřív nastav termín semestru.",
+    errorNoClientId: "Chybí OAuth Client ID.",
+};
+
+const googleSyncSection = document.getElementById("googleSync");
+const googleConnectBtn = document.getElementById("googleConnect");
+const googleDisconnectBtn = document.getElementById("googleDisconnect");
+const googleSyncNowBtn = document.getElementById("googleSyncNow");
+const googleCalendarField = document.getElementById("googleCalendarField");
+const googleCalendarSelect = document.getElementById("googleCalendar");
+const googleSyncControls = document.getElementById("googleSyncControls");
+const googleStatus = document.getElementById("googleStatus");
+
+let calendarSync = null;
 
 function isAdminNow() {
     return !!auth.currentUser && auth.currentUser.email === ADMIN_EMAIL;
@@ -290,7 +311,16 @@ function renderEventList() {
             delBtn.className = "event-delete";
             delBtn.setAttribute("aria-label", `Smazat událost ${ev.title}`);
             delBtn.textContent = "×";
-            delBtn.addEventListener("click", () => deleteDoc(doc(db, "events", ev.id)));
+            delBtn.addEventListener("click", async () => {
+                try {
+                    if (isGoogleDoc(ev.id) && calendarSync && calendarSync.isConnected()) {
+                        await calendarSync.deleteEvent(googleEventIdOf(ev.id));
+                    }
+                    await deleteDoc(doc(db, "events", ev.id));
+                } catch (err) {
+                    console.error("Smazání události se nezdařilo.", err);
+                }
+            });
             li.appendChild(delBtn);
         }
 
@@ -304,7 +334,11 @@ addEventForm.addEventListener("submit", async (event) => {
     const title = eventTitleInput.value.trim();
     if (!date || !title) return;
     try {
-        await addDoc(eventsColRef, { date, title });
+        if (calendarSync && calendarSync.isConnected()) {
+            await calendarSync.pushEvent({ date, title });
+        } else {
+            await addDoc(eventsColRef, { date, title });
+        }
         addEventForm.reset();
     } catch (err) {
         console.error("Přidání události se nezdařilo.", err);
@@ -408,3 +442,77 @@ calNext.addEventListener("click", () => {
 
 renderCalendar();
 loadSemesterRange();
+
+// Google Calendar sync — admin only, and nothing is requested until the admin
+// actually presses Connect, so visitors never load Google's script.
+
+function renderSyncState(state) {
+    googleConnectBtn.hidden = state.connected;
+    googleDisconnectBtn.hidden = !state.connected;
+    googleSyncNowBtn.hidden = !state.connected;
+    googleCalendarField.hidden = !state.connected;
+    googleSyncNowBtn.disabled = !!state.busy;
+    googleStatus.textContent = state.message || "";
+
+    if (state.connected && state.calendars) {
+        googleCalendarSelect.innerHTML = "";
+        state.calendars.forEach((cal) => {
+            const option = document.createElement("option");
+            option.value = cal.id;
+            option.textContent = cal.name;
+            option.selected = cal.id === state.calendarId;
+            googleCalendarSelect.appendChild(option);
+        });
+    }
+}
+
+async function runSync(action) {
+    try {
+        await action();
+    } catch (err) {
+        googleStatus.textContent = err.message;
+        console.error(err);
+    }
+}
+
+function initCalendarSync() {
+    if (!googleSyncSection) return;
+    const clientId = googleSyncSection.dataset.clientId || "";
+    if (!clientId) {
+        // The status paragraph already explains why; just hide the dead controls.
+        googleSyncControls.hidden = true;
+        return;
+    }
+
+    calendarSync = createCalendarSync({
+        clientId,
+        strings: SYNC_STRINGS,
+        getRange: () => semesterRange,
+        firestore: {
+            listEvents: () => events,
+            findEvent: (id) => events.find((ev) => ev.id === id) || null,
+            upsertEvent: (id, fields) => setDoc(doc(db, "events", id), fields),
+            deleteEvent: (id) => deleteDoc(doc(db, "events", id)),
+        },
+        onState: renderSyncState,
+    });
+
+    googleConnectBtn.addEventListener("click", () =>
+        runSync(async () => {
+            await calendarSync.connect();
+            await calendarSync.pull();
+        }),
+    );
+    googleDisconnectBtn.addEventListener("click", () => calendarSync.disconnect());
+    googleSyncNowBtn.addEventListener("click", () => runSync(() => calendarSync.pull()));
+    googleCalendarSelect.addEventListener("change", () =>
+        runSync(async () => {
+            calendarSync.selectCalendar(googleCalendarSelect.value);
+            await calendarSync.pull();
+        }),
+    );
+
+    calendarSync.refresh();
+}
+
+initCalendarSync();

@@ -51,7 +51,7 @@ export default {
             heading: "Zájmy",
             groups: [
                 { label: "Technologie", value: "Programování, ESP32, 3D tisk" },
-                { label: "Mimo obor", value: "Myslivost, hudba, čtení knih, focení" },
+                { label: "Mimo obor", value: "Myslivost, Hudba, Čtení knih, Focení" },
             ],
         },
         experience: {
