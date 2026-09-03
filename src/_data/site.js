@@ -5,7 +5,7 @@ export default {
     // design (it identifies the app, it does not authorise anything on its own),
     // so it belongs in the repo. Empty = sync stays switched off and the admin
     // UI says so. Create it in Google Cloud Console — see docs/PROBLEM.md.
-    googleClientId: "",
+    googleClientId: "388679329463-cfs6hft5fg1ni08r2man6c562m0uukk4.apps.googleusercontent.com",
     author: "Tomáš Zvoníček",
     titleSuffix: "Tomáš Zvoníček",
 
