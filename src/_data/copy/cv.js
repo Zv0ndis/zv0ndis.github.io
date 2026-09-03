@@ -33,7 +33,10 @@ export default {
         tech: {
             heading: "Technologie",
             groups: [
-                { label: "Jazyky", value: "C, C#, Python, HTML, CSS, SQL" },
+                {
+                    label: "Jazyky",
+                    value: "C, C#, Java, Python, JavaScript, Shell, HTML, CSS, SQL",
+                },
                 {
                     label: "Nástroje",
                     value: "Docker, Git, Linux, Figma, Canva, Photopea, Blender, Autodesk Fusion 360, LLM",
@@ -124,7 +127,10 @@ export default {
         tech: {
             heading: "Technologies",
             groups: [
-                { label: "Languages", value: "C, C#, Python, HTML, CSS, SQL" },
+                {
+                    label: "Languages",
+                    value: "C, C#, Java, Python, JavaScript, Shell, HTML, CSS, SQL",
+                },
                 {
                     label: "Tools",
                     value: "Docker, Git, Linux, Figma, Canva, Photopea, Blender, Autodesk Fusion 360, LLM",
