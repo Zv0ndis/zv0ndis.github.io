@@ -151,11 +151,51 @@ export function createCalendarSync({ clientId, strings, firestore, getRange, onS
         return raw ? raw.slice(0, 10) : null;
     }
 
+    // Everything the page can display, not just the teaching weeks: the exam
+    // periods sit months after endDate, so a window of startDate..endDate would
+    // silently skip half the academic year.
+    function syncSpan(range) {
+        const dates = [
+            range.startDate,
+            range.endDate,
+            range.examWinterStart,
+            range.examWinterEnd,
+            range.examSummerStart,
+            range.examSummerEnd,
+        ]
+            .filter(Boolean)
+            .sort();
+        return { from: dates[0], to: dates[dates.length - 1] };
+    }
+
+    function shiftDay(isoDate, days) {
+        const d = new Date(isoDate + "T00:00:00Z");
+        d.setUTCDate(d.getUTCDate() + days);
+        return d.toISOString().slice(0, 10);
+    }
+
+    // Google pages the result set even when maxResults is high, so anything past
+    // the first page needs following or events go missing without a word.
+    async function fetchAllEvents(query) {
+        const items = [];
+        let pageToken = null;
+        do {
+            const params = new URLSearchParams(query);
+            if (pageToken) params.set("pageToken", pageToken);
+            const page = await call(
+                "/calendars/" + encodeURIComponent(calendarId) + "/events?" + params.toString(),
+            );
+            items.push(...(page.items || []));
+            pageToken = page.nextPageToken || null;
+        } while (pageToken);
+        return items;
+    }
+
     /**
-     * Google Calendar -> Firestore. Imports everything inside the semester range
-     * and drops previously imported events that are gone from Google, so a
-     * deletion there propagates here. Only "g_" documents are ever touched —
-     * events added directly on the site are left alone.
+     * Google Calendar -> Firestore. Imports everything the page can show and
+     * drops previously imported events that are gone from Google, so a deletion
+     * there propagates here. Only "g_" documents are ever touched — events added
+     * directly on the site are left alone.
      */
     async function pull() {
         const range = getRange();
@@ -163,23 +203,26 @@ export function createCalendarSync({ clientId, strings, firestore, getRange, onS
 
         publish({ busy: true, message: strings.syncing });
         try {
-            const params = new URLSearchParams({
-                timeMin: range.startDate + "T00:00:00Z",
-                timeMax: range.endDate + "T23:59:59Z",
+            const span = syncSpan(range);
+            // Query a day wide on each side: timeMin/timeMax are absolute instants
+            // in UTC, but the site works in local days, so an event on the first
+            // or last day would otherwise fall outside. The exact filtering is
+            // done on the date string below.
+            const items = await fetchAllEvents({
+                timeMin: shiftDay(span.from, -1) + "T00:00:00Z",
+                timeMax: shiftDay(span.to, 1) + "T23:59:59Z",
                 singleEvents: "true",
                 orderBy: "startTime",
                 maxResults: "2500",
             });
-            const data = await call(
-                "/calendars/" + encodeURIComponent(calendarId) + "/events?" + params.toString(),
-            );
 
             const fromGoogle = new Map();
-            for (const item of data.items || []) {
+            for (const item of items) {
                 if (item.status === "cancelled") continue;
                 const date = eventDate(item);
                 const title = (item.summary || "").trim();
                 if (!date || !title) continue; // the site requires both
+                if (date < span.from || date > span.to) continue; // the slack above
                 fromGoogle.set(item.id, { date, title: title.slice(0, 80) });
             }
 
