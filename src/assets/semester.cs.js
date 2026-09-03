@@ -231,3 +231,6 @@ semesterRangeForm.addEventListener("submit", async (event) => {
         console.error("Uložení termínu se nezdařilo.", err);
     }
 });
+
+// Počáteční načtení termínu.
+loadSemesterRange();

@@ -224,3 +224,6 @@ semesterRangeForm.addEventListener("submit", async (event) => {
         console.error("Failed to save semester dates.", err);
     }
 });
+
+// Initial read on load.
+loadSemesterRange();
