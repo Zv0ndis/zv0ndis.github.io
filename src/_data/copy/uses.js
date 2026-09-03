@@ -1,17 +1,8 @@
 // Content for the "what I use" page.
 //
-// Seeded from the tools and technologies already listed in copy/cv.js, so the
-// two never contradict each other — if something changes, change it in both.
-//
-// Hardware is deliberately not here: nobody has said what it is. To add it,
-// drop a group like this at the top of `groups`:
-//
-//     {
-//         heading: "Hardware",
-//         items: [
-//             { name: "…", note: "…" },
-//         ],
-//     },
+// The Development, Languages and Design groups mirror copy/cv.js — the CV lists
+// the same tools in one comma-separated string, so a change here needs the same
+// change there (and vice versa). Hardware is only on this page.
 
 export default {
     cs: {
@@ -23,7 +14,7 @@ export default {
                 heading: "Vývoj",
                 items: [
                     { name: "VS Code", note: "editor, ve kterém trávím většinu času" },
-                    { name: "GitHub", note: "verzování všeho včetně téhle stránky" },
+                    { name: "Git", note: "verzování všeho včetně téhle stránky" },
                     { name: "Docker", note: "izolovaná prostředí, ať mi nehnije systém" },
                     { name: "Linux", note: "hlavně kvůli síťařině a serverům" },
                     { name: "LLM", note: "generování kódu a dokumentace" },
@@ -85,7 +76,7 @@ export default {
                     { name: "Git", note: "versioning everything, this site included" },
                     { name: "Docker", note: "isolated environments, so the host stays clean" },
                     { name: "Linux", note: "mostly for networking and servers" },
-                    { name: "LLMs", note: "for code generation and documentation" },
+                    { name: "LLM", note: "for code generation and documentation" },
                 ],
             },
             {

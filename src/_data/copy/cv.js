@@ -39,7 +39,7 @@ export default {
                 },
                 {
                     label: "Nástroje",
-                    value: "Docker, Git, Linux, Figma, Canva, Photopea, Blender, Autodesk Fusion 360, LLM",
+                    value: "VS Code, Git, Docker, Linux, LLM, Figma, Canva, Photopea, Blender, Autodesk Fusion 360",
                 },
             ],
         },
@@ -133,7 +133,7 @@ export default {
                 },
                 {
                     label: "Tools",
-                    value: "Docker, Git, Linux, Figma, Canva, Photopea, Blender, Autodesk Fusion 360, LLM",
+                    value: "VS Code, Git, Docker, Linux, LLM, Figma, Canva, Photopea, Blender, Autodesk Fusion 360",
                 },
             ],
         },
