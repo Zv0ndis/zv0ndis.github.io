@@ -295,21 +295,21 @@ ul {
 }
 
 /* Prose lists get a monospace-flavoured marker; tag and event lists opt out. */
-section ul:not(.tag-list, .event-list) li {
+section ul:not(.tag-list) li {
     position: relative;
     padding-left: 22px;
     margin-bottom: 8px;
     color: var(--fg);
 }
 
-section ul:not(.tag-list, .event-list) li::before {
+section ul:not(.tag-list) li::before {
     content: "▹";
     position: absolute;
     left: 0;
     color: var(--green);
 }
 
-section ul:not(.tag-list, .event-list) li:last-child {
+section ul:not(.tag-list) li:last-child {
     margin-bottom: 0;
 }
 
@@ -895,8 +895,7 @@ input[type="radio"] {
     max-width: 72ch;
 }
 
-.semester-range form,
-.calendar-section form {
+.semester-range form {
     display: flex;
     flex-wrap: wrap;
     align-items: flex-end;
@@ -918,11 +917,6 @@ input[type="radio"] {
     font-weight: 700;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-}
-
-.calendar-section form input[type="text"] {
-    flex: 1;
-    min-width: 180px;
 }
 
 /* =========================================================================
@@ -983,227 +977,6 @@ input[type="radio"] {
     to {
         transform: translateX(100%);
     }
-}
-
-/* =========================================================================
-   Semester: calendar
-   ========================================================================= */
-
-.calendar-nav {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-    margin-bottom: 18px;
-}
-
-.calendar-nav button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 34px;
-    height: 34px;
-    border: 1px solid var(--line);
-    border-radius: var(--r-md);
-    background: var(--bg-elev);
-    color: var(--fg-dim);
-    font-family: inherit;
-    cursor: pointer;
-    transition:
-        color var(--dur) var(--ease),
-        border-color var(--dur) var(--ease),
-        background-color var(--dur) var(--ease);
-}
-
-.calendar-nav button:hover {
-    color: var(--pink);
-    border-color: var(--pink);
-    background: var(--pink-soft);
-}
-
-#calMonthLabel {
-    min-width: 180px;
-    text-align: center;
-    color: var(--fg-strong);
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: 0.02em;
-}
-
-.calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 6px;
-    max-width: 620px;
-    margin: 0 auto;
-}
-
-.calendar-day-label {
-    padding: 0 0 6px;
-    color: var(--fg-faint);
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-align: center;
-    text-transform: uppercase;
-}
-
-.calendar-cell {
-    position: relative;
-    aspect-ratio: 1;
-    padding: 7px;
-    border: 1px solid var(--line-soft);
-    border-radius: var(--r-md);
-    background: var(--bg-elev);
-    color: var(--fg-dim);
-    font-size: 12.5px;
-    transition:
-        border-color var(--dur) var(--ease),
-        background-color var(--dur) var(--ease);
-}
-
-.calendar-cell-empty {
-    border-color: transparent;
-    background: transparent;
-}
-
-.calendar-cell-in-semester {
-    background: var(--cyan-soft);
-    border-color: rgb(127 220 255 / 16%);
-    color: var(--fg);
-}
-
-.calendar-cell-exam {
-    background: var(--pink-soft);
-    border-color: rgb(255 94 135 / 30%);
-    color: var(--fg);
-}
-
-.calendar-cell-today {
-    border-color: var(--cyan);
-    background: var(--cyan-soft);
-    color: var(--fg-strong);
-    font-weight: 700;
-    box-shadow: 0 0 0 1px var(--cyan);
-}
-
-.calendar-cell-has-event::after {
-    content: "";
-    position: absolute;
-    right: 7px;
-    bottom: 7px;
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: var(--pink);
-    box-shadow: 0 0 6px var(--pink);
-}
-
-/* =========================================================================
-   Semester: event list
-   ========================================================================= */
-
-.event-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.event-item {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 11px 12px;
-    border-radius: var(--r-md);
-    border-bottom: 1px solid var(--line-soft);
-    transition: background-color var(--dur) var(--ease);
-}
-
-.event-item:last-child {
-    border-bottom: none;
-}
-
-.event-item:hover {
-    background: var(--bg-elev);
-}
-
-.event-date {
-    flex: none;
-    min-width: 104px;
-    color: var(--cyan);
-    font-size: 12.5px;
-}
-
-.event-title {
-    flex: 1;
-    color: var(--fg);
-}
-
-.event-empty {
-    padding: 12px;
-    color: var(--fg-faint);
-    font-size: 13.5px;
-}
-
-.event-delete {
-    padding: 0 6px;
-    border: none;
-    background: none;
-    color: var(--fg-faint);
-    font-size: 18px;
-    line-height: 1;
-    cursor: pointer;
-    transition: color var(--dur) var(--ease);
-}
-
-.event-delete:hover {
-    color: var(--pink);
-}
-
-/* =========================================================================
-   Google Calendar sync (admin only)
-   ========================================================================= */
-
-.google-sync-controls {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 12px;
-}
-
-.google-sync-controls label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--fg-faint);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-}
-
-.google-sync-controls select {
-    padding: 9px 12px;
-    border: 1px solid var(--line);
-    border-radius: var(--r-md);
-    background: var(--bg-elev);
-    color: var(--fg-strong);
-    font-family: inherit;
-    font-size: 13px;
-    letter-spacing: normal;
-    text-transform: none;
-}
-
-.google-sync-controls select:focus {
-    outline: none;
-    border-color: var(--cyan);
-}
-
-.google-sync-status {
-    margin: 14px 0 0;
-    min-height: 1.2em;
-    color: var(--fg-dim);
-    font-size: 12.5px;
 }
 
 /* =========================================================================
@@ -1363,26 +1136,12 @@ input[type="radio"] {
         gap: 20px;
     }
 
-    .calendar-cell {
-        padding: 5px;
-        font-size: 11px;
-        border-radius: var(--r-sm);
-    }
-
-    .calendar-grid {
-        gap: 4px;
-    }
-
     .pay-form input[type="number"] {
         width: 100%;
     }
 
     .pay-form label {
         width: 100%;
-    }
-
-    .event-date {
-        min-width: 88px;
     }
 }
 

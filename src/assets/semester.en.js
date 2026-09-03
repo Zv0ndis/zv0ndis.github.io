@@ -4,12 +4,6 @@ import {
     doc,
     getDoc,
     setDoc,
-    collection,
-    addDoc,
-    deleteDoc,
-    onSnapshot,
-    query,
-    orderBy,
 } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
 import {
     getAuth,
@@ -17,7 +11,6 @@ import {
     onAuthStateChanged,
     signOut,
 } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
-import { createCalendarSync, isGoogleDoc, googleEventIdOf } from "./google-calendar.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyCWv9Md-whrotc61qSR8ccgQZFAPFBJkR8",
@@ -35,13 +28,8 @@ const db = getFirestore(app);
 const auth = getAuth(app);
 
 const semesterDocRef = doc(db, "semester", "config");
-const eventsColRef = collection(db, "events");
 
 let semesterRange = null;
-let events = [];
-let viewDate = new Date();
-viewDate.setDate(1);
-
 const EN_MONTHS = [
     "January",
     "February",
@@ -56,8 +44,6 @@ const EN_MONTHS = [
     "November",
     "December",
 ];
-const EN_DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-
 const loginToggle = document.getElementById("loginToggle");
 const logoutButton = document.getElementById("logoutButton");
 const loginForm = document.getElementById("loginForm");
@@ -81,36 +67,6 @@ const semesterProgressSection = document.getElementById("semesterProgress");
 const progressHeadline = document.getElementById("progressHeadline");
 const progressCaption = document.getElementById("progressCaption");
 const progressFill = document.getElementById("progressFill");
-
-const calendarGrid = document.getElementById("calendarGrid");
-const calMonthLabel = document.getElementById("calMonthLabel");
-const calPrev = document.getElementById("calPrev");
-const calNext = document.getElementById("calNext");
-
-const addEventForm = document.getElementById("addEventForm");
-const eventDateInput = document.getElementById("eventDate");
-const eventTitleInput = document.getElementById("eventTitle");
-const eventList = document.getElementById("eventList");
-
-const SYNC_STRINGS = {
-    syncing: "Syncing…",
-    synced: (imported, removed) => `Done — ${imported} imported, ${removed} removed.`,
-    errorAuth: "Access to Google Calendar expired or was denied.",
-    errorApi: "Google Calendar returned an error.",
-    errorNoRange: "Set the semester dates first.",
-    errorNoClientId: "The OAuth client ID is missing.",
-};
-
-const googleSyncSection = document.getElementById("googleSync");
-const googleConnectBtn = document.getElementById("googleConnect");
-const googleDisconnectBtn = document.getElementById("googleDisconnect");
-const googleSyncNowBtn = document.getElementById("googleSyncNow");
-const googleCalendarField = document.getElementById("googleCalendarField");
-const googleCalendarSelect = document.getElementById("googleCalendar");
-const googleSyncControls = document.getElementById("googleSyncControls");
-const googleStatus = document.getElementById("googleStatus");
-
-let calendarSync = null;
 
 function isAdminNow() {
     return !!auth.currentUser && auth.currentUser.email === ADMIN_EMAIL;
@@ -156,7 +112,6 @@ onAuthStateChanged(auth, (user) => {
     adminOnlyEls.forEach((el) => {
         el.hidden = !isAdmin;
     });
-    renderEventList();
 });
 
 // Semester range
@@ -245,7 +200,6 @@ async function loadSemesterRange() {
     }
     renderSemesterRange();
     renderSemesterProgress();
-    renderCalendar();
 }
 
 semesterRangeForm.addEventListener("submit", async (event) => {
@@ -266,246 +220,7 @@ semesterRangeForm.addEventListener("submit", async (event) => {
         semesterRange = updated;
         renderSemesterRange();
         renderSemesterProgress();
-        renderCalendar();
     } catch (err) {
         console.error("Failed to save semester dates.", err);
     }
 });
-
-// Events
-
-function renderEventList() {
-    eventList.innerHTML = "";
-    if (events.length === 0) {
-        const li = document.createElement("li");
-        li.className = "event-empty";
-        li.textContent = "No events yet.";
-        eventList.appendChild(li);
-        return;
-    }
-    events.forEach((ev) => {
-        const li = document.createElement("li");
-        li.className = "event-item";
-
-        const dateSpan = document.createElement("span");
-        dateSpan.className = "event-date";
-        dateSpan.textContent = formatDateEn(ev.date);
-
-        const titleSpan = document.createElement("span");
-        titleSpan.className = "event-title";
-        titleSpan.textContent = ev.title;
-
-        li.appendChild(dateSpan);
-        li.appendChild(titleSpan);
-
-        if (isAdminNow()) {
-            const delBtn = document.createElement("button");
-            delBtn.type = "button";
-            delBtn.className = "event-delete";
-            delBtn.setAttribute("aria-label", `Delete event ${ev.title}`);
-            delBtn.textContent = "×";
-            delBtn.addEventListener("click", async () => {
-                try {
-                    if (isGoogleDoc(ev.id) && calendarSync && calendarSync.isConnected()) {
-                        await calendarSync.deleteEvent(googleEventIdOf(ev.id));
-                    }
-                    await deleteDoc(doc(db, "events", ev.id));
-                } catch (err) {
-                    console.error("Deleting the event failed.", err);
-                }
-            });
-            li.appendChild(delBtn);
-        }
-
-        eventList.appendChild(li);
-    });
-}
-
-addEventForm.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    const date = eventDateInput.value;
-    const title = eventTitleInput.value.trim();
-    if (!date || !title) return;
-    try {
-        if (calendarSync && calendarSync.isConnected()) {
-            await calendarSync.pushEvent({ date, title });
-        } else {
-            await addDoc(eventsColRef, { date, title });
-        }
-        addEventForm.reset();
-    } catch (err) {
-        console.error("Failed to add event.", err);
-    }
-});
-
-try {
-    onSnapshot(
-        query(eventsColRef, orderBy("date")),
-        (snapshot) => {
-            events = snapshot.docs.map((d) => ({ id: d.id, ...d.data() }));
-            renderEventList();
-            renderCalendar();
-        },
-        (err) => {
-            console.error("Failed to load events.", err);
-        },
-    );
-} catch (err) {
-    console.error(err);
-}
-
-// Calendar
-
-function renderCalendar() {
-    calendarGrid.innerHTML = "";
-    calMonthLabel.textContent = `${EN_MONTHS[viewDate.getMonth()]} ${viewDate.getFullYear()}`;
-
-    EN_DAYS.forEach((label) => {
-        const cell = document.createElement("div");
-        cell.className = "calendar-day-label";
-        cell.textContent = label;
-        calendarGrid.appendChild(cell);
-    });
-
-    const firstOfMonth = new Date(viewDate.getFullYear(), viewDate.getMonth(), 1);
-    const startOffset = (firstOfMonth.getDay() + 6) % 7; // Monday = 0
-    const daysInMonth = new Date(viewDate.getFullYear(), viewDate.getMonth() + 1, 0).getDate();
-    const todayISO = toISODate(new Date());
-    const eventDates = new Set(events.map((ev) => ev.date));
-
-    for (let i = 0; i < startOffset; i++) {
-        const filler = document.createElement("div");
-        filler.className = "calendar-cell calendar-cell-empty";
-        calendarGrid.appendChild(filler);
-    }
-
-    for (let day = 1; day <= daysInMonth; day++) {
-        const cellDate = new Date(viewDate.getFullYear(), viewDate.getMonth(), day);
-        const iso = toISODate(cellDate);
-        const cell = document.createElement("div");
-        cell.className = "calendar-cell";
-        if (iso === todayISO) cell.classList.add("calendar-cell-today");
-        if (
-            semesterRange &&
-            semesterRange.startDate &&
-            semesterRange.endDate &&
-            iso >= semesterRange.startDate &&
-            iso <= semesterRange.endDate
-        ) {
-            cell.classList.add("calendar-cell-in-semester");
-        }
-        if (
-            semesterRange &&
-            semesterRange.examWinterStart &&
-            semesterRange.examWinterEnd &&
-            iso >= semesterRange.examWinterStart &&
-            iso <= semesterRange.examWinterEnd
-        ) {
-            cell.classList.add("calendar-cell-exam");
-        }
-        if (
-            semesterRange &&
-            semesterRange.examSummerStart &&
-            semesterRange.examSummerEnd &&
-            iso >= semesterRange.examSummerStart &&
-            iso <= semesterRange.examSummerEnd
-        ) {
-            cell.classList.add("calendar-cell-exam");
-        }
-        if (eventDates.has(iso)) cell.classList.add("calendar-cell-has-event");
-
-        const num = document.createElement("span");
-        num.className = "calendar-day-number";
-        num.textContent = String(day);
-        cell.appendChild(num);
-
-        calendarGrid.appendChild(cell);
-    }
-}
-
-calPrev.addEventListener("click", () => {
-    viewDate.setMonth(viewDate.getMonth() - 1);
-    renderCalendar();
-});
-
-calNext.addEventListener("click", () => {
-    viewDate.setMonth(viewDate.getMonth() + 1);
-    renderCalendar();
-});
-
-renderCalendar();
-loadSemesterRange();
-
-// Google Calendar sync — admin only, and nothing is requested until the admin
-// actually presses Connect, so visitors never load Google's script.
-
-function renderSyncState(state) {
-    googleConnectBtn.hidden = state.connected;
-    googleDisconnectBtn.hidden = !state.connected;
-    googleSyncNowBtn.hidden = !state.connected;
-    googleCalendarField.hidden = !state.connected;
-    googleSyncNowBtn.disabled = !!state.busy;
-    googleStatus.textContent = state.message || "";
-
-    if (state.connected && state.calendars) {
-        googleCalendarSelect.innerHTML = "";
-        state.calendars.forEach((cal) => {
-            const option = document.createElement("option");
-            option.value = cal.id;
-            option.textContent = cal.name;
-            option.selected = cal.id === state.calendarId;
-            googleCalendarSelect.appendChild(option);
-        });
-    }
-}
-
-async function runSync(action) {
-    try {
-        await action();
-    } catch (err) {
-        googleStatus.textContent = err.message;
-        console.error(err);
-    }
-}
-
-function initCalendarSync() {
-    if (!googleSyncSection) return;
-    const clientId = googleSyncSection.dataset.clientId || "";
-    if (!clientId) {
-        // The status paragraph already explains why; just hide the dead controls.
-        googleSyncControls.hidden = true;
-        return;
-    }
-
-    calendarSync = createCalendarSync({
-        clientId,
-        strings: SYNC_STRINGS,
-        getRange: () => semesterRange,
-        firestore: {
-            listEvents: () => events,
-            findEvent: (id) => events.find((ev) => ev.id === id) || null,
-            upsertEvent: (id, fields) => setDoc(doc(db, "events", id), fields),
-            deleteEvent: (id) => deleteDoc(doc(db, "events", id)),
-        },
-        onState: renderSyncState,
-    });
-
-    googleConnectBtn.addEventListener("click", () =>
-        runSync(async () => {
-            await calendarSync.connect();
-            await calendarSync.pull();
-        }),
-    );
-    googleDisconnectBtn.addEventListener("click", () => calendarSync.disconnect());
-    googleSyncNowBtn.addEventListener("click", () => runSync(() => calendarSync.pull()));
-    googleCalendarSelect.addEventListener("change", () =>
-        runSync(async () => {
-            calendarSync.selectCalendar(googleCalendarSelect.value);
-            await calendarSync.pull();
-        }),
-    );
-
-    calendarSync.refresh();
-}
-
-initCalendarSync();
