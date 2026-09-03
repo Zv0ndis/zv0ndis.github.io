@@ -105,7 +105,7 @@ export default {
     },
 
     en: {
-        subtitle: "Student at FIT BUT Brno • 20 years old",
+        subtitle: "Student at FIT BUT Brno • 21 years old",
         contact: { ...contact, location: "Slavičín, Zlín Region, Czechia" },
         aboutHeading: "About me",
         about: [
