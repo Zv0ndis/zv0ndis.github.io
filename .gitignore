@@ -24,3 +24,6 @@ _site/
 
 # Lighthouse CI reports
 .lighthouseci/
+
+# local theme preview
+_preview-*.html

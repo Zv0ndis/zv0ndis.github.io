@@ -62,9 +62,11 @@ Assety jsou pod `/assets/`.
 
 ## Konvence
 
-- **Barvy** (v `src/assets/style.css`): pozadí `#070707`, text `#fff`,
-  akcenty růžová `#ff5e87`, modrá `#91e4ff`, zelená `#5eff86`, odkazy `#4a9eff`.
-- **Font**: Fira Code (Google Fonts).
+- **Barvy** ("Neon Dusk", tokeny v `src/assets/style.css`): pozadí `#14111B`,
+  text `#F6F3FA`, růžová `#FF5FA8` + azurová `#5CD0FF` jako signál, fialová
+  `#6B3CFF` pro výplně, odkazy `#9D80FF`.
+- **Fonty**: Space Grotesk (text) + IBM Plex Mono (technické popisky, kód, formuláře),
+  obojí self-hosted. Split přes tokeny `--sans` / `--mono`.
 - Prettier + html-validate běží v CI; výstupní HTML formátuje build.
 - `.njk` soubory prettier ignoruje (`.prettierignore`).
 
