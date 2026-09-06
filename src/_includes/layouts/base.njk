@@ -47,6 +47,7 @@
         <script src="/assets/reveal.js?v={{ build.rev }}" defer></script>
     </head>
     <body>
+        <div class="scroll-progress" aria-hidden="true"></div>
         <div class="glow" aria-hidden="true"></div>
         {%- if page_key %}
         <site-nav data-page="{{ page_key }}" data-lang="{{ lang }}"></site-nav>

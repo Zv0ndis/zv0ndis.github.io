@@ -25,9 +25,11 @@
         { threshold: 0.08 },
     );
 
+    var pending = 0;
     Array.prototype.forEach.call(cards, function (card) {
         // Already on screen (or nearly): leave it alone, it must not flash.
         if (card.getBoundingClientRect().top < window.innerHeight * 0.92) return;
+        card.style.setProperty("--reveal-index", pending++);
         card.classList.add("reveal-pending");
         observer.observe(card);
     });

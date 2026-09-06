@@ -41,12 +41,66 @@
 
     /* Motion */
     --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    --spring: cubic-bezier(0.16, 1, 0.3, 1);
     --dur: 180ms;
+
+    /* Animated-gradient angles. Registered as real <angle>s just below so they
+       can be tweened; these plain fallbacks keep the gradients valid on engines
+       without @property (the h1 name must never render as invisible text). */
+    --grad-angle: 120deg;
+    --border-angle: 0deg;
 
     /* Type — Space Grotesk for prose, IBM Plex Mono for technical text */
     --sans:
         "Space Grotesk", ui-sans-serif, system-ui, -apple-system, "Segoe UI", "Roboto", sans-serif;
     --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", "Menlo", "Consolas", monospace;
+}
+
+/* Tweenable angles for the shifting headline gradient and the rotating card
+   border. Unsupported engines fall back to the plain :root values above. */
+@property --grad-angle {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 120deg;
+}
+
+@property --border-angle {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
+}
+
+/* =========================================================================
+   Cross-document view transitions
+   =========================================================================
+   Every page loads this one sheet, so navigation between them animates as a
+   short cross-fade with a slight vertical drift. Engines without the API just
+   navigate instantly. Disabled under reduced motion further down. */
+
+@view-transition {
+    navigation: auto;
+}
+
+::view-transition-old(root) {
+    animation: vt-out 220ms var(--ease) both;
+}
+
+::view-transition-new(root) {
+    animation: vt-in 320ms var(--spring) both;
+}
+
+@keyframes vt-out {
+    to {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+}
+
+@keyframes vt-in {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
 }
 
 /* =========================================================================
@@ -244,6 +298,34 @@ body::after {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
+/* Scroll-progress hairline pinned to the top of the viewport. Driven entirely
+   by a scroll-timeline — no script — so it costs nothing on the main thread.
+   Engines without scroll-driven animations just leave it at full width, which
+   reads as a thin accent rule and does no harm. */
+.scroll-progress {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 200;
+    height: 2px;
+    transform-origin: 0 50%;
+    background: linear-gradient(90deg, var(--cyan), var(--pink) 55%, var(--violet));
+    box-shadow: 0 0 12px rgb(92 208 255 / 45%);
+}
+
+@supports (animation-timeline: scroll()) {
+    .scroll-progress {
+        scale: 0 1;
+        animation: scroll-progress linear both;
+        animation-timeline: scroll(root);
+    }
+}
+
+@keyframes scroll-progress {
+    to {
+        scale: 1 1;
+    }
+}
+
 ::selection {
     background: var(--pink);
     color: var(--bg);
@@ -265,13 +347,13 @@ body::after {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--line-strong);
+    background: linear-gradient(180deg, var(--line-strong), var(--violet));
     border-radius: var(--r-pill);
     border: 2px solid var(--bg);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--line-strong);
+    background: linear-gradient(180deg, var(--violet), var(--pink));
 }
 
 /* =========================================================================
@@ -295,12 +377,46 @@ h1 {
     line-height: 1.1;
     letter-spacing: -0.02em;
     text-align: center;
+    text-wrap: balance;
     color: var(--pink);
-    background: linear-gradient(120deg, var(--cyan) 0%, var(--pink) 48%, var(--violet) 100%);
+    background: linear-gradient(
+        var(--grad-angle),
+        var(--cyan) 0%,
+        var(--pink) 48%,
+        var(--violet) 100%
+    );
+    background-size: 200% 200%;
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
     filter: drop-shadow(0 4px 32px rgb(107 60 255 / 30%));
+}
+
+/* The headline gradient slowly rotates and slides, so the name reads as lit
+   rather than printed. Compositor-friendly (only custom props + position
+   animate here). Held still under reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+    h1 {
+        animation:
+            headline-hue 14s linear infinite,
+            headline-pan 9s ease-in-out infinite alternate;
+    }
+}
+
+@keyframes headline-hue {
+    to {
+        --grad-angle: 480deg;
+    }
+}
+
+@keyframes headline-pan {
+    from {
+        background-position: 0% 50%;
+    }
+
+    to {
+        background-position: 100% 50%;
+    }
 }
 
 /* Section heading: small, tracked, with an accent tick — hierarchy from
@@ -330,6 +446,7 @@ h2::before {
 p {
     margin: 0 0 12px;
     color: var(--fg);
+    text-wrap: pretty;
 }
 
 p:last-child {
@@ -461,7 +578,42 @@ section {
         var(--shadow-sm);
     transition:
         border-color var(--dur) var(--ease),
-        box-shadow var(--dur) var(--ease);
+        box-shadow var(--dur) var(--ease),
+        transform var(--dur) var(--spring);
+}
+
+/* A conic ring that traces the card edge. Masked to a 1px band, invisible until
+   the card is hovered or holds focus, then it fades in and rotates once per few
+   seconds. Purely decorative, so it is pointer-inert and skipped when the
+   engine cannot mask-composite. */
+@supports (mask-composite: exclude) {
+    section::after {
+        content: "";
+        position: absolute;
+        inset: -1px;
+        border-radius: inherit;
+        padding: 1px;
+        background: conic-gradient(
+            from var(--border-angle),
+            transparent 15%,
+            var(--cyan),
+            var(--pink) 50%,
+            var(--violet),
+            transparent 85%
+        );
+        mask:
+            linear-gradient(#000 0 0) content-box,
+            linear-gradient(#000 0 0);
+        mask-composite: exclude;
+        opacity: 0;
+        transition: opacity var(--dur) var(--ease);
+        pointer-events: none;
+    }
+
+    section:hover::after,
+    section:focus-within::after {
+        opacity: 0.85;
+    }
 }
 
 section:hover {
@@ -469,6 +621,20 @@ section:hover {
     box-shadow:
         inset 0 1px 0 rgb(255 255 255 / 7%),
         var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    section:hover::after,
+    section:focus-within::after {
+        animation: border-spin 4.5s linear infinite;
+    }
+}
+
+@keyframes border-spin {
+    to {
+        --border-angle: 360deg;
+    }
 }
 
 section:last-child {
@@ -547,13 +713,16 @@ section:last-child {
     line-height: 1.5;
     transition:
         color var(--dur) var(--ease),
-        border-color var(--dur) var(--ease);
+        border-color var(--dur) var(--ease),
+        background-color var(--dur) var(--ease),
+        transform var(--dur) var(--spring);
 }
 
 .tag:hover {
     color: var(--cyan);
-    border-color: var(--line-strong);
+    border-color: var(--cyan);
     background: var(--bg-hover);
+    transform: translateY(-1px);
 }
 
 /* =========================================================================
@@ -744,16 +913,62 @@ section:last-child {
     }
 }
 
+/* Hero entrance: greeting, name, subtitle and CTA rise in sequence on load.
+   The name keeps its shifting-gradient animation, delayed until after it has
+   settled. All of it collapses to a plain static hero under reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+    .hero-greeting,
+    .hero .subtitle,
+    .hero-cta,
+    .hero p:not([class]),
+    .lang-hint {
+        animation: hero-rise 700ms var(--spring) both;
+    }
+
+    .hero-greeting {
+        animation-delay: 60ms;
+    }
+
+    .hero h1 {
+        animation:
+            hero-rise 800ms var(--spring) 140ms both,
+            headline-hue 14s linear 940ms infinite,
+            headline-pan 9s ease-in-out 940ms infinite alternate;
+    }
+
+    .hero .subtitle,
+    .hero p:not([class]) {
+        animation-delay: 260ms;
+    }
+
+    .hero-cta {
+        animation-delay: 380ms;
+    }
+
+    .lang-hint {
+        animation-delay: 480ms;
+    }
+}
+
+@keyframes hero-rise {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+}
+
 .hero .subtitle {
     margin: 0 0 32px;
     color: var(--fg-dim);
 }
 
 .hero-cta {
+    position: relative;
     display: inline-flex;
     align-items: center;
     gap: 8px;
     padding: 12px 24px;
+    overflow: hidden;
     border: 1px solid var(--line-strong);
     border-radius: var(--r-pill);
     background: var(--bg-elev);
@@ -765,7 +980,23 @@ section:last-child {
         color var(--dur) var(--ease),
         border-color var(--dur) var(--ease),
         background-color var(--dur) var(--ease),
-        transform var(--dur) var(--ease);
+        box-shadow var(--dur) var(--ease),
+        transform var(--dur) var(--spring);
+}
+
+/* A single light sweep crosses the button on hover, then rests off-screen. */
+.hero-cta::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        100deg,
+        transparent 30%,
+        rgb(255 255 255 / 14%) 50%,
+        transparent 70%
+    );
+    translate: -120% 0;
+    transition: translate 620ms var(--ease);
 }
 
 .hero-cta:hover {
@@ -777,6 +1008,14 @@ section:last-child {
         0 0 30px rgb(255 95 168 / 30%);
     transform: translateY(-2px);
     text-decoration: none;
+}
+
+.hero-cta:hover::before {
+    translate: 120% 0;
+}
+
+.hero-cta:active {
+    transform: translateY(0) scale(0.98);
 }
 
 /* Offered by nav.js only when the visitor previously chose the other
@@ -813,6 +1052,13 @@ section:last-child {
     display: flex;
     align-items: center;
     gap: 8px;
+}
+
+/* nav.js injects this after load, so the drop-in plays on insertion. */
+@media (prefers-reduced-motion: no-preference) {
+    .pages-nav {
+        animation: hero-rise 600ms var(--spring) both;
+    }
 }
 
 .lang-toggle,
@@ -1207,15 +1453,22 @@ input[type="radio"] {
    invisible. */
 .reveal-pending {
     opacity: 0;
-    transform: translateY(18px);
+    transform: translateY(22px) scale(0.985);
+    filter: blur(6px);
 }
 
 .reveal-pending.is-revealed {
     opacity: 1;
     transform: none;
+    filter: none;
     transition:
-        opacity 520ms var(--ease),
-        transform 520ms var(--ease);
+        opacity 560ms var(--spring),
+        transform 560ms var(--spring),
+        filter 560ms var(--ease);
+    /* reveal.js numbers the pending cards; mod keeps a run of adjacent cards
+       cascading 0-1-2-3 then resetting, so a long page never stacks a
+       half-second of delay onto the last card. */
+    transition-delay: calc(mod(var(--reveal-index, 0), 4) * 80ms);
 }
 
 /* =========================================================================
@@ -1263,5 +1516,15 @@ input[type="radio"] {
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
+    }
+
+    /* The universal selector above does not reach these. */
+    .scroll-progress {
+        display: none;
+    }
+
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+        animation: none !important;
     }
 }
