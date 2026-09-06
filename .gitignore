@@ -16,6 +16,9 @@ npm-debug.log*
 _site/
 .cache/
 
+# graphify knowledge-graph output (local only)
+graphify-out/
+
 # Local env / secrets
 *.local
 .env
