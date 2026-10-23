@@ -2,9 +2,9 @@
 .idea/
 .vscode/
 *.swp
-
-# Claude Code – local machine settings (keep launch.json tracked)
-.claude/settings.local.json
+.claude/
+CLAUDE.md
+docs/
 
 # OS
 .DS_Store

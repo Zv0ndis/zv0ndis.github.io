@@ -43,8 +43,7 @@ src/
   sitemap.njk          # generuje sitemap.xml ze site.pages
   404.njk
 eleventy.config.js     # + transform: prettier na výstupní HTML
-firestore.rules        # Firebase pravidla (nasazuje se ručně, viz docs/PROBLEM.md)
-docs/                  # PLAN.md, PROBLEM.md
+firestore.rules        # Firebase pravidla (nasazuje se ručně)
 ```
 
 URL zůstávají stejné jako dřív (`cv.html`, `cv-en.html`, `semester.html`, …).
@@ -78,9 +77,3 @@ Projekt `semester-a8421`. Klientská konfigurace je veřejná – data chrání 
 ```bash
 npx firebase-tools deploy --only firestore:rules
 ```
-
-Kroky vyžadující konzoli viz [`docs/PROBLEM.md`](docs/PROBLEM.md).
-
-## Plán rozvoje
-
-[`docs/PLAN.md`](docs/PLAN.md) · [`docs/PROBLEM.md`](docs/PROBLEM.md)
