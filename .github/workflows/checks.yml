@@ -12,11 +12,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
-          node-version: 20
+          node-version: 24
           cache: npm
 
       - run: npm ci
@@ -41,16 +41,16 @@ jobs:
       # unauthenticated clients, so it can never pass.
       - name: Link check
         run: |
-          npx --yes serve _site -l 3000 --no-clipboard &
-          for i in $(seq 30); do
+          npx serve _site -l 3000 --no-clipboard &
+          for i in $(seq 60); do
             curl -sf http://localhost:3000/index.html >/dev/null && break
-            if [ "$i" -eq 30 ]; then
-              echo "::error::local server did not come up within 30s"
+            if [ "$i" -eq 60 ]; then
+              echo "::error::local server did not come up within 60s"
               exit 1
             fi
             sleep 1
           done
-          npx --yes linkinator http://localhost:3000/index.html \
+          npx linkinator http://localhost:3000/index.html \
             --recurse --sitemap --silent --retry --retry-errors \
             --url-rewrite-search "https://zv0ndis.github.io" \
             --url-rewrite-replace "http://localhost:3000" \
@@ -61,11 +61,11 @@ jobs:
   lighthouse:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
-          node-version: 20
+          node-version: 24
           cache: npm
 
       - run: npm ci
