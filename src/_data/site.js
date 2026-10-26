@@ -37,7 +37,7 @@ export default {
         {
             key: "privacy",
             cs: { url: "privacy.html", label: "Soukromí" },
-            en: { url: "privacy.html", label: "Privacy" },
+            en: { url: "privacy-en.html", label: "Privacy" },
         },
     ],
 };

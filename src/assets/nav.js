@@ -34,7 +34,7 @@
         {
             id: "privacy",
             cs: { href: "privacy.html", label: "Soukromí" },
-            en: { href: "privacy.html", label: "Privacy" },
+            en: { href: "privacy-en.html", label: "Privacy" },
         },
     ];
 
