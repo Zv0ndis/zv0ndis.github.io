@@ -101,12 +101,18 @@
         <div class="two-col-hobbies">
             {%- for e in d.projects.entries %}
             <div class="entry">
+                {%- if e.url %}
                 <a class="entry-title" href="{{ e.url }}" target="_blank" rel="noopener noreferrer">{{ e.title }}</a>
+                {%- else %}
+                <span class="entry-title">{{ e.title }}</span>
+                {%- endif %}
+                {%- if e.tech %}
                 <ul class="tag-list">
                     {%- for item in e.tech | commaList %}
                     <li><span class="tag">{{ item }}</span></li>
                     {%- endfor %}
                 </ul>
+                {%- endif %}
                 <p>{{ e.text }}</p>
             </div>
             {%- endfor %}

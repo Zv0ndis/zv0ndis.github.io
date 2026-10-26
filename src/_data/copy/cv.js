@@ -90,8 +90,12 @@ export default {
             ],
         },
         projects: {
-            heading: "Co umím jako programátor",
+            heading: "Co jsem už dělal jako programátor",
             entries: [
+                {
+                    title: "Přehledy statistik z videí",
+                    text: "Webová stránka pro přehledy statistik z videí.",
+                },
                 {
                     title: "Překladač (IFJ)",
                     tech: "C",
@@ -225,8 +229,12 @@ export default {
             ],
         },
         projects: {
-            heading: "What I can do as a programmer",
+            heading: "What I've already done as a programmer",
             entries: [
+                {
+                    title: "Video statistics dashboard",
+                    text: "A website for viewing statistics overviews of videos.",
+                },
                 {
                     title: "Compiler (IFJ)",
                     tech: "C",
