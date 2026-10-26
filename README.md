@@ -24,13 +24,15 @@ src/
   _data/
     site.js            # base URL, seznam stránek (jazyk → URL + label)
     copy/
-      cv.js            # obsah CV pro CS i EN
+      cv.js            # obsah CV pro CS i EN (i kontakty a projekty pro Domů)
+      home.js          # texty domovské stránky
       jobpay.js        # texty kalkulačky výplaty
       semester.js      # texty stránky Semestr
       uses.js          # obsah stránky Vybavení
   _includes/
     layouts/base.njk   # HTML skeleton (head, meta, OG, hreflang, <site-nav>)
     partials/
+      home.njk         # domovská stránka (čte copy.home + copy.cv)
       cv.njk           # rozložení CV (čte copy.cv)
       job-pay.njk
       uses.njk         # čte copy.uses
@@ -61,11 +63,12 @@ Assety jsou pod `/assets/`.
 
 ## Konvence
 
-- **Barvy** ("Neon Dusk", tokeny v `src/assets/style.css`): pozadí `#14111B`,
-  text `#F6F3FA`, růžová `#FF5FA8` + azurová `#5CD0FF` jako signál, fialová
-  `#6B3CFF` pro výplně, odkazy `#9D80FF`.
-- **Fonty**: Space Grotesk (text) + IBM Plex Mono (technické popisky, kód, formuláře),
-  obojí self-hosted. Split přes tokeny `--sans` / `--mono`.
+- **Vzhled**: arkádový automat — svítící marquee nahoře, ovládací panel s tlačítky
+  (navigace), obsah na CRT obrazovce. Tokeny v `src/assets/style.css`: pozadí
+  `#07060D`, magenta `#FF2BD6` (neon marquee, značky sekcí), azurová `#21F0FF`
+  (linky, popisky, odkazy), žlutá `#FFE23A` jen pro aktivní stav a hlavní akci.
+- **Fonty** (self-hosted, OFL): Monoton (neon marquee), Press Start 2P (krátké
+  ASCII popisky a čísla — nemá česká velká písmena), Chakra Petch (veškerý text).
 - Prettier + html-validate běží v CI; výstupní HTML formátuje build.
 - `.njk` soubory prettier ignoruje (`.prettierignore`).
 

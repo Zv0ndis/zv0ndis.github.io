@@ -5,16 +5,4 @@ title: Tomáš Zvoníček
 description: Personal site of Tomáš Zvoníček – Faculty of Information Technology student at Brno University of Technology, interested in cybersecurity and IT infrastructure.
 ---
 
-<div class="hero">
-    <p class="hero-greeting">Heya!</p>
-    <h1>Zvondis here!</h1>
-    <p class="subtitle">{{ copy.cv[lang].subtitle }}</p>
-    <p>
-        Need a website? I'll build one for you at a reasonable price. Call me at
-        <a href="{{ copy.cv[lang].contact.phoneHref }}">{{ copy.cv[lang].contact.phone | replace(" ", "&nbsp;") | safe }}</a>.
-    </p>
-    <a class="hero-cta" href="cv-en.html">View CV &rarr;</a>
-    <p class="lang-hint" data-lang-hint hidden>
-        <a href="index.html">Pokračovat v češtině &rarr;</a>
-    </p>
-</div>
+{% include "partials/home.njk" %}

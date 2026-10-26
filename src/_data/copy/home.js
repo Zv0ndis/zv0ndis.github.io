@@ -1,0 +1,43 @@
+// Home page copy for both languages. Rendered by src/_includes/partials/home.njk.
+// Contact details and the project list come from copy/cv.js.
+
+export default {
+    cs: {
+        offer: "Potřebujete web? Postavím vám ho <em>za rozumnou cenu.</em>",
+        lede: "Heya, tady Zvondis — student FIT VUT v Brně. Stačí zavolat a domluvíme se.",
+        startKey: "Press start",
+        startAria: "Zavolat na",
+        cvLink: "Zobrazit CV",
+        hudLeft: "1P · Zvondis",
+        hudRight: "Credit 01",
+        langHint: "Continue in English",
+        langHintUrl: "index-en.html",
+        cells: { tel: "Tel", mail: "E-mail", github: "GitHub", loc: "Loc" },
+        scoresHeading: "High score: co jsem už dělal",
+        colRank: "Pořadí",
+        colName: "Projekt",
+        colStack: "Technologie",
+        scoresMore: "Popis všech projektů v CV",
+        continueHeading: "Continue?",
+        continueText: "Zavolejte nebo napište — domluvíme, co potřebujete.",
+    },
+    en: {
+        offer: "Need a website? I'll build you one <em>at a reasonable price.</em>",
+        lede: "Heya, Zvondis here — a student at FIT BUT Brno. Just give me a call and we'll sort it out.",
+        startKey: "Press start",
+        startAria: "Call",
+        cvLink: "View CV",
+        hudLeft: "1P · Zvondis",
+        hudRight: "Credit 01",
+        langHint: "Pokračovat v češtině",
+        langHintUrl: "index.html",
+        cells: { tel: "Tel", mail: "Email", github: "GitHub", loc: "Loc" },
+        scoresHeading: "High scores: what I've built",
+        colRank: "Rank",
+        colName: "Project",
+        colStack: "Stack",
+        scoresMore: "Every project described in the CV",
+        continueHeading: "Continue?",
+        continueText: "Call or write — we'll work out what you need.",
+    },
+};

@@ -1,0 +1,459 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-26T13:00:00Z",
+  "title": "Design System: Zvondis",
+  "extensions": {
+    "colorMeta": {
+      "cabinet-ink": {
+        "role": "neutral",
+        "displayName": "Cabinet Ink",
+        "tonalRamp": [
+          "oklch(15% 0.015 290)",
+          "oklch(25% 0.015 290)",
+          "oklch(35% 0.015 290)",
+          "oklch(48% 0.015 290)",
+          "oklch(60% 0.015 290)",
+          "oklch(72% 0.015 290)",
+          "oklch(84% 0.015 290)",
+          "oklch(95% 0.015 290)"
+        ]
+      },
+      "plum-panel": {
+        "role": "neutral",
+        "displayName": "Plum Panel",
+        "tonalRamp": [
+          "oklch(15% 0.02 295)",
+          "oklch(25% 0.02 295)",
+          "oklch(35% 0.02 295)",
+          "oklch(48% 0.02 295)",
+          "oklch(60% 0.02 295)",
+          "oklch(72% 0.02 295)",
+          "oklch(84% 0.02 295)",
+          "oklch(95% 0.02 295)"
+        ]
+      },
+      "plum-panel-raised": {
+        "role": "neutral",
+        "displayName": "Plum Panel Raised",
+        "tonalRamp": [
+          "oklch(15% 0.025 295)",
+          "oklch(25% 0.025 295)",
+          "oklch(35% 0.025 295)",
+          "oklch(48% 0.025 295)",
+          "oklch(60% 0.025 295)",
+          "oklch(72% 0.025 295)",
+          "oklch(84% 0.025 295)",
+          "oklch(95% 0.025 295)"
+        ]
+      },
+      "bezel-black": {
+        "role": "neutral",
+        "displayName": "Bezel Black",
+        "tonalRamp": [
+          "oklch(15% 0.02 295)",
+          "oklch(25% 0.02 295)",
+          "oklch(35% 0.02 295)",
+          "oklch(48% 0.02 295)",
+          "oklch(60% 0.02 295)",
+          "oklch(72% 0.02 295)",
+          "oklch(84% 0.02 295)",
+          "oklch(95% 0.02 295)"
+        ]
+      },
+      "hairline": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "tonalRamp": [
+          "oklch(15% 0.05 290)",
+          "oklch(25% 0.05 290)",
+          "oklch(35% 0.05 290)",
+          "oklch(48% 0.05 290)",
+          "oklch(60% 0.05 290)",
+          "oklch(72% 0.05 290)",
+          "oklch(84% 0.05 290)",
+          "oklch(95% 0.05 290)"
+        ]
+      },
+      "hairline-strong": {
+        "role": "neutral",
+        "displayName": "Hairline Strong",
+        "tonalRamp": [
+          "oklch(15% 0.07 290)",
+          "oklch(25% 0.07 290)",
+          "oklch(35% 0.07 290)",
+          "oklch(48% 0.07 290)",
+          "oklch(60% 0.07 290)",
+          "oklch(72% 0.07 290)",
+          "oklch(84% 0.07 290)",
+          "oklch(95% 0.07 290)"
+        ]
+      },
+      "phosphor-white": {
+        "role": "neutral",
+        "displayName": "Phosphor White",
+        "tonalRamp": [
+          "oklch(15% 0.03 295)",
+          "oklch(25% 0.03 295)",
+          "oklch(35% 0.03 295)",
+          "oklch(48% 0.03 295)",
+          "oklch(60% 0.03 295)",
+          "oklch(72% 0.03 295)",
+          "oklch(84% 0.03 295)",
+          "oklch(95% 0.03 295)"
+        ]
+      },
+      "phosphor-white-strong": {
+        "role": "neutral",
+        "displayName": "Phosphor White Strong",
+        "tonalRamp": [
+          "oklch(15% 0.01 295)",
+          "oklch(25% 0.01 295)",
+          "oklch(35% 0.01 295)",
+          "oklch(48% 0.01 295)",
+          "oklch(60% 0.01 295)",
+          "oklch(72% 0.01 295)",
+          "oklch(84% 0.01 295)",
+          "oklch(95% 0.01 295)"
+        ]
+      },
+      "dim-lavender": {
+        "role": "neutral",
+        "displayName": "Dim Lavender",
+        "tonalRamp": [
+          "oklch(15% 0.06 295)",
+          "oklch(25% 0.06 295)",
+          "oklch(35% 0.06 295)",
+          "oklch(48% 0.06 295)",
+          "oklch(60% 0.06 295)",
+          "oklch(72% 0.06 295)",
+          "oklch(84% 0.06 295)",
+          "oklch(95% 0.06 295)"
+        ]
+      },
+      "faint-lavender": {
+        "role": "neutral",
+        "displayName": "Faint Lavender",
+        "tonalRamp": [
+          "oklch(15% 0.06 295)",
+          "oklch(25% 0.06 295)",
+          "oklch(35% 0.06 295)",
+          "oklch(48% 0.06 295)",
+          "oklch(60% 0.06 295)",
+          "oklch(72% 0.06 295)",
+          "oklch(84% 0.06 295)",
+          "oklch(95% 0.06 295)"
+        ]
+      },
+      "neon-magenta": {
+        "role": "primary",
+        "displayName": "Neon Magenta",
+        "tonalRamp": [
+          "oklch(15% 0.29 340)",
+          "oklch(25% 0.29 340)",
+          "oklch(35% 0.29 340)",
+          "oklch(48% 0.29 340)",
+          "oklch(60% 0.29 340)",
+          "oklch(72% 0.29 340)",
+          "oklch(84% 0.29 340)",
+          "oklch(95% 0.29 340)"
+        ]
+      },
+      "neon-magenta-soft": {
+        "role": "primary",
+        "displayName": "Neon Magenta Soft",
+        "tonalRamp": [
+          "oklch(15% 0.29 340)",
+          "oklch(25% 0.29 340)",
+          "oklch(35% 0.29 340)",
+          "oklch(48% 0.29 340)",
+          "oklch(60% 0.29 340)",
+          "oklch(72% 0.29 340)",
+          "oklch(84% 0.29 340)",
+          "oklch(95% 0.29 340)"
+        ]
+      },
+      "phosphor-cyan": {
+        "role": "secondary",
+        "displayName": "Phosphor Cyan",
+        "tonalRamp": [
+          "oklch(15% 0.15 200)",
+          "oklch(25% 0.15 200)",
+          "oklch(35% 0.15 200)",
+          "oklch(48% 0.15 200)",
+          "oklch(60% 0.15 200)",
+          "oklch(72% 0.15 200)",
+          "oklch(84% 0.15 200)",
+          "oklch(95% 0.15 200)"
+        ]
+      },
+      "phosphor-cyan-soft": {
+        "role": "secondary",
+        "displayName": "Phosphor Cyan Soft",
+        "tonalRamp": [
+          "oklch(15% 0.15 200)",
+          "oklch(25% 0.15 200)",
+          "oklch(35% 0.15 200)",
+          "oklch(48% 0.15 200)",
+          "oklch(60% 0.15 200)",
+          "oklch(72% 0.15 200)",
+          "oklch(84% 0.15 200)",
+          "oklch(95% 0.15 200)"
+        ]
+      },
+      "start-yellow": {
+        "role": "tertiary",
+        "displayName": "Start Yellow",
+        "tonalRamp": [
+          "oklch(15% 0.18 100)",
+          "oklch(25% 0.18 100)",
+          "oklch(35% 0.18 100)",
+          "oklch(48% 0.18 100)",
+          "oklch(60% 0.18 100)",
+          "oklch(72% 0.18 100)",
+          "oklch(84% 0.18 100)",
+          "oklch(95% 0.18 100)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "marquee": {
+        "displayName": "Marquee",
+        "purpose": "The ZVONDIS neon sign only."
+      },
+      "display": {
+        "displayName": "Display",
+        "purpose": "Page h1; larger on the home CRT screen."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section titles: cyan tracked caps behind a magenta square."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Entry titles and score names."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "All prose, max 70ch."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Uppercase tracked labels, nav buttons, table headers."
+      },
+      "pixel": {
+        "displayName": "Pixel",
+        "purpose": "Short ASCII labels and numbers only; no Czech capitals in this face."
+      }
+    },
+    "shadows": [
+      {
+        "name": "crt-recess",
+        "value": "0 0 0 1px #463a62, inset 0 0 0 1px rgb(255 255 255 / 4%), inset 0 0 120px rgb(0 0 0 / 65%), 0 24px 48px rgb(0 0 0 / 55%)",
+        "purpose": "CRT screen container only."
+      },
+      {
+        "name": "button-cap",
+        "value": "inset 0 -3px 5px rgb(0 0 0 / 35%), inset 0 2px 3px rgb(255 255 255 / 35%), 0 0 0 3px #07060d, 0 0 0 4px #463a62, 0 3px 8px 3px rgb(0 0 0 / 55%)",
+        "purpose": "Convex arcade nav button cap in its collar."
+      },
+      {
+        "name": "start-lift",
+        "value": "0 8px 20px rgb(0 0 0 / 55%)",
+        "purpose": "PRESS START primary action."
+      },
+      {
+        "name": "neon-tube",
+        "value": "text-shadow: 0 0 2px #fff, 0 0 10px #ff2bd6, 0 0 28px #ff2bd6, 0 0 64px rgb(255 43 214 / 55%)",
+        "purpose": "Marquee sign only; the one lit object."
+      },
+      {
+        "name": "scanlines",
+        "value": "repeating-linear-gradient(180deg, transparent 0 2px, rgb(0 0 0 / 22%) 2px 3px)",
+        "purpose": "Overlay on CRT glass."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Default easing for state transitions and openings."
+      },
+      {
+        "name": "dur",
+        "value": "160ms",
+        "purpose": "Hover and colour transitions."
+      },
+      {
+        "name": "press",
+        "value": "90ms",
+        "purpose": "Button cap and PRESS START press/lift."
+      },
+      {
+        "name": "crt-power",
+        "value": "520ms ease-out, clip-path from a horizontal line + brightness",
+        "purpose": "Home screen power-on."
+      },
+      {
+        "name": "crt-cut",
+        "value": "170ms ease-in out / 300ms ease-out in, scaleY(0.004) + brightness(4)",
+        "purpose": "Cross-document view transition."
+      },
+      {
+        "name": "neon-ignite",
+        "value": "900ms steps(1, end), lit by default",
+        "purpose": "Marquee stutter on load."
+      },
+      {
+        "name": "blink",
+        "value": "1s steps(1, end) x6",
+        "purpose": "PRESS START key; stops after six cycles."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "all animations none, transitions 0.01ms",
+        "purpose": "Under prefers-reduced-motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "lg",
+        "value": "1088px"
+      },
+      {
+        "name": "md",
+        "value": "900px"
+      },
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "xs",
+        "value": "480px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "PRESS START",
+      "kind": "button",
+      "description": "Primary action: yellow tel button with a blinking pixel key over the number.",
+      "html": "<a class=\"ds-start\" href=\"#\"><span class=\"ds-start-key\">PRESS START</span><span class=\"ds-start-num\">+420 728 517 872</span></a>",
+      "css": ".ds-start{display:inline-flex;flex-direction:column;gap:8px;padding:16px 24px 15px;border-radius:4px;background:#ffe23a;color:#07060d;text-decoration:none;box-shadow:0 8px 20px rgb(0 0 0 / 55%);transition:transform 90ms cubic-bezier(0.16,1,0.3,1)}.ds-start:hover{transform:translateY(-1px)}.ds-start:active{transform:translateY(3px)}.ds-start:focus-visible{outline:2px solid #ffe23a;outline-offset:3px}.ds-start-key{font-family:'Press Start 2P',monospace;font-size:11px;line-height:1.4;text-transform:uppercase;animation:ds-blink 1s steps(1,end) 6}.ds-start-num{font-family:'Chakra Petch',sans-serif;font-size:24px;font-weight:700;line-height:1.1;font-variant-numeric:tabular-nums;white-space:nowrap}@keyframes ds-blink{50%{opacity:0}}@media (prefers-reduced-motion:reduce){.ds-start-key{animation:none}}",
+      "refersTo": "button-start"
+    },
+    {
+      "name": "Toggle Button",
+      "kind": "button",
+      "description": "Secondary control (admin toggle): magenta tint, solid magenta on hover.",
+      "html": "<button class=\"ds-toggle\">Sign in</button>",
+      "css": ".ds-toggle{padding:11px 16px;border:1px solid #ff2bd6;border-radius:4px;background:rgb(255 43 214 / 12%);color:#fbf9ff;font-family:'Chakra Petch',sans-serif;font-size:14px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:background-color 160ms cubic-bezier(0.16,1,0.3,1),color 160ms cubic-bezier(0.16,1,0.3,1)}.ds-toggle:hover{background:#ff2bd6;color:#07060d}.ds-toggle:focus-visible{outline:2px solid #ffe23a;outline-offset:3px}",
+      "refersTo": "button-toggle"
+    },
+    {
+      "name": "Control Panel",
+      "kind": "nav",
+      "description": "Page navigation as round arcade buttons; current page lit yellow; coin-slot language switch.",
+      "html": "<nav class=\"ds-cp\"><a class=\"ds-cp-btn\" href=\"#\"><span class=\"ds-cap\"></span>Home</a><a class=\"ds-cp-btn ds-cyan\" href=\"#\" aria-current=\"page\"><span class=\"ds-cap\"></span>CV</a><a class=\"ds-cp-btn ds-cyan2\" href=\"#\"><span class=\"ds-cap\"></span>Uses</a><a class=\"ds-coin\" href=\"#\">EN</a></nav>",
+      "css": ".ds-cp{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:12px 22px;padding:14px 24px;border-bottom:1px solid #2b2440;background:linear-gradient(180deg,#1a1525,#110e19)}.ds-cp-btn{display:flex;align-items:center;gap:10px;padding:6px 2px;color:#aaa0c4;font-family:'Chakra Petch',sans-serif;font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;text-decoration:none}.ds-cap{--cap:#ff2bd6;width:24px;height:24px;border-radius:50%;background:var(--cap);box-shadow:inset 0 -3px 5px rgb(0 0 0 / 35%),inset 0 2px 3px rgb(255 255 255 / 35%),0 0 0 3px #07060d,0 0 0 4px #463a62,0 3px 8px 3px rgb(0 0 0 / 55%);transition:transform 90ms cubic-bezier(0.16,1,0.3,1)}.ds-cyan2 .ds-cap{--cap:#21f0ff}.ds-cp-btn:hover{color:#fbf9ff}.ds-cp-btn:active .ds-cap{transform:translateY(2px)}.ds-cp-btn[aria-current=page]{color:#ffe23a}.ds-cp-btn[aria-current=page] .ds-cap{--cap:#ffe23a}.ds-cp-btn:focus-visible,.ds-coin:focus-visible{outline:2px solid #ffe23a;outline-offset:3px}.ds-coin{display:inline-flex;align-items:center;gap:10px;padding:8px 12px;border:1px solid #463a62;border-radius:4px;background:#07060d;color:#e8e3f5;font-family:'Press Start 2P',monospace;font-size:11px;line-height:1.4;text-decoration:none}.ds-coin::before{content:'';width:3px;height:16px;border-radius:2px;background:#8d83a7}.ds-coin:hover{border-color:#21f0ff;color:#21f0ff}",
+      "refersTo": "nav-button"
+    },
+    {
+      "name": "Tag",
+      "kind": "chip",
+      "description": "Technology and interest chips on cyan phosphor tint.",
+      "html": "<span class=\"ds-tag\">Eleventy</span>",
+      "css": ".ds-tag{display:inline-block;padding:4px 9px;border:1px solid rgb(33 240 255 / 35%);border-radius:4px;background:rgb(33 240 255 / 10%);color:#e8e3f5;font-family:'Chakra Petch',sans-serif;font-size:13px;line-height:1.4}",
+      "refersTo": "tag"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "description": "Ink-well field; yellow border and caret on focus.",
+      "html": "<label class=\"ds-label\">Hourly rate<input class=\"ds-input\" type=\"number\" placeholder=\"200\"></label>",
+      "css": ".ds-label{display:flex;flex-direction:column;gap:8px;color:#aaa0c4;font-family:'Chakra Petch',sans-serif;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}.ds-input{padding:10px 12px;border:1px solid #463a62;border-radius:4px;background:#07060d;color:#fbf9ff;font:inherit;font-size:15px;letter-spacing:0;text-transform:none;font-variant-numeric:tabular-nums;color-scheme:dark;caret-color:#ffe23a;transition:border-color 160ms cubic-bezier(0.16,1,0.3,1)}.ds-input::placeholder{color:#8d83a7}.ds-input:hover{border-color:#8d83a7}.ds-input:focus{outline:none;border-color:#ffe23a}",
+      "refersTo": "input"
+    },
+    {
+      "name": "CRT Screen",
+      "kind": "card",
+      "description": "The container every page's content plays on: rounded bezel, vignette, scanlines.",
+      "html": "<div class=\"ds-screen\"><h2 class=\"ds-h2\">About</h2><p>Content on the glass.</p></div>",
+      "css": ".ds-screen{position:relative;isolation:isolate;padding:40px;border:14px solid #16121e;border-radius:28px;background:radial-gradient(120% 90% at 50% 35%,#16112a 0%,#0c0914 60%,#07060d 100%);color:#e8e3f5;font-family:'Chakra Petch',sans-serif;line-height:1.6;box-shadow:0 0 0 1px #463a62,inset 0 0 0 1px rgb(255 255 255 / 4%),inset 0 0 120px rgb(0 0 0 / 65%),0 24px 48px rgb(0 0 0 / 55%)}.ds-screen::after{content:'';position:absolute;inset:0;z-index:2;border-radius:14px;pointer-events:none;background:repeating-linear-gradient(180deg,transparent 0 2px,rgb(0 0 0 / 22%) 2px 3px)}.ds-h2{display:flex;align-items:center;gap:12px;margin:0 0 22px;color:#21f0ff;font-size:15px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}.ds-h2::before{content:'';width:10px;height:10px;background:#ff2bd6}",
+      "refersTo": "crt-screen"
+    },
+    {
+      "name": "Marquee",
+      "kind": "custom",
+      "description": "The lit neon sign on every page; the only glowing object.",
+      "html": "<div class=\"ds-marquee\"><a class=\"ds-sign\" href=\"#\">Zvondis</a></div>",
+      "css": ".ds-marquee{display:grid;place-items:center;min-height:104px;padding:18px 24px 14px;border-bottom:3px solid #ff2bd6;background:linear-gradient(180deg,rgb(255 43 214 / 6%),transparent 70%),linear-gradient(180deg,#120c1a,#07060d)}.ds-sign{color:#ffe0f7;font-family:Monoton,'Chakra Petch',sans-serif;font-size:56px;line-height:1;letter-spacing:.04em;text-transform:uppercase;text-decoration:none;text-shadow:0 0 2px #fff,0 0 10px #ff2bd6,0 0 28px #ff2bd6,0 0 64px rgb(255 43 214 / 55%)}.ds-sign:hover{color:#fff}.ds-sign:focus-visible{outline:2px solid #ffe23a;outline-offset:3px}"
+    },
+    {
+      "name": "High-score Table",
+      "kind": "custom",
+      "description": "Real projects as ranked scores: pixel magenta rank, magenta header rule, hairline rows.",
+      "html": "<table class=\"ds-scores\"><thead><tr><th>Rank</th><th>Project</th></tr></thead><tbody><tr><td class=\"ds-rank\">1.</td><td class=\"ds-name\"><a href=\"#\">zv0ndis.github.io</a></td></tr><tr><td class=\"ds-rank\">2.</td><td class=\"ds-name\">ISA project</td></tr></tbody></table>",
+      "css": ".ds-scores{width:100%;border-collapse:collapse;font-family:'Chakra Petch',sans-serif;color:#e8e3f5}.ds-scores th{padding:0 12px 12px 0;border-bottom:2px solid #ff2bd6;color:#8d83a7;font-size:12px;font-weight:700;letter-spacing:.1em;text-align:left;text-transform:uppercase}.ds-scores td{padding:16px 12px 16px 0;border-bottom:1px solid #2b2440;vertical-align:baseline}.ds-rank{width:4.5em;color:#ff2bd6;font-family:'Press Start 2P',monospace;font-size:12px}.ds-name{color:#fbf9ff;font-size:19px;font-weight:700}.ds-name a{color:#21f0ff;text-underline-offset:4px}.ds-name a:hover{color:#ff2bd6}.ds-name a:focus-visible{outline:2px solid #ffe23a;outline-offset:3px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Cabinet in Attract Mode",
+    "overview": "Every page is an arcade cabinet waiting for a player. A lit neon marquee sits on top, a control panel of round buttons sits below it, and the content plays on a CRT screen set into a rounded bezel, with scanlines on the glass. The home page is the attract loop: the offer on screen, PRESS START as the call to action, contact cells set into the cabinet beside the screen, a high-score table of real projects, and a \"Continue?\" close. Inner pages (CV, Uses, Semester, Job Pay) reuse the same marquee, panel and screen, so the whole site reads as one machine.\n\nThe ground is near-black with dark plum panels. Three signal colours each have one job and are never used to decorate. Density is moderate: content sits on the screen in a single readable column (prose capped at 70ch), with hairline-ruled rows for lists, tables and results.\n\nMotion is how the hardware behaves: tubes stutter on, the tube warms up, the picture cuts between pages. All of it is switched off under `prefers-reduced-motion`.",
+    "keyCharacteristics": [
+      "One lit object per page: the magenta neon marquee.",
+      "CRT screen container (rounded bezel, inner vignette, scanlines) for all page content.",
+      "Navigation is a row of round arcade buttons. The current page is the one yellow-lit button.",
+      "Pixel face only for short ASCII labels and numbers. Everything people read is in Chakra Petch.",
+      "Hairline rules and 4px corners on the screen; the screen itself is the only big rounded shape."
+    ],
+    "rules": [
+      {
+        "name": "The One Lit Object Rule",
+        "body": "Only the marquee glows. Neon text-shadow belongs to the marquee sign and nowhere else.",
+        "section": "colors"
+      },
+      {
+        "name": "The Yellow Means Now Rule",
+        "body": "Yellow marks only what is active or the one primary action. If a surface has no active state and no primary action, it has no yellow.",
+        "section": "colors"
+      },
+      {
+        "name": "The Phosphor Wiring Rule",
+        "body": "Cyan is information (links, labels, data). Magenta is structure and markers. Don't swap them.",
+        "section": "colors"
+      },
+      {
+        "name": "The ASCII-Only Pixel Rule",
+        "body": "Press Start 2P has no Czech capitals. Use it only for short ASCII strings and numbers. Any label that could carry a Czech diacritic goes in Chakra Petch.",
+        "section": "typography"
+      },
+      {
+        "name": "The Marquee Owns Monoton Rule",
+        "body": "Monoton is the sign, and only the sign.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat Glass Rule",
+        "body": "Content on the screen is flat. Rows, chips and panels separate with hairlines and ink wells, never with shadows.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do put every page's content on the CRT screen under the marquee and control panel.",
+      "Do keep yellow to the current nav button, focus and checked states, and the single primary action.",
+      "Do use cyan for links, labels and data, and magenta for markers, rules and the marquee.",
+      "Do use Press Start 2P only for short ASCII labels and numbers, and Chakra Petch for any text that may carry Czech diacritics.",
+      "Do separate rows with 1px hairlines and keep corners at 4px inside the screen.",
+      "Do gate every new animation behind the existing reduced-motion reset, and cap any blink at a few cycles."
+    ],
+    "donts": [
+      "Don't give anything but the marquee sign a neon glow or text-shadow.",
+      "Don't use yellow as decoration, an accent or a highlight colour.",
+      "Don't use Monoton outside the marquee.",
+      "Don't set prose, headings or Czech-bearing labels in the pixel face.",
+      "Don't replace the segmented energy bar or the round arcade buttons with smooth pills or plain text tabs.",
+      "Don't add loops that run forever; attract-mode motion settles after load."
+    ]
+  }
+}

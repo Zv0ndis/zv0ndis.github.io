@@ -1,0 +1,98 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "dark-glow",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/assigned.html"
+        ],
+        "createdAt": "2026-10-26T11:34:22.688Z",
+        "reason": "user brief pins neon/cyberpunk; neon tube glow is the literal material of the decision sketch"
+      },
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/assigned.html"
+        ],
+        "createdAt": "2026-10-26T11:35:33.547Z",
+        "reason": "throwaway decision-round sketch, gitignored, never shipped"
+      },
+      {
+        "rule": "wide-tracking",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/assigned.html"
+        ],
+        "createdAt": "2026-10-26T11:35:33.552Z",
+        "reason": "throwaway decision-round sketch, gitignored, never shipped"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/assigned.html"
+        ],
+        "createdAt": "2026-10-26T11:35:33.557Z",
+        "reason": "throwaway decision-round sketch, gitignored, never shipped"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "_site/index.html"
+        ],
+        "createdAt": "2026-10-26T11:45:06.169Z",
+        "reason": "false positive: CRT screen/container padding is clamp() 20-64px inside a 14px bezel; continue band has 28-44px top padding"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "_site/cv.html"
+        ],
+        "createdAt": "2026-10-26T11:45:06.175Z",
+        "reason": "false positive: CRT screen/container padding is clamp() 20-64px inside a 14px bezel; continue band has 28-44px top padding"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "_site/job-pay.html"
+        ],
+        "createdAt": "2026-10-26T11:45:06.180Z",
+        "reason": "false positive: CRT screen/container padding is clamp() 20-64px inside a 14px bezel; continue band has 28-44px top padding"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "_site/semester.html"
+        ],
+        "createdAt": "2026-10-26T11:45:06.185Z",
+        "reason": "false positive: CRT screen/container padding is clamp() 20-64px inside a 14px bezel; continue band has 28-44px top padding"
+      },
+      {
+        "rule": "dark-glow",
+        "value": "*",
+        "files": [
+          "_site/*.html"
+        ],
+        "createdAt": "2026-10-26T11:45:13.612Z",
+        "reason": "user brief pins neon/cyberpunk; the only glow is the marquee neon-tube lettering"
+      },
+      {
+        "rule": "repeating-stripes-gradient",
+        "value": "*",
+        "files": [
+          "_site/*.html"
+        ],
+        "createdAt": "2026-10-26T11:45:13.618Z",
+        "reason": "CRT scanlines on the screen glass are the chosen arcade world's material, not decoration"
+      }
+    ]
+  }
+}

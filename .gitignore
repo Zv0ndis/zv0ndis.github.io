@@ -30,3 +30,7 @@ graphify-out/
 
 # local theme preview
 _preview-*.html
+.impeccable/mocks/
+.impeccable/review/
+.impeccable/build/
+.impeccable/hook.cache.json

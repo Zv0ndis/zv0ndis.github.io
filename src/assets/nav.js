@@ -1,8 +1,8 @@
 /**
  * <site-nav data-page="cv" data-lang="cs"></site-nav>
  *
- * Shared top navigation for every page: language toggle + pages menu.
- * Renders into light DOM so the existing rules in style.css (.pages-nav etc.) apply.
+ * Shared control panel for every page: one arcade button per page + the
+ * language coin slot. Renders into light DOM so style.css (.control-panel) applies.
  *
  * When adding a page, add it here and to sitemap.xml.
  */
@@ -39,22 +39,15 @@
     ];
 
     var STRINGS = {
-        cs: { menu: "Další stránky", toEn: "EN", toEnLabel: "Switch to English" },
-        en: { menu: "More pages", toCs: "CZ", toCsLabel: "Přepnout do češtiny" },
+        cs: { nav: "Stránky", toEn: "EN", toEnLabel: "Switch to English" },
+        en: { nav: "Pages", toCs: "CZ", toCsLabel: "Přepnout do češtiny" },
     };
-
-    var ICON =
-        '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-        '<rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect>' +
-        '<rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>';
 
     function esc(s) {
         return String(s).replace(/[&<>"]/g, function (c) {
             return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
         });
     }
-
-    var uid = 0;
 
     // Remembering the language is deliberately passive: we store what the
     // visitor picked and offer it back on the landing page, but never redirect.
@@ -88,12 +81,12 @@
         if (preferred && preferred !== currentLang) hint.hidden = false;
     }
 
+    // The control panel: every page is one arcade button, the current one lit.
     class SiteNav extends HTMLElement {
         connectedCallback() {
             var lang = this.getAttribute("data-lang") === "en" ? "en" : "cs";
             var current = this.getAttribute("data-page") || "";
             var other = lang === "en" ? "cs" : "en";
-            var menuId = "pagesMenu-" + ++uid;
             var s = STRINGS[lang];
 
             var currentPage = PAGES.filter(function (p) {
@@ -101,120 +94,46 @@
             })[0];
             var hasCounterpart = currentPage && currentPage[lang].href !== currentPage[other].href;
 
-            var toggleHtml = "";
-            if (hasCounterpart) {
-                var label = lang === "en" ? s.toCs : s.toEn;
-                var aria = lang === "en" ? s.toCsLabel : s.toEnLabel;
-                toggleHtml =
-                    '<a href="' +
-                    esc(currentPage[other].href) +
-                    '" class="lang-toggle" aria-label="' +
-                    esc(aria) +
-                    '">' +
-                    esc(label) +
-                    "</a>";
-            }
-
-            var items = PAGES.map(function (p) {
-                var active = p.id === current;
+            var buttons = PAGES.map(function (p) {
                 return (
-                    '<a href="' +
+                    '<li><a href="' +
                     esc(p[lang].href) +
-                    '" class="pages-menu-item' +
-                    (active ? " active" : "") +
-                    '" role="menuitem"' +
-                    (active ? ' aria-current="page"' : "") +
-                    ' tabindex="-1">' +
+                    '" class="cp-btn"' +
+                    (p.id === current ? ' aria-current="page"' : "") +
+                    '><span class="cp-cap" aria-hidden="true"></span>' +
                     esc(p[lang].label) +
-                    "</a>"
+                    "</a></li>"
                 );
             }).join("");
 
+            var coinHtml = "";
+            if (hasCounterpart) {
+                coinHtml =
+                    '<a href="' +
+                    esc(currentPage[other].href) +
+                    '" class="coin-slot" aria-label="' +
+                    esc(lang === "en" ? s.toCsLabel : s.toEnLabel) +
+                    '">' +
+                    esc(lang === "en" ? s.toCs : s.toEn) +
+                    "</a>";
+            }
+
             this.innerHTML =
-                '<nav class="pages-nav">' +
-                toggleHtml +
-                '<button class="pages-toggle" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="' +
-                menuId +
-                '" aria-label="' +
-                esc(s.menu) +
-                '">' +
-                ICON +
-                "</button>" +
-                '<div id="' +
-                menuId +
-                '" class="pages-menu" role="menu" hidden>' +
-                items +
-                "</div>" +
+                '<nav class="control-panel" aria-label="' +
+                esc(s.nav) +
+                '"><ul class="cp-buttons">' +
+                buttons +
+                "</ul>" +
+                coinHtml +
                 "</nav>";
 
-            var langLink = this.querySelector(".lang-toggle");
-            if (langLink) {
-                langLink.addEventListener("click", function () {
+            var coin = this.querySelector(".coin-slot");
+            if (coin) {
+                coin.addEventListener("click", function () {
                     writePreferredLang(other);
                 });
             }
             offerPreferredLang(lang);
-
-            this._toggle = this.querySelector(".pages-toggle");
-            this._menu = this.querySelector(".pages-menu");
-            this._menuItems = Array.prototype.slice.call(this.querySelectorAll(".pages-menu-item"));
-
-            this._onDocClick = this._onDocClick.bind(this);
-            this._onKeydown = this._onKeydown.bind(this);
-
-            this._toggle.addEventListener("click", (e) => {
-                e.stopPropagation();
-                this._menu.hidden ? this.open() : this.close();
-            });
-            document.addEventListener("click", this._onDocClick);
-            document.addEventListener("keydown", this._onKeydown);
-        }
-
-        disconnectedCallback() {
-            document.removeEventListener("click", this._onDocClick);
-            document.removeEventListener("keydown", this._onKeydown);
-        }
-
-        open() {
-            this._menu.hidden = false;
-            this._toggle.setAttribute("aria-expanded", "true");
-            if (this._menuItems[0]) this._menuItems[0].focus();
-        }
-
-        close(refocus) {
-            this._menu.hidden = true;
-            this._toggle.setAttribute("aria-expanded", "false");
-            if (refocus) this._toggle.focus();
-        }
-
-        _onDocClick(e) {
-            if (!this._menu.hidden && !this.contains(e.target)) this.close();
-        }
-
-        _onKeydown(e) {
-            if (this._menu.hidden) return;
-            if (e.key === "Escape") {
-                this.close(true);
-                return;
-            }
-            var idx = this._menuItems.indexOf(document.activeElement);
-            if (e.key === "ArrowDown") {
-                e.preventDefault();
-                this._menuItems[(idx + 1) % this._menuItems.length].focus();
-            } else if (e.key === "ArrowUp") {
-                e.preventDefault();
-                this._menuItems[
-                    (idx - 1 + this._menuItems.length) % this._menuItems.length
-                ].focus();
-            } else if (e.key === "Home") {
-                e.preventDefault();
-                this._menuItems[0].focus();
-            } else if (e.key === "End") {
-                e.preventDefault();
-                this._menuItems[this._menuItems.length - 1].focus();
-            } else if (e.key === "Tab") {
-                this.close();
-            }
         }
     }
 

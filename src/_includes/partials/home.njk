@@ -1,0 +1,95 @@
+{%- set h = copy.home[lang] -%}
+{%- set cv = copy.cv[lang] -%}
+{%- set cvUrl = (site.pages | findPage("cv"))[lang].url -%}
+<main class="cabinet">
+    <div class="attract">
+        <div class="screen">
+            <h1>{{ h.offer | safe }}</h1>
+            <p class="screen-lede">{{ h.lede }}</p>
+            <div class="screen-actions">
+                <a
+                    class="start"
+                    href="{{ cv.contact.phoneHref }}"
+                    aria-label="{{ h.startAria }} {{ cv.contact.phone }}"
+                >
+                    <span class="start-key" data-key="{{ h.startKey }}"></span>
+                    <span class="start-num">{{ cv.contact.phone | replace(" ", "&nbsp;") | safe }}</span>
+                </a>
+                <a href="{{ cvUrl }}">{{ h.cvLink }}</a>
+            </div>
+            <p class="lang-hint" data-lang-hint hidden>
+                <a href="{{ h.langHintUrl }}">{{ h.langHint }}</a>
+            </p>
+            <p class="screen-hud" aria-hidden="true">
+                <span>{{ h.hudLeft }}</span>
+                <span>{{ h.hudRight }}</span>
+            </p>
+        </div>
+
+        <ul class="bezel">
+            <li>
+                <a href="{{ cv.contact.phoneHref }}">
+                    <span class="cell-key">{{ h.cells.tel }}</span>
+                    {{ cv.contact.phone | replace(" ", "&nbsp;") | safe }}
+                </a>
+            </li>
+            <li>
+                <a href="mailto:{{ cv.contact.email }}">
+                    <span class="cell-key">{{ h.cells.mail }}</span>
+                    {{ cv.contact.email }}
+                </a>
+            </li>
+            <li>
+                <a href="{{ cv.contact.githubUrl }}" target="_blank" rel="noopener noreferrer">
+                    <span class="cell-key">{{ h.cells.github }}</span>
+                    Zv0ndis
+                </a>
+            </li>
+            <li>
+                <span class="cell">
+                    <span class="cell-key">{{ h.cells.loc }}</span>
+                    {{ cv.contact.location }}
+                </span>
+            </li>
+        </ul>
+    </div>
+
+    <section class="scores">
+        <h2>{{ h.scoresHeading }}</h2>
+        <table class="score-table">
+            <thead>
+                <tr>
+                    <th scope="col">{{ h.colRank }}</th>
+                    <th scope="col">{{ h.colName }}</th>
+                    <th scope="col" class="score-stack">{{ h.colStack }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%- for e in cv.projects.entries %}
+                <tr>
+                    <td class="score-rank">{{ loop.index }}.</td>
+                    <td class="score-name">
+                        {%- if e.url %}
+                        <a href="{{ e.url }}" target="_blank" rel="noopener noreferrer">{{ e.title }}</a>
+                        {%- else %}
+                        {{ e.title }}
+                        {%- endif %}
+                    </td>
+                    <td class="score-stack">{{ e.tech }}</td>
+                </tr>
+                {%- endfor %}
+            </tbody>
+        </table>
+        <p class="score-more"><a href="{{ cvUrl }}">{{ h.scoresMore }}</a></p>
+    </section>
+
+    <section class="continue">
+        <h2>{{ h.continueHeading }}</h2>
+        <p>
+            {{ h.continueText }}
+            <a href="{{ cv.contact.phoneHref }}">{{ cv.contact.phone | replace(" ", "&nbsp;") | safe }}</a>
+            ·
+            <a href="mailto:{{ cv.contact.email }}">{{ cv.contact.email }}</a>
+        </p>
+    </section>
+</main>
