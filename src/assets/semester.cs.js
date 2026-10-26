@@ -118,7 +118,7 @@ onAuthStateChanged(auth, (user) => {
 
 function renderSemesterRange() {
     if (semesterRange && semesterRange.startDate && semesterRange.endDate) {
-        semesterRangeText.textContent = `${formatDateCz(semesterRange.startDate)} – ${formatDateCz(semesterRange.endDate)}`;
+        semesterRangeText.textContent = `${formatDateCz(semesterRange.startDate)} - ${formatDateCz(semesterRange.endDate)}`;
         semesterStartInput.value = semesterRange.startDate;
         semesterEndInput.value = semesterRange.endDate;
     } else {
@@ -126,7 +126,7 @@ function renderSemesterRange() {
     }
 
     if (semesterRange && semesterRange.examWinterStart && semesterRange.examWinterEnd) {
-        examWinterText.textContent = `Zkouškové zimní: ${formatDateCz(semesterRange.examWinterStart)} – ${formatDateCz(semesterRange.examWinterEnd)}`;
+        examWinterText.textContent = `Zkouškové zimní: ${formatDateCz(semesterRange.examWinterStart)} - ${formatDateCz(semesterRange.examWinterEnd)}`;
         examWinterStartInput.value = semesterRange.examWinterStart;
         examWinterEndInput.value = semesterRange.examWinterEnd;
     } else {
@@ -134,7 +134,7 @@ function renderSemesterRange() {
     }
 
     if (semesterRange && semesterRange.examSummerStart && semesterRange.examSummerEnd) {
-        examSummerText.textContent = `Zkouškové letní: ${formatDateCz(semesterRange.examSummerStart)} – ${formatDateCz(semesterRange.examSummerEnd)}`;
+        examSummerText.textContent = `Zkouškové letní: ${formatDateCz(semesterRange.examSummerStart)} - ${formatDateCz(semesterRange.examSummerEnd)}`;
         examSummerStartInput.value = semesterRange.examSummerStart;
         examSummerEndInput.value = semesterRange.examSummerEnd;
     } else {
@@ -237,6 +237,6 @@ loadSemesterRange().catch((err) => {
     console.error("loadSemesterRange failed", err);
     semesterRangeText.textContent =
         err && err.message === "timeout"
-            ? "Načítání trvá dlouho – zkontroluj připojení."
+            ? "Načítání trvá dlouho. Zkontroluj připojení."
             : "Termín se nepodařilo načíst. Zkus obnovit stránku.";
 });

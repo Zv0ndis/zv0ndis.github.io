@@ -4,7 +4,7 @@
 export default {
     cs: {
         offer: "Potřebujete web? Postavím vám ho <em>za rozumnou cenu.</em>",
-        lede: "Heya, tady Zvondis — student FIT VUT v Brně. Stačí zavolat a domluvíme se.",
+        lede: "Heya, tady Zvondis, student FIT VUT v Brně. Stačí zavolat a domluvíme se.",
         startKey: "Press start",
         startAria: "Zavolat na",
         cvLink: "Zobrazit CV",
@@ -19,11 +19,11 @@ export default {
         colStack: "Technologie",
         scoresMore: "Popis všech projektů v CV",
         continueHeading: "Continue?",
-        continueText: "Zavolejte nebo napište — domluvíme, co potřebujete.",
+        continueText: "Zavolejte nebo napište a domluvíme, co potřebujete.",
     },
     en: {
         offer: "Need a website? I'll build you one <em>at a reasonable price.</em>",
-        lede: "Heya, Zvondis here — a student at FIT BUT Brno. Just give me a call and we'll sort it out.",
+        lede: "Heya, Zvondis here, a student at FIT BUT Brno. Just give me a call and we'll sort it out.",
         startKey: "Press start",
         startAria: "Call",
         cvLink: "View CV",
@@ -38,6 +38,6 @@ export default {
         colStack: "Stack",
         scoresMore: "Every project described in the CV",
         continueHeading: "Continue?",
-        continueText: "Call or write — we'll work out what you need.",
+        continueText: "Call or write and we'll work out what you need.",
     },
 };

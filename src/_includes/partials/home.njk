@@ -15,7 +15,7 @@
                     <span class="start-key" data-key="{{ h.startKey }}"></span>
                     <span class="start-num">{{ cv.contact.phone | replace(" ", "&nbsp;") | safe }}</span>
                 </a>
-                <a href="{{ cvUrl }}">{{ h.cvLink }}</a>
+                <a class="screen-cv" href="{{ cvUrl }}">{{ h.cvLink }}</a>
             </div>
             <p class="lang-hint" data-lang-hint hidden>
                 <a href="{{ h.langHintUrl }}">{{ h.langHint }}</a>
@@ -27,12 +27,6 @@
         </div>
 
         <ul class="bezel">
-            <li>
-                <a href="{{ cv.contact.phoneHref }}">
-                    <span class="cell-key">{{ h.cells.tel }}</span>
-                    {{ cv.contact.phone | replace(" ", "&nbsp;") | safe }}
-                </a>
-            </li>
             <li>
                 <a href="mailto:{{ cv.contact.email }}">
                     <span class="cell-key">{{ h.cells.mail }}</span>

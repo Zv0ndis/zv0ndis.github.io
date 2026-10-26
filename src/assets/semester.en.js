@@ -118,7 +118,7 @@ onAuthStateChanged(auth, (user) => {
 
 function renderSemesterRange() {
     if (semesterRange && semesterRange.startDate && semesterRange.endDate) {
-        semesterRangeText.textContent = `${formatDateEn(semesterRange.startDate)} – ${formatDateEn(semesterRange.endDate)}`;
+        semesterRangeText.textContent = `${formatDateEn(semesterRange.startDate)} - ${formatDateEn(semesterRange.endDate)}`;
         semesterStartInput.value = semesterRange.startDate;
         semesterEndInput.value = semesterRange.endDate;
     } else {
@@ -126,7 +126,7 @@ function renderSemesterRange() {
     }
 
     if (semesterRange && semesterRange.examWinterStart && semesterRange.examWinterEnd) {
-        examWinterText.textContent = `Winter exam period: ${formatDateEn(semesterRange.examWinterStart)} – ${formatDateEn(semesterRange.examWinterEnd)}`;
+        examWinterText.textContent = `Winter exam period: ${formatDateEn(semesterRange.examWinterStart)} - ${formatDateEn(semesterRange.examWinterEnd)}`;
         examWinterStartInput.value = semesterRange.examWinterStart;
         examWinterEndInput.value = semesterRange.examWinterEnd;
     } else {
@@ -134,7 +134,7 @@ function renderSemesterRange() {
     }
 
     if (semesterRange && semesterRange.examSummerStart && semesterRange.examSummerEnd) {
-        examSummerText.textContent = `Summer exam period: ${formatDateEn(semesterRange.examSummerStart)} – ${formatDateEn(semesterRange.examSummerEnd)}`;
+        examSummerText.textContent = `Summer exam period: ${formatDateEn(semesterRange.examSummerStart)} - ${formatDateEn(semesterRange.examSummerEnd)}`;
         examSummerStartInput.value = semesterRange.examSummerStart;
         examSummerEndInput.value = semesterRange.examSummerEnd;
     } else {
@@ -230,6 +230,6 @@ loadSemesterRange().catch((err) => {
     console.error("loadSemesterRange failed", err);
     semesterRangeText.textContent =
         err && err.message === "timeout"
-            ? "This is taking a while — check your connection."
+            ? "This is taking a while. Check your connection."
             : "Could not load the dates. Try reloading.";
 });

@@ -8,7 +8,7 @@ export default {
     cs: {
         h1: "Vybavení",
         subtitle: "Nástroje, se kterými pracuju",
-        intro: "Nic z toho není doporučení — jen soupis toho, co mi sedlo a u čeho jsem zůstal.",
+        intro: "Nic z toho není doporučení, jen soupis toho, co mi sedlo a u čeho jsem zůstal.",
         groups: [
             {
                 heading: "Vývoj",
@@ -67,7 +67,7 @@ export default {
     en: {
         h1: "Uses",
         subtitle: "The tools I work with",
-        intro: "None of this is a recommendation — just what stuck.",
+        intro: "None of this is a recommendation, just what stuck.",
         groups: [
             {
                 heading: "Development",

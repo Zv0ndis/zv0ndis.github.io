@@ -134,6 +134,15 @@
                 });
             }
             offerPreferredLang(lang);
+
+            // On phones the panel is one scrolling row; keep the lit button in view.
+            var panel = this.querySelector(".control-panel");
+            var lit = this.querySelector('[aria-current="page"]');
+            if (lit && panel.scrollWidth > panel.clientWidth) {
+                var a = lit.getBoundingClientRect();
+                var b = panel.getBoundingClientRect();
+                panel.scrollLeft += a.left - b.left - (b.width - a.width) / 2;
+            }
         }
     }
 
