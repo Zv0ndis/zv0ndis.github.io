@@ -97,6 +97,23 @@
     </div>
 
     <section>
+        <h2>{{ d.projects.heading }}</h2>
+        <div class="two-col-hobbies">
+            {%- for e in d.projects.entries %}
+            <div class="entry">
+                <a class="entry-title" href="{{ e.url }}" target="_blank" rel="noopener noreferrer">{{ e.title }}</a>
+                <ul class="tag-list">
+                    {%- for item in e.tech | commaList %}
+                    <li><span class="tag">{{ item }}</span></li>
+                    {%- endfor %}
+                </ul>
+                <p>{{ e.text }}</p>
+            </div>
+            {%- endfor %}
+        </div>
+    </section>
+
+    <section>
         <h2>{{ d.leisure.heading }}</h2>
         <div class="two-col-hobbies">
             {%- for e in d.leisure.entries %}

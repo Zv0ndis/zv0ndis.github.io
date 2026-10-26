@@ -35,7 +35,7 @@ export default {
             groups: [
                 {
                     label: "Jazyky",
-                    value: "C, C#, Java, Python, JavaScript, Shell, HTML, CSS, SQL",
+                    value: "C, C#, Java, Python, Go, JavaScript, Shell, HTML, CSS, SQL, VHDL, MIPS64 Assembly",
                 },
                 {
                     label: "Nástroje",
@@ -89,6 +89,47 @@ export default {
                 },
             ],
         },
+        projects: {
+            heading: "Co umím jako programátor",
+            entries: [
+                {
+                    title: "Překladač (IFJ)",
+                    tech: "C",
+                    text: "Týmový překladač podmnožiny jazyka – lexikální, syntaktická a sémantická analýza a generování kódu.",
+                    url: "https://github.com/Zv0ndis/IFJ-Compiler-Project",
+                },
+                {
+                    title: "Síťové nástroje",
+                    tech: "Go, Python",
+                    text: "L4 skener portů (TCP/UDP) a spolehlivý přenos dat nad UDP s vlastním protokolem.",
+                    url: "https://github.com/Zv0ndis/IPK-Project-1",
+                },
+                {
+                    title: "Interpret s testerem",
+                    tech: "Python",
+                    text: "Interpret jazyka SOL26 včetně vlastní sady automatických testů.",
+                    url: "https://github.com/Zv0ndis/Interpet-with-tester-for-SOL26",
+                },
+                {
+                    title: "Systémové programování",
+                    tech: "C, Shell",
+                    text: "Synchronizace procesů přes semafory a sdílenou paměť, hashovací tabulky, utility typu tail, nástroj pro práci s boot záznamy.",
+                    url: "https://github.com/Zv0ndis/Process-Synchronization-C",
+                },
+                {
+                    title: "Nízkoúrovňové programování a hardware",
+                    tech: "VHDL, MIPS64, ESP32",
+                    text: "UART přijímač ve VHDL, šifra v assembleru MIPS64, projekty s mikrokontroléry ESP32.",
+                    url: "https://github.com/Zv0ndis/UART-Receiver-VHDL",
+                },
+                {
+                    title: "Web a automatizace",
+                    tech: "JavaScript, Eleventy, Firebase, GitHub Actions",
+                    text: "Tento web (statický generátor, CI/CD, Firebase přihlášení) a interní informační systém studentského klubu (KIS).",
+                    url: "https://github.com/Zv0ndis/zv0ndis.github.io",
+                },
+            ],
+        },
         leisure: {
             heading: "Volnočasové aktivity",
             entries: [
@@ -129,7 +170,7 @@ export default {
             groups: [
                 {
                     label: "Languages",
-                    value: "C, C#, Java, Python, JavaScript, Shell, HTML, CSS, SQL",
+                    value: "C, C#, Java, Python, Go, JavaScript, Shell, HTML, CSS, SQL, VHDL, MIPS64 Assembly",
                 },
                 {
                     label: "Tools",
@@ -180,6 +221,47 @@ export default {
                     date: "2020 – 2024",
                     role: "Technical Lyceum",
                     text: "Graduated with honors (“red diploma”). I gained a technical overview spanning mechanical engineering, electrical engineering, and IT. The program included exchange stays, which broadened my language skills and adaptability.",
+                },
+            ],
+        },
+        projects: {
+            heading: "What I can do as a programmer",
+            entries: [
+                {
+                    title: "Compiler (IFJ)",
+                    tech: "C",
+                    text: "Team-built compiler for a language subset – lexical, syntactic and semantic analysis plus code generation.",
+                    url: "https://github.com/Zv0ndis/IFJ-Compiler-Project",
+                },
+                {
+                    title: "Networking tools",
+                    tech: "Go, Python",
+                    text: "An L4 (TCP/UDP) port scanner and reliable data transfer over UDP with a custom protocol.",
+                    url: "https://github.com/Zv0ndis/IPK-Project-1",
+                },
+                {
+                    title: "Interpreter with tester",
+                    tech: "Python",
+                    text: "Interpreter for the SOL26 language, including its own automated test suite.",
+                    url: "https://github.com/Zv0ndis/Interpet-with-tester-for-SOL26",
+                },
+                {
+                    title: "Systems programming",
+                    tech: "C, Shell",
+                    text: "Process synchronization with semaphores and shared memory, hash tables, tail-like utilities, a boot record tool.",
+                    url: "https://github.com/Zv0ndis/Process-Synchronization-C",
+                },
+                {
+                    title: "Low-level & hardware",
+                    tech: "VHDL, MIPS64, ESP32",
+                    text: "A UART receiver in VHDL, a cipher in MIPS64 assembly, ESP32 microcontroller projects.",
+                    url: "https://github.com/Zv0ndis/UART-Receiver-VHDL",
+                },
+                {
+                    title: "Web & automation",
+                    tech: "JavaScript, Eleventy, Firebase, GitHub Actions",
+                    text: "This site (static generator, CI/CD, Firebase sign-in) and the student club's internal information system (KIS).",
+                    url: "https://github.com/Zv0ndis/zv0ndis.github.io",
                 },
             ],
         },
