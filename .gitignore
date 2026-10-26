@@ -34,3 +34,4 @@ _preview-*.html
 .impeccable/review/
 .impeccable/build/
 .impeccable/hook.cache.json
+.impeccable/questions/
