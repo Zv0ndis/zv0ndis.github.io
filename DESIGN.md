@@ -61,7 +61,6 @@ spacing:
   gutter-desktop: "56px"
   column-gap: "24px"
   band: "88px"
-  page: "1440px"
 components:
   button-call:
     backgroundColor: "{colors.accent}"
@@ -175,7 +174,7 @@ Near-white paper, near-black ink, one grey for secondary text and one cobalt acc
 
 ## Layout
 
-12 columns, 24px gaps, max 1440px, 56px side gutters from 960px up (32px from 600px, 16px on phones). The rail takes columns 1 to 3; content takes 4 to 12. The main element is a subgrid in both axes so the lead shares row 1 with the rail and each band can return its heading to the rail columns. Bands are spaced 88px on desktop and 64px below. Below 960px everything is one column.
+12 columns, 24px gaps, full viewport width, 56px side gutters from 960px up (32px from 600px, 16px on phones). The rail takes columns 1 to 3; content takes 4 to 12. The main element is a subgrid in both axes so the lead shares row 1 with the rail and each band can return its heading to the rail columns. Bands are spaced 88px on desktop and 64px below. Below 960px everything is one column.
 
 ## Elevation & Depth
 

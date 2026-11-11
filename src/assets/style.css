@@ -18,7 +18,6 @@
 
     --gutter: 16px;
     --col-gap: 24px;
-    --page-max: 1440px;
     --space-band: 64px;
     --radius: 2px;
     --target: 44px;
@@ -185,8 +184,6 @@ button {
    ========================================================================= */
 
 .frame {
-    max-width: var(--page-max);
-    margin: 0 auto;
     padding: 0 var(--gutter) 96px;
 }
 
