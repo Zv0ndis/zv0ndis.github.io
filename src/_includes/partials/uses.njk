@@ -1,20 +1,18 @@
 {%- set u = copy.uses[lang] -%}
-<div class="container">
-    <header class="cv-header">
-        <h1>{{ u.h1 }}</h1>
-        <p class="subtitle">{{ u.subtitle }}</p>
-    </header>
+<header class="lead">
+    <h1>{{ u.h1 }}</h1>
+    <p class="subtitle">{{ u.subtitle }}</p>
+</header>
 
+<div class="bands">
     {%- for group in u.groups %}
-    <section>
+    <section class="band">
         <h2>{{ group.heading }}</h2>
-        <ul class="uses-list">
+        <ul class="rows">
             {%- for item in group.items %}
-            <li class="uses-row">
-                <strong>{{ item.name }}</strong>
-                {%- if item.note %}
-                <span class="uses-note">{{ item.note }}</span>
-                {%- endif %}
+            <li>
+                <span class="row-title">{{ item.name }}</span>
+                <span class="row-detail">{{ item.note }}</span>
             </li>
             {%- endfor %}
         </ul>

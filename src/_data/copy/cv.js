@@ -11,7 +11,7 @@ const contact = {
 
 export default {
     cs: {
-        subtitle: "Student FIT VUT v Brně • 21 let",
+        subtitle: "Student FIT VUT v Brně, 21 let",
         contact: { ...contact, location: "Slavičín, Zlínský kraj" },
         aboutHeading: "O mně",
         about: [
@@ -150,7 +150,7 @@ export default {
     },
 
     en: {
-        subtitle: "Student at FIT BUT Brno • 21 years old",
+        subtitle: "Student at FIT BUT Brno, 21 years old",
         contact: { ...contact, location: "Slavičín, Zlín Region, Czechia" },
         aboutHeading: "About me",
         about: [

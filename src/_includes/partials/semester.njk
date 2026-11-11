@@ -1,65 +1,62 @@
 {%- set s = copy.semester[lang] -%}
-<div class="container">
-    <header class="cv-header">
-        <h1 id="loginToggle" class="title-trigger">{{ s.h1 }}</h1>
-        <p class="subtitle">{{ s.subtitle }}</p>
-        <button type="button" id="logoutButton" class="text-link" hidden>{{ s.logout }}</button>
-    </header>
+<header class="lead">
+    {#- The clickable h1 is an owner-only login affordance, deliberately not a visible control. #}
+    <h1 id="loginToggle">{{ s.h1 }}</h1>
+    <p class="subtitle">{{ s.subtitle }}</p>
+    <button type="button" id="logoutButton" class="text-link" hidden>{{ s.logout }}</button>
 
     <form id="loginForm" class="login-form" hidden>
-        <input
-            type="email"
-            id="loginEmail"
-            placeholder="{{ s.loginEmail }}"
-            autocomplete="username"
-            required
-        />
-        <input
-            type="password"
-            id="loginPassword"
-            placeholder="{{ s.loginPassword }}"
-            autocomplete="current-password"
-            required
-        />
-        <button type="submit" class="admin-toggle">{{ s.loginSubmit }}</button>
-        <span id="loginError" class="login-error"></span>
+        <label class="field"
+            >{{ s.loginEmail }}
+            <input type="email" id="loginEmail" autocomplete="username" required />
+        </label>
+        <label class="field"
+            >{{ s.loginPassword }}
+            <input type="password" id="loginPassword" autocomplete="current-password" required />
+        </label>
+        <button type="submit" class="button">{{ s.loginSubmit }}</button>
+        <p id="loginError" class="form-error" role="alert"></p>
     </form>
+</header>
 
-    <section class="semester-range">
+<div class="bands">
+    <section class="band">
         <h2>{{ s.datesHeading }}</h2>
-        <p id="semesterRangeText">{{ s.rangeLoading }}</p>
-        <p id="examWinterText" class="exam-period-text"></p>
-        <p id="examSummerText" class="exam-period-text"></p>
-        <form id="semesterRangeForm" class="admin-only" hidden>
-            <label
-                >{{ s.semesterStart }}
-                <input type="date" id="semesterStart" required />
-            </label>
-            <label
-                >{{ s.semesterEnd }}
-                <input type="date" id="semesterEnd" required />
-            </label>
-            <label
-                >{{ s.examWinterFrom }}
-                <input type="date" id="examWinterStart" />
-            </label>
-            <label
-                >{{ s.examWinterTo }}
-                <input type="date" id="examWinterEnd" />
-            </label>
-            <label
-                >{{ s.examSummerFrom }}
-                <input type="date" id="examSummerStart" />
-            </label>
-            <label
-                >{{ s.examSummerTo }}
-                <input type="date" id="examSummerEnd" />
-            </label>
-            <button type="submit" class="admin-toggle">{{ s.save }}</button>
+        <p id="semesterRangeText" class="range-text">{{ s.rangeLoading }}</p>
+        <p id="examWinterText" class="exam-text"></p>
+        <p id="examSummerText" class="exam-text"></p>
+        <form id="semesterRangeForm" class="admin-form admin-only" hidden>
+            <div class="fields fields-2">
+                <label class="field"
+                    >{{ s.semesterStart }}
+                    <input type="date" id="semesterStart" required />
+                </label>
+                <label class="field"
+                    >{{ s.semesterEnd }}
+                    <input type="date" id="semesterEnd" required />
+                </label>
+                <label class="field"
+                    >{{ s.examWinterFrom }}
+                    <input type="date" id="examWinterStart" />
+                </label>
+                <label class="field"
+                    >{{ s.examWinterTo }}
+                    <input type="date" id="examWinterEnd" />
+                </label>
+                <label class="field"
+                    >{{ s.examSummerFrom }}
+                    <input type="date" id="examSummerStart" />
+                </label>
+                <label class="field"
+                    >{{ s.examSummerTo }}
+                    <input type="date" id="examSummerEnd" />
+                </label>
+            </div>
+            <button type="submit" class="button">{{ s.save }}</button>
         </form>
     </section>
 
-    <section class="semester-progress" id="semesterProgress" hidden>
+    <section class="band" id="semesterProgress" hidden>
         <h2>{{ s.progressHeading }}</h2>
         <p class="progress-headline" id="progressHeadline"></p>
         <p class="progress-caption" id="progressCaption"></p>
@@ -67,5 +64,4 @@
             <div class="progress-fill" id="progressFill"></div>
         </div>
     </section>
-
 </div>

@@ -1,127 +1,131 @@
 {%- set d = copy.cv[lang] -%}
-<div class="container">
-    <header class="cv-header">
-        <h1>{{ site.author }}</h1>
-        <p class="subtitle">{{ d.subtitle }}</p>
-        <div class="contact-info">
-            <a href="mailto:{{ d.contact.email }}">{{ d.contact.email }}</a>
-            <a href="{{ d.contact.phoneHref }}">{{ d.contact.phone | replace(" ", "&nbsp;") | safe }}</a>
-            <span>{{ d.contact.location }}</span>
-            <a href="{{ d.contact.githubUrl }}" target="_blank" rel="noopener noreferrer"
-                >{{ d.contact.githubLabel }}</a
-            >
-        </div>
-    </header>
+<header class="lead">
+    <h1>{{ site.author }}</h1>
+    <p class="subtitle">{{ d.subtitle }}</p>
+    <div class="contact-info">
+        <a class="tel" href="{{ d.contact.phoneHref }}">{{ d.contact.phone | replace(" ", "&nbsp;") | safe }}</a>
+        <a href="mailto:{{ d.contact.email }}">{{ d.contact.email }}</a>
+        <a href="{{ d.contact.githubUrl }}" target="_blank" rel="noopener noreferrer">{{ d.contact.githubLabel }}</a>
+        <span>{{ d.contact.location }}</span>
+    </div>
+</header>
 
-    <section>
+<div class="bands">
+    <section class="band">
         <h2>{{ d.aboutHeading }}</h2>
         {%- for p in d.about %}
         <p>{{ p }}</p>
         {%- endfor %}
     </section>
 
-    <div class="two-col">
+    <section class="band">
+        <h2>{{ d.experience.heading }}</h2>
         <div>
-            <section>
-                <h2>{{ d.skills.heading }}</h2>
-                <ul>
-                    {%- for item in d.skills.items %}
-                    <li>{{ item }}</li>
-                    {%- endfor %}
-                </ul>
-            </section>
-
-            <section>
-                <h2>{{ d.tech.heading }}</h2>
-                {%- for g in d.tech.groups %}
-                <p class="tech-label">{{ g.label }}</p>
-                <ul class="tag-list">
-                    {%- for item in g.value | commaList %}
-                    <li><span class="tag">{{ item }}</span></li>
-                    {%- endfor %}
-                </ul>
-                {%- endfor %}
-            </section>
-
-            <section>
-                <h2>{{ d.languages.heading }}</h2>
-                {%- for l in d.languages.items %}
-                <p class="lang-row">
-                    <strong>{{ l.name }}</strong>
-                    <span class="lang-level">{{ l.level }}</span>
-                </p>
-                {%- endfor %}
-            </section>
-
-            <section>
-                <h2>{{ d.interests.heading }}</h2>
-                {%- for g in d.interests.groups %}
-                <p class="tech-label">{{ g.label }}</p>
-                <ul class="tag-list">
-                    {%- for item in g.value | commaList %}
-                    <li><span class="tag">{{ item }}</span></li>
-                    {%- endfor %}
-                </ul>
-                {%- endfor %}
-            </section>
-        </div>
-
-        <div>
-            <section>
-                <h2>{{ d.experience.heading }}</h2>
-                {%- for e in d.experience.entries %}
-                <div class="entry">
-                    <div class="entry-header">
-                        <span class="entry-title">{{ e.title }}</span>
-                    </div>
-                    <span class="entry-role">{{ e.role }}</span>
-                    <p>{{ e.text }}</p>
-                </div>
-                {%- endfor %}
-            </section>
-
-            <section>
-                <h2>{{ d.education.heading }}</h2>
-                {%- for e in d.education.entries %}
-                <div class="entry">
-                    <div class="entry-header">
-                        <span class="entry-title">{{ e.title }}</span>
-                        <span class="entry-date">{{ e.date }}</span>
-                    </div>
-                    <span class="entry-role">{{ e.role }}</span>
-                    <p>{{ e.text }}</p>
-                </div>
-                {%- endfor %}
-            </section>
-        </div>
-    </div>
-
-    <section>
-        <h2>{{ d.projects.heading }}</h2>
-        <div class="two-col-hobbies">
-            {%- for e in d.projects.entries %}
+            {%- for e in d.experience.entries %}
             <div class="entry">
-                {%- if e.url %}
-                <a class="entry-title" href="{{ e.url }}" target="_blank" rel="noopener noreferrer">{{ e.title }}</a>
-                {%- else %}
-                <span class="entry-title">{{ e.title }}</span>
-                {%- endif %}
-                {%- if e.tech %}
-                <ul class="tag-list">
-                    {%- for item in e.tech | commaList %}
-                    <li><span class="tag">{{ item }}</span></li>
-                    {%- endfor %}
-                </ul>
-                {%- endif %}
+                <div class="entry-header">
+                    <span class="entry-title">{{ e.title }}</span>
+                </div>
+                <span class="entry-role">{{ e.role }}</span>
                 <p>{{ e.text }}</p>
             </div>
             {%- endfor %}
         </div>
     </section>
 
-    <section>
+    <section class="band">
+        <h2>{{ d.education.heading }}</h2>
+        <div>
+            {%- for e in d.education.entries %}
+            <div class="entry">
+                <div class="entry-header">
+                    <span class="entry-title">{{ e.title }}</span>
+                    <span class="entry-date">{{ e.date }}</span>
+                </div>
+                <span class="entry-role">{{ e.role }}</span>
+                <p>{{ e.text }}</p>
+            </div>
+            {%- endfor %}
+        </div>
+    </section>
+
+    <section class="band" aria-labelledby="projects">
+        <h2 id="projects">{{ d.projects.heading }}</h2>
+        <ul class="rows">
+            {%- for e in d.projects.entries %}
+            <li>
+                <span class="row-title">
+                    {%- if e.url %}
+                    <a href="{{ e.url }}" target="_blank" rel="noopener noreferrer">{{ e.title }}</a>
+                    {%- else %}
+                    {{ e.title }}
+                    {%- endif %}
+                </span>
+                {%- if e.tech %}
+                <span class="row-detail">{{ e.tech }}</span>
+                {%- endif %}
+                <span class="row-text">{{ e.text }}</span>
+            </li>
+            {%- endfor %}
+        </ul>
+    </section>
+
+    <section class="band">
+        <h2>{{ d.tech.heading }}</h2>
+        <div>
+            {%- for g in d.tech.groups %}
+            <div class="group">
+                <p class="group-label">{{ g.label }}</p>
+                <ul class="inline-list">
+                    {%- for item in g.value | commaList %}
+                    <li>{{ item }}</li>
+                    {%- endfor %}
+                </ul>
+            </div>
+            {%- endfor %}
+        </div>
+    </section>
+
+    <section class="band">
+        <h2>{{ d.skills.heading }}</h2>
+        <ul class="plain-list">
+            {%- for item in d.skills.items %}
+            <li>{{ item }}</li>
+            {%- endfor %}
+        </ul>
+    </section>
+
+    <section class="band">
+        <h2>{{ d.languages.heading }}</h2>
+        <div>
+            {%- for l in d.languages.items %}
+            <p class="lang-row">
+                <strong>{{ l.name }}</strong>
+                <span class="lang-level">{{ l.level }}</span>
+            </p>
+            {%- endfor %}
+        </div>
+    </section>
+
+    <section class="band">
+        <h2>{{ d.interests.heading }}</h2>
+        <div>
+            {%- for g in d.interests.groups %}
+            <div class="group">
+                <p class="group-label">{{ g.label }}</p>
+                <ul class="inline-list">
+                    {%- for item in g.value | commaList %}
+                    <li>{{ item }}</li>
+                    {%- endfor %}
+                </ul>
+            </div>
+            {%- endfor %}
+        </div>
+    </section>
+
+    <section class="band">
         <h2>{{ d.leisure.heading }}</h2>
-        <div class="two-col-hobbies">
+        <div>
             {%- for e in d.leisure.entries %}
             <div class="entry">
                 <span class="entry-title">{{ e.title }}</span>

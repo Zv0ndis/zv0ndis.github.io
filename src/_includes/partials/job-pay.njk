@@ -1,42 +1,44 @@
 {%- set j = copy.jobpay[lang] -%}
-<div class="container">
-    <header class="cv-header">
-        <h1>{{ j.h1 }}</h1>
-        <p class="subtitle">{{ j.subtitle }}</p>
-    </header>
+<header class="lead">
+    <h1>{{ j.h1 }}</h1>
+    <p class="subtitle">{{ j.subtitle }}</p>
+</header>
 
-    <section class="pay-form-section">
+<div class="bands">
+    <section class="band">
         <h2>{{ j.formHeading }}</h2>
-        <form id="payForm" class="pay-form" onsubmit="return false">
-            <div class="pay-contract-toggle" role="radiogroup" aria-label="{{ j.contractAria }}">
-                <label class="pay-radio">
+        <form id="payForm" onsubmit="return false">
+            <fieldset class="contract">
+                <legend>{{ j.contractLabel }}</legend>
+                <label class="radio">
                     <input type="radio" name="contractType" value="dpp" checked />
                     DPP
                 </label>
-                <label class="pay-radio">
+                <label class="radio">
                     <input type="radio" name="contractType" value="dpc" />
                     DPČ
                 </label>
+            </fieldset>
+            <div class="fields">
+                <label class="field"
+                    >{{ j.hourlyRate }}
+                    <input type="number" id="hourlyRate" min="0" step="0.5" value="150" inputmode="decimal" required />
+                </label>
+                <label class="field"
+                    >{{ j.regularHours }}
+                    <input type="number" id="regularHours" min="0" step="0.25" value="0" inputmode="decimal" required />
+                </label>
+                <label class="field"
+                    >{{ j.nightHours }}
+                    <input type="number" id="nightHours" min="0" step="0.25" value="0" inputmode="decimal" required />
+                </label>
             </div>
-
-            <label
-                >{{ j.hourlyRate }}
-                <input type="number" id="hourlyRate" min="0" step="0.5" value="150" required />
-            </label>
-            <label
-                >{{ j.regularHours }}
-                <input type="number" id="regularHours" min="0" step="0.25" value="0" required />
-            </label>
-            <label
-                >{{ j.nightHours }}
-                <input type="number" id="nightHours" min="0" step="0.25" value="0" required />
-            </label>
         </form>
     </section>
 
-    <section class="pay-results-section">
+    <section class="band">
         <h2>{{ j.resultHeading }}</h2>
-        <div class="pay-results">
+        <div class="pay-results" aria-live="polite">
             <div class="pay-row">
                 <span>{{ j.rowRegular }}</span>
                 <span id="resRegularPay">0 Kč</span>
@@ -58,7 +60,7 @@
             </div>
             <div class="pay-row pay-row-total">
                 <span>{{ j.rowNet }}</span>
-                <span id="resNetTotal">0 Kč</span>
+                <output id="resNetTotal" for="hourlyRate regularHours nightHours">0 Kč</output>
             </div>
         </div>
         <p class="pay-disclaimer">{{ j.disclaimer }}</p>

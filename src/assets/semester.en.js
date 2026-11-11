@@ -91,15 +91,29 @@ loginToggle.addEventListener("click", () => {
     loginForm.hidden = !loginForm.hidden;
 });
 
+function setLoginInvalid(invalid) {
+    for (const input of [loginEmail, loginPassword]) {
+        if (invalid) {
+            input.setAttribute("aria-invalid", "true");
+            input.setAttribute("aria-describedby", "loginError");
+        } else {
+            input.removeAttribute("aria-invalid");
+            input.removeAttribute("aria-describedby");
+        }
+    }
+}
+
 loginForm.addEventListener("submit", async (event) => {
     event.preventDefault();
     loginError.textContent = "";
+    setLoginInvalid(false);
     try {
         await signInWithEmailAndPassword(auth, loginEmail.value.trim(), loginPassword.value);
         loginForm.reset();
         loginForm.hidden = true;
     } catch (err) {
-        loginError.textContent = "Login failed.";
+        loginError.textContent = "Wrong email or password. Try again.";
+        setLoginInvalid(true);
     }
 });
 
@@ -171,7 +185,7 @@ function renderSemesterProgress() {
 
     if (today > end) {
         progressHeadline.textContent = "Semester has ended";
-        progressCaption.textContent = `Week ${totalWeeks} of ${totalWeeks} • 100%`;
+        progressCaption.textContent = `Week ${totalWeeks} of ${totalWeeks}, 100%`;
         progressFill.style.width = "100%";
         return;
     }
@@ -185,7 +199,7 @@ function renderSemesterProgress() {
         toISODate(today) >= semesterRange.startDate ? (currentWeek % 2 === 1 ? "odd" : "even") : "";
 
     progressHeadline.textContent = `Week ${currentWeek} of ${totalWeeks}. It's an ${weekType} week.`;
-    progressCaption.textContent = `${daysRemaining} ${enDays(daysRemaining)} left until the end of semester • ${percent}%`;
+    progressCaption.textContent = `${daysRemaining} ${enDays(daysRemaining)} left until the end of semester, ${percent}%`;
     progressFill.style.width = `${percent}%`;
 }
 

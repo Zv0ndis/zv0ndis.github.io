@@ -10,7 +10,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="color-scheme" content="dark" />
+        <meta name="color-scheme" content="light" />
         <title>{{ title }}</title>
         <meta name="description" content="{{ description }}" />
         <meta name="author" content="{{ site.author }}" />
@@ -35,7 +35,7 @@
         <meta name="twitter:card" content="summary" />
         <link
             rel="preload"
-            href="/assets/fonts/monoton-latin-400-normal.woff2"
+            href="/assets/fonts/archivo-latin-wght-normal.woff2"
             as="font"
             type="font/woff2"
             crossorigin
@@ -46,16 +46,35 @@
     </head>
     <body data-page="{{ page_key or 'none' }}">
         {%- set home = site.pages | findPage("home") %}
-        <div class="marquee">
-            <a class="marquee-sign" href="/{{ home[lang].url }}">Zvondis</a>
+        <a class="skip" href="#main">{{ "Skip to content" if lang == "en" else "Přeskočit na obsah" }}</a>
+        <div class="frame">
+            <header class="rail">
+                <a class="mark" href="/{{ home[lang].url }}">Zvondis</a>
+                <nav class="rail-nav" aria-label="{{ 'Pages' if lang == 'en' else 'Stránky' }}">
+                    <ul>
+                        {%- for p in site.pages %}
+                        <li>
+                            <a href="{{ p[lang].url }}" class="nav-link"{% if p.key == page_key %} aria-current="page"{% endif %}>{{ p[lang].label }}</a>
+                        </li>
+                        {%- endfor %}
+                    </ul>
+                    {%- if hasCounterpart %}
+                    {%- set other = 'cs' if lang == 'en' else 'en' %}
+                    <a
+                        href="{{ entry[other].url }}"
+                        class="lang-switch"
+                        lang="{{ other }}"
+                        data-set-lang="{{ other }}"
+                        aria-label="{{ 'Přepnout do češtiny' if lang == 'en' else 'Switch to English' }}"
+                        >{{ 'CZ' if lang == 'en' else 'EN' }}</a
+                    >
+                    {%- endif %}
+                </nav>
+            </header>
+            <main id="main" class="main">
+                {{ content | safe }}
+            </main>
         </div>
-        {%- if page_key %}
-        <site-nav data-page="{{ page_key }}" data-lang="{{ lang }}"></site-nav>
-        {%- else %}
-        <site-nav data-lang="{{ lang }}"></site-nav>
-        {%- endif %}
-
-        {{ content | safe }}
         {%- for src in (scripts or []) %}
         <script src="/assets/{{ src }}?v={{ build.rev }}"></script>
         {%- endfor %}

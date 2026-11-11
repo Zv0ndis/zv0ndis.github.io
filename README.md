@@ -63,12 +63,13 @@ Assety jsou pod `/assets/`.
 
 ## Konvence
 
-- **Vzhled**: arkádový automat — svítící marquee nahoře, ovládací panel s tlačítky
-  (navigace), obsah na CRT obrazovce. Tokeny v `src/assets/style.css`: pozadí
-  `#07060D`, magenta `#FF2BD6` (neon marquee, značky sekcí), azurová `#21F0FF`
-  (linky, popisky, odkazy), žlutá `#FFE23A` jen pro aktivní stav a hlavní akci.
-- **Fonty** (self-hosted, OFL): Monoton (neon marquee), Press Start 2P (krátké
-  ASCII popisky a čísla — nemá česká velká písmena), Chakra Petch (veškerý text).
+- **Vzhled**: minimalistická švýcarská sazba, popis v `DESIGN.md`. Mřížka o 12
+  sloupcích, navigace ve sloupcích 1-3, obsah od sloupce 4, sekce oddělené tenkou
+  linkou. Tokeny v `src/assets/style.css`: papír `#FAFAF9`, inkoust `#0C0C0D`,
+  šedá `#595C62` a jediný akcent `#1637E0` (jen „za rozumnou cenu“ a tlačítko
+  Zavolat).
+- **Fonty** (self-hosted, OFL): Archivo (variabilní, latin + latin-ext) na všechno,
+  kontrast jen vahou 800 proti 300.
 - Prettier + html-validate běží v CI; výstupní HTML formátuje build.
 - `.njk` soubory prettier ignoruje (`.prettierignore`).
 

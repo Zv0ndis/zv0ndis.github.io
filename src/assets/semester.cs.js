@@ -91,15 +91,29 @@ loginToggle.addEventListener("click", () => {
     loginForm.hidden = !loginForm.hidden;
 });
 
+function setLoginInvalid(invalid) {
+    for (const input of [loginEmail, loginPassword]) {
+        if (invalid) {
+            input.setAttribute("aria-invalid", "true");
+            input.setAttribute("aria-describedby", "loginError");
+        } else {
+            input.removeAttribute("aria-invalid");
+            input.removeAttribute("aria-describedby");
+        }
+    }
+}
+
 loginForm.addEventListener("submit", async (event) => {
     event.preventDefault();
     loginError.textContent = "";
+    setLoginInvalid(false);
     try {
         await signInWithEmailAndPassword(auth, loginEmail.value.trim(), loginPassword.value);
         loginForm.reset();
         loginForm.hidden = true;
     } catch (err) {
-        loginError.textContent = "Přihlášení se nezdařilo.";
+        loginError.textContent = "Špatný e-mail nebo heslo. Zkuste to znovu.";
+        setLoginInvalid(true);
     }
 });
 
@@ -174,7 +188,7 @@ function renderSemesterProgress() {
 
     if (today > end) {
         progressHeadline.textContent = "Semestr skončil";
-        progressCaption.textContent = `${totalWeeks}. týden z ${totalWeeks} • 100 %`;
+        progressCaption.textContent = `${totalWeeks}. týden z ${totalWeeks}, 100 %`;
         progressFill.style.width = "100%";
         return;
     }
@@ -192,7 +206,7 @@ function renderSemesterProgress() {
             : "";
 
     progressHeadline.textContent = `${currentWeek}. týden z ${totalWeeks}. Týden je ${weekType}.`;
-    progressCaption.textContent = `Zbývá ${daysRemaining} ${czDny(daysRemaining)} do konce semestru • ${percent} %`;
+    progressCaption.textContent = `Zbývá ${daysRemaining} ${czDny(daysRemaining)} do konce semestru, ${percent} %`;
     progressFill.style.width = `${percent}%`;
 }
 
