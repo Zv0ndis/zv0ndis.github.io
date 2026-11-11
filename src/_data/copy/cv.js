@@ -61,6 +61,12 @@ export default {
             heading: "Zkušenosti",
             entries: [
                 {
+                    title: "Deeply Trees",
+                    date: "10/2026 - současnost",
+                    role: "Vývojář, backend a full-stack",
+                    text: "Pracuji na produktu Lens, který pomáhá značkám na Amazonu s kampaněmi s tvůrci: tvůrci propojí Instagram a Facebook, Lens sbírá jejich statistiky a přiřazuje prodeje na Amazonu k jejich sledovacím odkazům. Starám se o integraci s Meta Graph API (připojení účtů, životní cyklus tokenů, ztracené stránky), logiku kampaní a sledovacích odkazů a statistiky s reportingem. Práce v týmu přes tickety v Jiře a pull requesty s CI mě naučila psát opravy a testy a nasazovat na staging i produkci v Dockeru (Python, Django, FastAPI, Celery, PostgreSQL/TimescaleDB, React).",
+                },
+                {
                     title: "Tesco",
                     role: "Všestranný asistent prodeje",
                     text: "Práce v dynamickém prostředí mě naučila zvládat stresové situace, efektivně komunikovat se zákazníky a rychle řešit problémy. Vyzkoušel jsem si fungování provozu od práce na pokladně přes doplňování zboží až po řešení nestandardních situací. Získal jsem schopnost multitaskingu a odolnost vůči stresu.",
@@ -129,8 +135,13 @@ export default {
                 {
                     title: "Web a automatizace",
                     tech: "JavaScript, Eleventy, Firebase, GitHub Actions",
-                    text: "Tento web (statický generátor, CI/CD, Firebase přihlášení) a interní informační systém studentského klubu (KIS).",
+                    text: "Tento web (statický generátor, CI/CD, Firebase přihlášení).",
                     url: "https://github.com/Zv0ndis/zv0ndis.github.io",
+                },
+                {
+                    title: "KIS, informační systém studentského klubu",
+                    tech: "Python, Flask, PostgreSQL, Angular, Docker",
+                    text: "REST API ve Flasku s OpenAPI (Connexion) nad PostgreSQL, administrační frontend v Angularu, integrace Google Wallet a nasazení v Dockeru. Vyvíjeno pro Studentskou unii FIT VUT (klub Kachna).",
                 },
             ],
         },
@@ -200,6 +211,12 @@ export default {
             heading: "Experience",
             entries: [
                 {
+                    title: "Deeply Trees",
+                    date: "10/2026 - present",
+                    role: "Developer, backend and full-stack",
+                    text: "I work on Lens, a product that helps Amazon brands run creator campaigns: creators connect Instagram and Facebook, and Lens gathers their analytics and credits Amazon sales to each creator's tracking links. I handle the Meta Graph API integration (account connections, token lifecycle, lost-Page handling), campaign and tracking-link logic, and account statistics and reporting. Working in a team through Jira tickets and pull requests with CI taught me to ship bug fixes and tests and to deploy to staging and production in Docker (Python, Django, FastAPI, Celery, PostgreSQL/TimescaleDB, React).",
+                },
+                {
                     title: "Tesco",
                     role: "General sales assistant",
                     text: "Working in a fast-paced environment taught me to handle stressful situations, communicate effectively with customers, and solve problems quickly. I experienced the full range of store operations, from checkout work to restocking to handling non-standard situations. I gained strong multitasking skills and resilience under stress.",
@@ -268,8 +285,13 @@ export default {
                 {
                     title: "Web & automation",
                     tech: "JavaScript, Eleventy, Firebase, GitHub Actions",
-                    text: "This site (static generator, CI/CD, Firebase sign-in) and the student club's internal information system (KIS).",
+                    text: "This site (static generator, CI/CD, Firebase sign-in).",
                     url: "https://github.com/Zv0ndis/zv0ndis.github.io",
+                },
+                {
+                    title: "KIS, the student club information system",
+                    tech: "Python, Flask, PostgreSQL, Angular, Docker",
+                    text: "A REST API in Flask with OpenAPI (Connexion) on top of PostgreSQL, an Angular admin frontend, Google Wallet integration, and Docker deployment. Built for the Student Union of FIT BUT (the Kachna club).",
                 },
             ],
         },

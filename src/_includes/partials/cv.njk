@@ -25,6 +25,9 @@
             <div class="entry">
                 <div class="entry-header">
                     <span class="entry-title">{{ e.title }}</span>
+                    {%- if e.date %}
+                    <span class="entry-date">{{ e.date }}</span>
+                    {%- endif %}
                 </div>
                 <span class="entry-role">{{ e.role }}</span>
                 <p>{{ e.text }}</p>
