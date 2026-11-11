@@ -373,11 +373,6 @@ h1 {
     line-height: 1.45;
 }
 
-.prose,
-.band > p {
-    max-width: 65ch;
-}
-
 .meta {
     color: var(--mute);
     font-size: 0.9375rem;
@@ -407,7 +402,6 @@ h1 {
 }
 
 .lede {
-    max-width: 34em;
     margin-top: 32px;
     color: var(--mute);
     font-size: 1.25rem;
@@ -519,7 +513,6 @@ h1 {
 
 .row-text {
     grid-column: 1 / -1;
-    max-width: 65ch;
     margin-top: 6px;
     color: var(--mute);
     font-size: 1rem;
@@ -595,7 +588,6 @@ h1 {
 }
 
 .entry p {
-    max-width: 65ch;
     margin-top: 8px;
 }
 
@@ -639,12 +631,6 @@ h1 {
     font-weight: 700;
 }
 
-@media (width >= 600px) {
-    .field {
-        max-width: 22rem;
-    }
-}
-
 .fields {
     display: grid;
     gap: 20px;
@@ -652,7 +638,7 @@ h1 {
 
 @media (width >= 600px) {
     .fields-2 {
-        grid-template-columns: repeat(2, minmax(0, 22rem));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         column-gap: var(--col-gap);
     }
 }
@@ -769,7 +755,6 @@ input[type="radio"] {
 }
 
 .progress-track {
-    max-width: 40rem;
     height: 8px;
     margin-top: 24px;
     border-bottom: 1px solid var(--ink);
@@ -806,10 +791,6 @@ input[type="radio"] {
     min-height: var(--target);
     font-weight: 700;
     cursor: pointer;
-}
-
-.pay-results {
-    max-width: 40rem;
 }
 
 .pay-row {

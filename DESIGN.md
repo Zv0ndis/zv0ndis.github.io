@@ -162,7 +162,7 @@ Near-white paper, near-black ink, one grey for secondary text and one cobalt acc
 - **Display** (800, clamp 40 to 72px, -0.04em): page titles. On 404 the numerals go larger and the line under them drops to 300.
 - **Lede** (400, 20px, mute): the sentence under each title.
 - **Title** (700, 18px, -0.01em): row and entry titles.
-- **Body** (400, 17px, line-height 1.55, max 65ch): everything people read.
+- **Body** (400, 17px, line-height 1.55, fills its column): everything people read.
 - **Label** (700, 15px): band names in the rail, nav, field labels.
 - **Meta** (400, 13 to 15px, mute): fact labels, dates, row details.
 
