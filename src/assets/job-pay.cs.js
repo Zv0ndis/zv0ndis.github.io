@@ -61,6 +61,7 @@ function calculate() {
     resNetTotal.textContent = formatKc(overLimit ? netTotal : grossTotal);
 }
 
+payForm.addEventListener("submit", (e) => e.preventDefault());
 payForm.addEventListener("input", calculate);
 payForm.addEventListener("change", calculate);
 calculate();
