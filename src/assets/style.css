@@ -536,6 +536,31 @@ h1 {
    CV
    ========================================================================= */
 
+.lead-photo {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px 40px;
+    align-items: start;
+}
+
+.portrait {
+    width: clamp(112px, 18vw, 220px);
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: var(--radius);
+}
+
+@media (width < 600px) {
+    .lead-photo {
+        grid-template-columns: 1fr;
+    }
+
+    .portrait {
+        grid-row: 1;
+    }
+}
+
 .contact-info {
     display: flex;
     flex-wrap: wrap;

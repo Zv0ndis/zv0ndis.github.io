@@ -1,13 +1,16 @@
 {%- set d = copy.cv[lang] -%}
-<header class="lead">
-    <h1>{{ site.author }}</h1>
-    <p class="subtitle">{{ d.subtitle }}</p>
-    <div class="contact-info">
-        <a class="tel" href="{{ d.contact.phoneHref }}">{{ d.contact.phone | replace(" ", "&nbsp;") | safe }}</a>
-        <a href="mailto:{{ d.contact.email }}">{{ d.contact.email }}</a>
-        <a href="{{ d.contact.githubUrl }}" target="_blank" rel="noopener noreferrer">{{ d.contact.githubLabel }}</a>
-        <span>{{ d.contact.location }}</span>
+<header class="lead lead-photo">
+    <div>
+        <h1>{{ site.author }}</h1>
+        <p class="subtitle">{{ d.subtitle }}</p>
+        <div class="contact-info">
+            <a class="tel" href="{{ d.contact.phoneHref }}">{{ d.contact.phone | replace(" ", "&nbsp;") | safe }}</a>
+            <a href="mailto:{{ d.contact.email }}">{{ d.contact.email }}</a>
+            <a href="{{ d.contact.githubUrl }}" target="_blank" rel="noopener noreferrer">{{ d.contact.githubLabel }}</a>
+            <span>{{ d.contact.location }}</span>
+        </div>
     </div>
+    <img class="portrait" src="/assets/portrait.webp" width="480" height="480" alt="{{ d.photoAlt }}">
 </header>
 
 <div class="bands">
