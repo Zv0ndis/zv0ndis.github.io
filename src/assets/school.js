@@ -1,5 +1,6 @@
 // Semestr page: upcoming exams and hand-in deadlines from /skola.json, which the studis-gcal job
-// exports from the owner's school calendars (titles, times and rooms only). Independent of Firestore.
+// exports from the owner's school calendars (titles, times and rooms only) to a private data repo. The
+// deploy build validates that file (scripts/validate-skola.mjs) and publishes it. Independent of Firestore.
 (() => {
     const section = document.getElementById("school");
     if (!section) return;
