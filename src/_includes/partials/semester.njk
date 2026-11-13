@@ -57,6 +57,18 @@
         </form>
     </section>
 
+    <section
+        class="band"
+        id="school"
+        data-exam="{{ s.schoolExam }}"
+        data-deadline="{{ s.schoolDeadline }}"
+        data-empty="{{ s.schoolEmpty }}"
+        data-error="{{ s.schoolError }}"
+    >
+        <h2>{{ s.schoolHeading }}</h2>
+        <ul class="rows" id="schoolList"></ul>
+        <p class="range-text" id="schoolStatus">{{ s.rangeLoading }}</p>
+    </section>
     <section class="band" id="semesterProgress" hidden>
         <h2>{{ s.progressHeading }}</h2>
         <p class="progress-headline" id="progressHeadline"></p>

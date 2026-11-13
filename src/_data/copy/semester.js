@@ -19,6 +19,11 @@ export default {
         examSummerTo: "Zkouškové letní do",
         save: "Uložit",
         progressHeading: "Průběh semestru",
+        schoolHeading: "Zkoušky a odevzdání",
+        schoolExam: "Zkouška",
+        schoolDeadline: "Odevzdání do",
+        schoolEmpty: "Teď nic nečeká.",
+        schoolError: "Termíny se nepodařilo načíst.",
     },
     en: {
         h1: "Semester",
@@ -37,5 +42,10 @@ export default {
         examSummerTo: "Summer exam period to",
         save: "Save",
         progressHeading: "Semester progress",
+        schoolHeading: "Exams and deadlines",
+        schoolExam: "Exam",
+        schoolDeadline: "Due",
+        schoolEmpty: "Nothing coming up.",
+        schoolError: "Couldn't load the dates.",
     },
 };
