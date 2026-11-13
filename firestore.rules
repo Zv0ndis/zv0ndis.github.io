@@ -11,11 +11,10 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Stronger: compare request.auth.uid with the owner's UID
-    // (Firebase console > Authentication > Users) instead of the email claim.
+    // The owner's account, by UID (an email claim alone could be spoofed by another account).
     function isAdmin() {
       return request.auth != null
-             && request.auth.token.email == 'zvondatom@gmail.com';
+             && request.auth.uid == 'YPqsyWcDjySxzGkI7BvpfROrlb92';
     }
 
     match /semester/config {
