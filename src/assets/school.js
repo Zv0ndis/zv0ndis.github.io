@@ -17,6 +17,24 @@
             ...(allDay ? {} : { hour: "2-digit", minute: "2-digit" }),
         }).format(new Date(allDay ? `${iso}T12:00:00Z` : iso));
 
+    // Time left until a deadline: "za 3 dny 4 h" / "in 3 days 4 h", hours and minutes on the last day.
+    const loc = lang === "en" ? "en-GB" : "cs-CZ";
+    const unit = (u, n, display = "long") =>
+        new Intl.NumberFormat(loc, { style: "unit", unit: u, unitDisplay: display }).format(n);
+    const left = (ms) => {
+        const min = Math.max(1, Math.floor(ms / 60000));
+        const d = Math.floor(min / 1440),
+            h = Math.floor((min % 1440) / 60),
+            m = min % 60;
+        const parts = d
+            ? [unit("day", d), h && unit("hour", h, "short")]
+            : h
+              ? [unit("hour", h, "short"), m && unit("minute", m, "short")]
+              : [unit("minute", m, "short")];
+        return `${lang === "en" ? "in" : "za"} ${parts.filter(Boolean).join(" ")}`;
+    };
+    const SOON = 2 * 24 * 3600 * 1000; // under two days: highlighted
+
     const row = (e) => {
         const li = document.createElement("li");
         const title = document.createElement("span");
@@ -30,8 +48,25 @@
         const label = e.kind === "exam" ? section.dataset.exam : section.dataset.deadline;
         const at = when(e.kind === "exam" ? e.start : e.end, e.allDay);
         detail.textContent = [label, at, e.room].filter(Boolean).join(" · ");
+        if (e.kind === "deadline") {
+            const remaining = document.createElement("span");
+            remaining.className = "row-left";
+            remaining.dataset.due = String(
+                new Date(e.allDay ? `${e.end}T00:00:00Z` : e.end).getTime(),
+            );
+            detail.append(" · ", remaining);
+        }
         li.append(title, detail);
         return li;
+    };
+
+    const tick = () => {
+        const now = Date.now();
+        for (const el of list.querySelectorAll(".row-left")) {
+            const ms = Number(el.dataset.due) - now;
+            el.textContent = ms > 0 ? left(ms) : "";
+            el.classList.toggle("is-soon", ms > 0 && ms < SOON);
+        }
     };
 
     fetch("/skola.json", { cache: "no-cache" })
@@ -42,6 +77,8 @@
                 (e) => new Date(e.allDay ? `${e.end}T00:00:00Z` : e.end) > now,
             );
             list.replaceChildren(...upcoming.map(row));
+            tick();
+            setInterval(tick, 60 * 1000);
             status.textContent = upcoming.length ? "" : section.dataset.empty;
             status.hidden = upcoming.length > 0;
         })

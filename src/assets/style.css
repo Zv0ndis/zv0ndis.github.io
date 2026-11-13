@@ -511,6 +511,11 @@ h1 {
     font-size: 0.9375rem;
 }
 
+.row-left.is-soon {
+    color: var(--accent);
+    font-weight: 700;
+}
+
 .row-text {
     grid-column: 1 / -1;
     margin-top: 6px;
