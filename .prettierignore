@@ -6,3 +6,4 @@ graphify-out/
 .impeccable/
 # written by the studis-gcal VM job (export_site.py), not hand-formatted
 src/static/skola.json
+src/assets/vendor/

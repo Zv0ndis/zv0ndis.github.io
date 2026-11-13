@@ -1,16 +1,13 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
+import { initializeApp } from "./vendor/firebase/firebase-app.js";
+import { getFirestore, doc, getDoc, setDoc } from "./vendor/firebase/firebase-firestore.js";
 import {
-    getFirestore,
-    doc,
-    getDoc,
-    setDoc,
-} from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
-import {
-    getAuth,
+    initializeAuth,
+    indexedDBLocalPersistence,
+    browserLocalPersistence,
     signInWithEmailAndPassword,
     onAuthStateChanged,
     signOut,
-} from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
+} from "./vendor/firebase/firebase-auth.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyCWv9Md-whrotc61qSR8ccgQZFAPFBJkR8",
@@ -25,7 +22,11 @@ const ADMIN_EMAIL = "zvondatom@gmail.com";
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-const auth = getAuth(app);
+// Password sign-in only: no popup/redirect resolver, so the SDK never loads Google's
+// iframe helper script (which the CSP blocks).
+const auth = initializeAuth(app, {
+    persistence: [indexedDBLocalPersistence, browserLocalPersistence],
+});
 
 const semesterDocRef = doc(db, "semester", "config");
 
