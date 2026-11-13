@@ -64,4 +64,18 @@
     document.addEventListener("visibilitychange", sync);
     still.addEventListener("change", sync);
     sync();
+
+    // Wide layout: fill the art's column, like the home page heart.
+    const header = pre.parentElement;
+    const wide = matchMedia("(width >= 1200px)");
+    const fit = () => {
+        pre.style.fontSize = "";
+        if (!wide.matches) return;
+        const base = parseFloat(getComputedStyle(pre).fontSize);
+        const box = pre.getBoundingClientRect(); // max-content wide, so this is the art's own width
+        const column = header.getBoundingClientRect().right - box.left;
+        pre.style.fontSize = `${column / (box.width / base)}px`;
+    };
+    new ResizeObserver(fit).observe(header);
+    wide.addEventListener("change", fit);
 })();

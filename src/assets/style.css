@@ -599,10 +599,12 @@ h1 {
 }
 
 @media (width >= 1200px) {
+    /* Same split as the home page heart; the art (sized by bits.js to fill its column) is usually
+       taller than the heading, so the last 1fr row takes the extra height, not the gaps between lines. */
     .lead-art {
         display: grid;
-        grid-template-columns: auto auto;
-        justify-content: start;
+        grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+        grid-template-rows: repeat(5, auto) 1fr;
         column-gap: 48px;
         align-self: start;
     }
@@ -613,10 +615,11 @@ h1 {
 
     .lead-art > .art {
         grid-column: 2;
-        grid-row: 1 / span 12;
-        align-self: center;
+        grid-row: 1 / -1;
+        place-self: start start;
+        width: max-content;
         margin: 0;
-        font-size: 13px;
+        font-size: 12px;
     }
 }
 
