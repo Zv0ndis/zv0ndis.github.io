@@ -33,7 +33,8 @@ export function validate(raw) {
         check(extra.length === 0, `${at}: unexpected key ${extra[0]}`);
         check(e.kind === "exam" || e.kind === "deadline", `${at}: bad kind`);
         check(typeof e.course === "string" && COURSE.test(e.course), `${at}: bad course`);
-        check(text(e.title), `${at}: bad title`);
+        // Exams need a title; a deadline's title (the registered topic) is never published.
+        if (e.kind === "exam") check(text(e.title), `${at}: bad title`);
         check(typeof e.allDay === "boolean", `${at}: bad allDay`);
         for (const k of ["start", "end"]) {
             const ok =
@@ -44,7 +45,10 @@ export function validate(raw) {
         }
         check(e.room === undefined || text(e.room), `${at}: bad room`);
         // Rebuilt key by key, so only the allowed fields can reach the site.
-        return Object.fromEntries(KEYS.filter((k) => e[k] !== undefined).map((k) => [k, e[k]]));
+        const keep = KEYS.filter(
+            (k) => e[k] !== undefined && !(k === "title" && e.kind === "deadline"),
+        );
+        return Object.fromEntries(keep.map((k) => [k, e[k]]));
     });
     return JSON.stringify({ events }) + "\n";
 }
@@ -62,6 +66,8 @@ function selftest() {
     const day = { ...ok, start: "2026-12-08", end: "2026-12-09", allDay: true };
     const out = JSON.parse(validate(JSON.stringify({ events: [ok, day] })));
     if (JSON.stringify(out.events) !== JSON.stringify([ok, day])) throw new Error("round trip");
+    const due = JSON.parse(validate(JSON.stringify({ events: [{ ...ok, kind: "deadline" }] })));
+    if ("title" in due.events[0]) throw new Error("deadline title published");
     const bad = [
         "[]",
         "{}",
@@ -73,6 +79,7 @@ function selftest() {
             { course: "<b>" },
             { title: "x".repeat(MAX_LEN + 1) },
             { title: 5 },
+            { title: undefined }, // exam without a title
             { start: "tomorrow" },
             { start: "2026-12-08" }, // date only, but not allDay
             { end: "2026-13-45T00:00:00Z" },

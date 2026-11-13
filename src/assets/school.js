@@ -21,7 +21,9 @@
         const li = document.createElement("li");
         const title = document.createElement("span");
         title.className = "row-title";
-        title.textContent = `${e.course} – ${e.title}`; // text from Studis/Moodle: never as HTML
+        // Deadlines stay generic ("ISA – projekt"): the registered topic is never shown, even if sent.
+        const name = e.kind === "exam" ? e.title : section.dataset.project;
+        title.textContent = `${e.course} – ${name}`; // text from Studis/Moodle: never as HTML
         const detail = document.createElement("span");
         detail.className = "row-detail";
         // A deadline counts at its end (23:59); an exam at its start.
