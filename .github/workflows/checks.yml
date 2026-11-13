@@ -52,7 +52,7 @@ jobs:
           done
           npx linkinator http://localhost:3000/index.html \
             --recurse --sitemap --silent --retry --retry-errors \
-            --url-rewrite-search "https://zv0ndis.github.io" \
+            --url-rewrite-search "https://zvondis.dev" \
             --url-rewrite-replace "http://localhost:3000" \
             --skip "myaccount.google.com"
 

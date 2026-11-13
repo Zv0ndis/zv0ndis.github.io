@@ -1,5 +1,5 @@
 {
   "lang": "en",
   "layout": "layouts/base.njk",
-  "permalink": "{{ page.fileSlug }}-en.html"
+  "permalink": "{{ (site.pages | findPage(page_key)).en.file }}"
 }

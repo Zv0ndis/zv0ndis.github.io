@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://zv0ndis.github.io/sitemap.xml
+Sitemap: https://zvondis.dev/sitemap.xml

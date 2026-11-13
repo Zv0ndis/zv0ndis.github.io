@@ -1,9 +1,9 @@
 {%- set entry = site.pages | findPage(page_key) -%}
 {%- set hasCounterpart = entry and (entry.cs.url != entry.en.url) -%}
 {%- if entry -%}
-{%- set selfUrl = site.url + "/" + entry[lang].url -%}
-{%- set csUrl = site.url + "/" + entry.cs.url -%}
-{%- set enUrl = site.url + "/" + entry.en.url -%}
+{%- set selfUrl = site.url + entry[lang].url -%}
+{%- set csUrl = site.url + entry.cs.url -%}
+{%- set enUrl = site.url + entry.en.url -%}
 {%- endif -%}
 <!doctype html>
 <html lang="{{ lang }}">
@@ -54,7 +54,7 @@
         <a class="skip" href="#main">{{ "Skip to content" if lang == "en" else "Přeskočit na obsah" }}</a>
         <div class="frame">
             <header class="rail">
-                <a class="mark" href="/{{ home[lang].url }}">Zvondis</a>
+                <a class="mark" href="{{ home[lang].url }}">Zvondis</a>
                 <nav class="rail-nav" aria-label="{{ 'Pages' if lang == 'en' else 'Stránky' }}">
                     <ul>
                         {%- for p in site.pages %}

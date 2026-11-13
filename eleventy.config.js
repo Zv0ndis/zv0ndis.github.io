@@ -4,6 +4,7 @@ export default function (eleventyConfig) {
     // src/assets/*  -> _site/assets/*   (CSS, JS, images)
     // src/static/*  -> _site/*          (files that must sit at the site root)
     eleventyConfig.ignores.add("src/static/**");
+    eleventyConfig.ignores.add("src/assets/**/*.md"); // vendor READMEs are notes, not pages
     eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
     eleventyConfig.addPassthroughCopy({ "src/static": "." });
     eleventyConfig.addPassthroughCopy("src/.well-known");

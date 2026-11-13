@@ -1,0 +1,22 @@
+---
+pagination:
+    data: site.legacy
+    size: 1
+    alias: r
+permalink: "{{ r.from }}"
+eleventyExcludeFromCollections: true
+layout: null
+---
+<!doctype html>
+<html lang="cs">
+    <head>
+        <meta charset="utf-8" />
+        <title>Tomáš Zvoníček</title>
+        <meta name="robots" content="noindex" />
+        <link rel="canonical" href="{{ site.url }}{{ r.to }}" />
+        <meta http-equiv="refresh" content="0; url={{ r.to }}" />
+    </head>
+    <body>
+        <p><a href="{{ r.to }}">{{ site.url }}{{ r.to }}</a></p>
+    </body>
+</html>

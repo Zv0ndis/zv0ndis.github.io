@@ -1,5 +1,5 @@
 {
   "lang": "cs",
   "layout": "layouts/base.njk",
-  "permalink": "{{ page.fileSlug }}.html"
+  "permalink": "{{ (site.pages | findPage(page_key)).cs.file }}"
 }
