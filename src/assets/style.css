@@ -540,22 +540,30 @@ h1 {
 .heart {
     margin: 32px 0 0;
     color: var(--accent);
-    font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     font-size: 11px;
     line-height: 1;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.02em;
     user-select: none;
     overflow: hidden;
 }
 
-.heart .s0 { opacity: 0.22; }
-.heart .s1 { opacity: 0.45; }
-.heart .s2 { opacity: 0.72; }
+.heart .s0 {
+    opacity: 0.22;
+}
+
+.heart .s1 {
+    opacity: 0.45;
+}
+
+.heart .s2 {
+    opacity: 0.72;
+}
 
 @media (width >= 1200px) {
     .home-lead {
         display: grid;
-        grid-template-columns: minmax(0, 1fr) auto;
+        grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
         column-gap: 48px;
         align-self: start;
     }
@@ -564,10 +572,12 @@ h1 {
         grid-column: 1;
     }
 
+    /* heart.js sets the font size so the art is exactly as tall as the intro */
     .home-lead > .heart {
         grid-column: 2;
         grid-row: 1 / span 5;
-        align-self: center;
+        place-self: center start;
+        width: max-content;
         margin: 0;
         font-size: 12px;
     }

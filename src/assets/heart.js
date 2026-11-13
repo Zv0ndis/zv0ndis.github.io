@@ -5,7 +5,8 @@
     const pre = document.querySelector("[data-heart]");
     if (!pre) return;
 
-    const COLS = 46, ROWS = 23;
+    const COLS = 46,
+        ROWS = 23;
     const f = (x, y, z) => {
         const a = x * x + 2.25 * y * y + z * z - 1;
         return a * a * a - x * x * z * z * z - 0.1125 * y * y * z * z * z;
@@ -17,8 +18,13 @@
         const theta = (Math.PI * (i + 0.5)) / 70; // from +z down to −z
         for (let j = 0; j < 140; j++) {
             const phi = (2 * Math.PI * j) / 140;
-            const d = [Math.sin(theta) * Math.cos(phi), Math.sin(theta) * Math.sin(phi), Math.cos(theta)];
-            let lo = 0, hi = 1.6;
+            const d = [
+                Math.sin(theta) * Math.cos(phi),
+                Math.sin(theta) * Math.sin(phi),
+                Math.cos(theta),
+            ];
+            let lo = 0,
+                hi = 1.6;
             if (f(d[0] * hi, d[1] * hi, d[2] * hi) <= 0) continue;
             for (let k = 0; k < 24; k++) {
                 const m = (lo + hi) / 2;
@@ -27,16 +33,22 @@
             const p = [d[0] * lo, d[1] * lo, d[2] * lo];
             const e = 1e-3; // normal = gradient of f
             const n = [0, 1, 2].map((ax) => {
-                const q = p.slice(); q[ax] += e;
-                const r = p.slice(); r[ax] -= e;
+                const q = p.slice();
+                q[ax] += e;
+                const r = p.slice();
+                r[ax] -= e;
                 return f(...q) - f(...r);
             });
             const len = Math.hypot(...n) || 1;
-            pts.push(p, n.map((v) => v / len));
+            pts.push(
+                p,
+                n.map((v) => v / len),
+            );
         }
     }
 
-    const hash = (x) => { // small integer mixer, so neighbouring points get unrelated bits
+    const hash = (x) => {
+        // small integer mixer, so neighbouring points get unrelated bits
         x = Math.imul(x ^ (x >>> 16), 0x7feb352d);
         x = Math.imul(x ^ (x >>> 15), 0x846ca68b);
         return (x ^ (x >>> 16)) >>> 0;
@@ -47,14 +59,17 @@
     function frame(t) {
         const ang = t / 1600;
         const beat = 1 + 0.07 * Math.pow(Math.max(0, Math.sin(t / 260)), 6); // short double-ish pulse
-        const c = Math.cos(ang), s = Math.sin(ang);
+        const c = Math.cos(ang),
+            s = Math.sin(ang);
         const shade = new Int8Array(COLS * ROWS).fill(-1); // -1 empty, 0 (dark) .. 3 (lit)
         const bit = new Uint8Array(COLS * ROWS);
         const tick = Math.floor(t / 700);
         const zbuf = new Float32Array(COLS * ROWS).fill(-Infinity);
         for (let i = 0; i < pts.length; i += 2) {
-            const [x, y, z] = pts[i], [nx, ny, nz] = pts[i + 1];
-            const rx = x * c - y * s, ry = x * s + y * c; // rotate around the vertical axis
+            const [x, y, z] = pts[i],
+                [nx, ny, nz] = pts[i + 1];
+            const rx = x * c - y * s,
+                ry = x * s + y * c; // rotate around the vertical axis
             const depth = ry; // toward the viewer = negative y, so smaller ry is nearer
             const sx = Math.round(COLS / 2 + rx * beat * 15.5);
             const sy = Math.round(ROWS / 2 - (z * beat + 0.1) * 8.6);
@@ -71,7 +86,8 @@
         for (let r = 0; r < ROWS; r++) {
             let cur = -2;
             for (let col = 0; col < COLS; col++) {
-                const k = r * COLS + col, sh = shade[k];
+                const k = r * COLS + col,
+                    sh = shade[k];
                 if (sh !== cur) {
                     if (cur >= 0) html += "</span>";
                     if (sh >= 0) html += `<span class="s${sh}">`;
@@ -86,15 +102,42 @@
     }
 
     const still = matchMedia("(prefers-reduced-motion: reduce)");
-    let raf = 0, visible = true;
-    const loop = (t) => { frame(t); raf = requestAnimationFrame(loop); };
+    let raf = 0,
+        visible = true;
+    const loop = (t) => {
+        frame(t);
+        raf = requestAnimationFrame(loop);
+    };
     const sync = () => {
         cancelAnimationFrame(raf);
-        if (still.matches) frame(900); // one calm frame, turned slightly so it reads as 3D
+        if (still.matches)
+            frame(900); // one calm frame, turned slightly so it reads as 3D
         else if (visible && !document.hidden) raf = requestAnimationFrame(loop);
     };
-    new IntersectionObserver(([e]) => { visible = e.isIntersecting; sync(); }).observe(pre);
+    new IntersectionObserver(([e]) => {
+        visible = e.isIntersecting;
+        sync();
+    }).observe(pre);
     document.addEventListener("visibilitychange", sync);
     still.addEventListener("change", sync);
     sync();
+
+    // Wide layout: the heart sits beside the intro, so size its font to be exactly as tall as the
+    // intro text (or as wide as its column, whichever is smaller). Column widths don't depend on
+    // the heart (fixed fr shares in CSS), so resizing it can't feed back into the text height.
+    const header = pre.parentElement;
+    const wide = matchMedia("(width >= 1200px)");
+    const fit = () => {
+        pre.style.fontSize = "";
+        if (!wide.matches) return;
+        const text = [...header.children].filter((el) => el !== pre && !el.hidden);
+        const height =
+            text.at(-1).getBoundingClientRect().bottom - text[0].getBoundingClientRect().top;
+        const base = parseFloat(getComputedStyle(pre).fontSize);
+        const box = pre.getBoundingClientRect(); // pre is max-content wide, so this is the art's size
+        const column = header.getBoundingClientRect().right - box.left;
+        pre.style.fontSize = `${Math.min(height / (box.height / base), column / (box.width / base))}px`;
+    };
+    new ResizeObserver(fit).observe(header);
+    wide.addEventListener("change", fit);
 })();
