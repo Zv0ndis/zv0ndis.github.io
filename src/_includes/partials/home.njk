@@ -2,7 +2,7 @@
 {%- set cv = copy.cv[lang] -%}
 {%- set cvUrl = (site.pages | findPage("cv"))[lang].url -%}
 {%- set phone = cv.contact.phone | replace(" ", "&nbsp;") | safe -%}
-<header class="lead">
+<header class="lead home-lead">
     <h1 class="offer">{{ h.offer | safe }}</h1>
     <p class="lede">{{ h.lede }}</p>
     <div class="actions">
@@ -26,6 +26,7 @@
             <dd>{{ cv.contact.location }}</dd>
         </div>
     </dl>
+    <pre class="heart" data-heart aria-hidden="true"></pre>
 </header>
 
 <div class="bands">
