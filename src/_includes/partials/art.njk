@@ -1,0 +1,4 @@
+{%- set artPiece = art[artKey or page_key] -%}
+{%- if artPiece %}
+<pre class="art" aria-hidden="true">{{ artPiece }}</pre>
+{%- endif %}

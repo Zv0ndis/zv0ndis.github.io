@@ -1,7 +1,8 @@
 {%- set u = copy.uses[lang] -%}
-<header class="lead">
+<header class="lead lead-art">
     <h1>{{ u.h1 }}</h1>
     <p class="subtitle">{{ u.subtitle }}</p>
+    {% include "partials/art.njk" %}
 </header>
 
 <div class="bands">

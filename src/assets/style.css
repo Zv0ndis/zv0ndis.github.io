@@ -583,6 +583,39 @@ h1 {
     }
 }
 
+/* Thematic ASCII art beside each page heading (partials/art.njk); below it on narrow screens. */
+.art {
+    margin: 32px 0 0;
+    color: var(--accent);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 11px;
+    line-height: 1.15;
+    overflow: hidden;
+    user-select: none;
+}
+
+@media (width >= 1200px) {
+    .lead-art {
+        display: grid;
+        grid-template-columns: auto auto;
+        justify-content: start;
+        column-gap: 48px;
+        align-self: start;
+    }
+
+    .lead-art > * {
+        grid-column: 1;
+    }
+
+    .lead-art > .art {
+        grid-column: 2;
+        grid-row: 1 / span 12;
+        align-self: center;
+        margin: 0;
+        font-size: 13px;
+    }
+}
+
 .lead-photo {
     display: grid;
     grid-template-columns: auto clamp(140px, 20vw, 260px);

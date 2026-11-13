@@ -1,5 +1,5 @@
 {%- set s = copy.semester[lang] -%}
-<header class="lead">
+<header class="lead lead-art">
     {#- The clickable h1 is an owner-only login affordance, deliberately not a visible control. #}
     <h1 id="loginToggle">{{ s.h1 }}</h1>
     <p class="subtitle">{{ s.subtitle }}</p>
@@ -17,6 +17,7 @@
         <button type="submit" class="button">{{ s.loginSubmit }}</button>
         <p id="loginError" class="form-error" role="alert"></p>
     </form>
+    {% include "partials/art.njk" %}
 </header>
 
 <div class="bands">

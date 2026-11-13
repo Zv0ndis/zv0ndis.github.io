@@ -1,7 +1,8 @@
 {%- set j = copy.jobpay[lang] -%}
-<header class="lead">
+<header class="lead lead-art">
     <h1>{{ j.h1 }}</h1>
     <p class="subtitle">{{ j.subtitle }}</p>
+    {% include "partials/art.njk" %}
 </header>
 
 <div class="bands">
