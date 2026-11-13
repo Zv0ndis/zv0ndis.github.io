@@ -24,6 +24,30 @@ export default function (eleventyConfig) {
 
     // "C, C#, Python" -> ["C", "C#", "Python"], so comma-separated copy can be
     // rendered as individual tags without splitting it up in the data files.
+    // Art mask -> spans of 0/1 grouped by shade, the same markup assets/bits.js animates.
+    // Legend matches src/_data/art.js: "+" darkest .. "*" brightest, anything else empty.
+    eleventyConfig.addFilter("bitArt", (mask) => {
+        const shades = { "+": 0, ".": 1, "#": 2, "*": 3 };
+        let i = 0;
+        return String(mask || "")
+            .split("\n")
+            .map((line) => {
+                let out = "",
+                    cur = -1;
+                for (const ch of line) {
+                    const sh = ch in shades ? shades[ch] : -1;
+                    if (sh !== cur) {
+                        if (cur >= 0) out += "</span>";
+                        if (sh >= 0) out += `<span class="s${sh}">`;
+                        cur = sh;
+                    }
+                    out += sh < 0 ? " " : (Math.imul(++i, 2654435761) >>> 31).toString();
+                }
+                return cur >= 0 ? out + "</span>" : out;
+            })
+            .join("\n");
+    });
+
     eleventyConfig.addFilter("commaList", (value) =>
         String(value || "")
             .split(",")

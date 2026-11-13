@@ -1,4 +1,4 @@
-{%- set artPiece = art[artKey or page_key] -%}
-{%- if artPiece %}
-<pre class="art" aria-hidden="true">{{ artPiece }}</pre>
+{%- set artMask = art[art_key or page_key] -%}
+{%- if artMask %}
+<pre class="art" data-bits aria-hidden="true">{{ artMask | bitArt | safe }}</pre>
 {%- endif %}

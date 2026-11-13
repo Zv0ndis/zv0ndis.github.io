@@ -80,6 +80,9 @@
                 {{ content | safe }}
             </main>
         </div>
+        {%- if art[art_key or page_key] %}
+        <script src="/assets/bits.js?v={{ build.rev }}" defer></script>
+        {%- endif %}
         {%- for src in (scripts or []) %}
         <script src="/assets/{{ src }}?v={{ build.rev }}"></script>
         {%- endfor %}
