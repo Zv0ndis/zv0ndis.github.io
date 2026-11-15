@@ -16,10 +16,10 @@
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.0.0",
-    "html-validate": "^9.0.0",
+    "html-validate": "^11.21.1",
     "linkinator": "8.1.0",
     "prettier": "^3.3.0",
-    "serve": "14.2.6",
+    "serve": "^14.2.8",
     "stylelint": "^17.14.1",
     "stylelint-config-standard": "^40.0.0"
   }
