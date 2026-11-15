@@ -4,15 +4,19 @@ export default {
     cs: {
         h1: "Kontrola injekce",
         subtitle: "Najde v textových souborech skryté pokyny pro AI (prompt injection)",
-        formHeading: "Soubory",
+        formHeading: "Zadání",
         fileLabel: "Vyber jeden nebo více textových souborů",
-        privacy: "Soubory se kontrolují jen ve tvém prohlížeči, nikam se neodesílají.",
+        textLabel: "…nebo vlož text",
+        submit: "Zkontrolovat",
+        privacy: "Kontrola běží jen ve tvém prohlížeči, nic se nikam neodesílá.",
         resultHeading: "Výsledek",
-        empty: "Zatím nic nevybráno.",
+        empty: "Vyber soubor nebo vlož text a dej Zkontrolovat.",
         disclaimer:
             "Jde o heuristiku: hledá skryté znaky (Unicode tagy, znaky nulové šířky, bidi), typické fráze typu „ignoruj předchozí instrukce“, šablony chatu, skrytý text a odkazy, které mohou vynášet data. Když nic nenajde, neznamená to, že je soubor bezpečný.",
         msgs: {
             line: "řádek",
+            pasted: "Vložený text",
+            nothing: "Nejdřív vyber soubor nebo vlož text.",
             more: "…a dalších {n} nálezů.",
             tooBig: "Soubor je větší než 2 MB, přeskočeno.",
             verdict: [
@@ -43,15 +47,19 @@ export default {
     en: {
         h1: "Injection Check",
         subtitle: "Finds hidden AI instructions (prompt injection) in text files",
-        formHeading: "Files",
+        formHeading: "Input",
         fileLabel: "Choose one or more text files",
-        privacy: "Files are checked in your browser only and never uploaded.",
+        textLabel: "…or paste text",
+        submit: "Check",
+        privacy: "The check runs in your browser only; nothing is uploaded.",
         resultHeading: "Result",
-        empty: "Nothing chosen yet.",
+        empty: "Choose a file or paste text, then press Check.",
         disclaimer:
             "This is a heuristic: it looks for hidden characters (Unicode tags, zero-width, bidi), typical phrases like “ignore previous instructions”, chat-template markers, hidden text and links that could leak data. Finding nothing doesn't mean a file is safe.",
         msgs: {
             line: "line",
+            pasted: "Pasted text",
+            nothing: "Choose a file or paste some text first.",
             more: "…and {n} more findings.",
             tooBig: "File is larger than 2 MB, skipped.",
             verdict: [

@@ -229,17 +229,27 @@ function render(root, msgs, name, findings, error) {
 }
 
 if (typeof document !== "undefined") {
+    const form = document.getElementById("icForm");
     const input = document.getElementById("icFiles");
+    const pasted = document.getElementById("icText");
     const root = document.getElementById("icResults");
     const msgs = JSON.parse(root.dataset.msgs);
-    input.addEventListener("change", async () => {
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
         root.replaceChildren();
+        if (pasted.value) render(root, msgs, msgs.pasted, scan(pasted.value));
         for (const file of input.files) {
             if (file.size > MAX_BYTES) {
                 render(root, msgs, file.name, [], msgs.tooBig);
                 continue;
             }
             render(root, msgs, file.name, scan(await file.text()));
+        }
+        if (!root.children.length) {
+            const p = document.createElement("p");
+            p.className = "pay-disclaimer";
+            p.textContent = msgs.nothing;
+            root.append(p);
         }
     });
 }

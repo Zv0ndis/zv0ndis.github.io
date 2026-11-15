@@ -7,10 +7,17 @@
 <div class="bands">
     <section class="band">
         <h2>{{ j.formHeading }}</h2>
-        <label class="field"
-            >{{ j.fileLabel }}
-            <input type="file" id="icFiles" multiple accept="text/*,.txt,.md,.csv,.json,.html,.htm,.xml,.yml,.yaml,.log" />
-        </label>
+        <form id="icForm" class="fields">
+            <label class="field"
+                >{{ j.fileLabel }}
+                <input type="file" id="icFiles" multiple accept="text/*,.txt,.md,.csv,.json,.html,.htm,.xml,.yml,.yaml,.log" />
+            </label>
+            <label class="field"
+                >{{ j.textLabel }}
+                <textarea id="icText" rows="8" spellcheck="false"></textarea>
+            </label>
+            <button type="submit" class="button">{{ j.submit }}</button>
+        </form>
         <p class="pay-disclaimer">{{ j.privacy }}</p>
     </section>
 
