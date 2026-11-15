@@ -24,21 +24,41 @@
     function render(d) {
         var status = LABELS[d.discord_status] ? d.discord_status : "offline";
         el.querySelector("[data-activity-status]").textContent = LABELS[status];
+        el.hidden = false; // before fit(): hidden boxes measure 0 wide
 
         track = (d.listening_to_spotify && d.spotify) || null;
         player.hidden = !track;
         if (track) {
             // Lanyard data is untrusted: text via textContent, URLs only to known hosts.
-            song.textContent = track.song;
+            if (song.textContent !== track.song) {
+                song.textContent = track.song;
+                fit();
+            }
             player.title = track.song + " - " + track.artist.replace(/;/g, ",");
             player.href = "https://open.spotify.com/track/" + encodeURIComponent(track.track_id);
             artist.textContent = track.artist.replace(/;/g, ",");
             var art = track.album_art_url || "";
-            cover.src = art.indexOf("https://i.scdn.co/") === 0 ? art : "data:,";
+            cover.src =
+                art.indexOf("https://i.scdn.co/") === 0
+                    ? art
+                    : "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
             tick();
         }
-        el.hidden = false;
     }
+
+    // Slide the title only when it is wider than its box, at about 30 px/s.
+    function fit() {
+        var box = song.parentNode;
+        box.classList.remove("is-sliding");
+        var over = song.offsetWidth - box.clientWidth;
+        if (over <= 0) return;
+        box.style.setProperty("--slide", -over + "px");
+        box.style.setProperty("--slide-time", over / 30 + 2 + "s");
+        box.classList.add("is-sliding");
+    }
+
+    window.addEventListener("resize", fit);
+    document.fonts.ready.then(fit); // the webfont changes the title's width
 
     function tick() {
         if (!track || !track.timestamps) return;

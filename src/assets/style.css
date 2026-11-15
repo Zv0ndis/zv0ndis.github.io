@@ -377,7 +377,7 @@ button {
     text-decoration: none;
 }
 
-.player:hover .player-song {
+.player:hover .player-song > span {
     text-decoration: underline;
 }
 
@@ -405,6 +405,42 @@ button {
 
 .player-song {
     font-weight: 700;
+}
+
+/* Inline-block so the title can be measured and moved; underline is set on it directly. */
+.player-song > span {
+    display: inline-block;
+}
+
+/* Titles wider than the box slide to their end and back; activity.js sets both variables. */
+.player-song.is-sliding {
+    text-overflow: clip;
+}
+
+.player-song.is-sliding > span {
+    animation: player-slide var(--slide-time) ease-in-out infinite alternate;
+}
+
+@keyframes player-slide {
+    0%,
+    15% {
+        transform: translateX(0);
+    }
+
+    85%,
+    100% {
+        transform: translateX(var(--slide));
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .player-song.is-sliding {
+        text-overflow: ellipsis;
+    }
+
+    .player-song.is-sliding > span {
+        animation: none;
+    }
 }
 
 .player-artist {
