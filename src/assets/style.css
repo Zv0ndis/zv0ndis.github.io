@@ -362,33 +362,7 @@ button {
     line-height: 1.4;
 }
 
-.activity-dot {
-    flex: none;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--field);
-}
-
-.activity[data-status="online"] .activity-dot {
-    background: #23a55a;
-}
-
-.activity[data-status="idle"] .activity-dot {
-    background: #f0b232;
-}
-
-.activity[data-status="dnd"] .activity-dot {
-    background: #f23f43;
-}
-
-.activity-status {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-/* Spotify mini player: a solid ink block, flat corners like the rest of the site. */
+/* Spotify mini player: the whole ink block is one link, so the touch target is the full box. */
 .player {
     display: grid;
     grid-template-columns: 48px minmax(0, 1fr);
@@ -400,12 +374,16 @@ button {
     border-radius: var(--radius);
     background: var(--ink);
     color: var(--paper);
+    text-decoration: none;
+}
+
+.player:hover .player-song {
+    text-decoration: underline;
 }
 
 .player-cover {
     width: 48px;
     height: 48px;
-    border-radius: var(--radius);
     background: var(--mute);
 }
 
@@ -416,9 +394,6 @@ button {
 
 .player-label {
     color: #a8abb1;
-    font-size: 0.6875rem;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
 }
 
 .player-song,
@@ -429,13 +404,7 @@ button {
 }
 
 .player-song {
-    color: var(--paper);
     font-weight: 700;
-    text-decoration: none;
-}
-
-.player-song:hover {
-    text-decoration: underline;
 }
 
 .player-artist {
@@ -446,7 +415,6 @@ button {
     grid-column: 1 / -1;
     height: 3px;
     margin-top: 12px;
-    border-radius: var(--radius);
     background: #3a3c40;
 }
 

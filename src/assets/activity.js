@@ -23,7 +23,6 @@
 
     function render(d) {
         var status = LABELS[d.discord_status] ? d.discord_status : "offline";
-        el.dataset.status = status;
         el.querySelector("[data-activity-status]").textContent = LABELS[status];
 
         track = (d.listening_to_spotify && d.spotify) || null;
@@ -31,7 +30,8 @@
         if (track) {
             // Lanyard data is untrusted: text via textContent, URLs only to known hosts.
             song.textContent = track.song;
-            song.href = "https://open.spotify.com/track/" + encodeURIComponent(track.track_id);
+            player.title = track.song + " - " + track.artist.replace(/;/g, ",");
+            player.href = "https://open.spotify.com/track/" + encodeURIComponent(track.track_id);
             artist.textContent = track.artist.replace(/;/g, ",");
             var art = track.album_art_url || "";
             cover.src = art.indexOf("https://i.scdn.co/") === 0 ? art : "data:,";

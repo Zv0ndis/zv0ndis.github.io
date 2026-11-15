@@ -77,19 +77,16 @@
                     {%- endif %}
                 </nav>
                 <div class="activity" data-activity hidden>
-                    <p class="activity-status">
-                        <span class="activity-dot" aria-hidden="true"></span>
-                        <span data-activity-status></span>
-                    </p>
-                    <div class="player" data-player hidden>
+                    <p data-activity-status></p>
+                    <a class="player" data-player href="https://open.spotify.com/" target="_blank" rel="noopener noreferrer" hidden>
                         <img class="player-cover" data-player-cover src="data:," alt="" width="48" height="48" />
-                        <p class="player-text">
+                        <span class="player-text">
                             <span class="player-label">{{ "Listening to" if lang == "en" else "Poslouchám" }}</span>
-                            <a class="player-song" data-player-song href="https://open.spotify.com/" target="_blank" rel="noopener noreferrer"></a>
+                            <span class="player-song" data-player-song></span>
                             <span class="player-artist" data-player-artist></span>
-                        </p>
+                        </span>
                         <span class="player-bar" aria-hidden="true"><span data-player-progress></span></span>
-                    </div>
+                    </a>
                 </div>
             </header>
             <main id="main" class="main">
