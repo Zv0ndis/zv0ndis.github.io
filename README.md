@@ -26,7 +26,6 @@ src/
     copy/
       cv.js            # obsah CV pro CS i EN (i kontakty a projekty pro Domů)
       home.js          # texty domovské stránky
-      jobpay.js        # texty kalkulačky výplaty
       semester.js      # texty stránky Semestr
       uses.js          # obsah stránky Vybavení
   _includes/
@@ -34,7 +33,6 @@ src/
     partials/
       home.njk         # domovská stránka (čte copy.home + copy.cv)
       cv.njk           # rozložení CV (čte copy.cv)
-      job-pay.njk
       uses.njk         # čte copy.uses
       semester.njk
   cs/                  # české stránky (permalink: <slug>.html)

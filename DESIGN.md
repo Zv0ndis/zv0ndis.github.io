@@ -107,7 +107,7 @@ A Swiss page, set rather than decorated. One grotesque family carries everything
 
 The page sits on a strict 12-column grid. A narrow rail in columns 1 to 3 holds the wordmark and the vertical nav; all content hangs from column 4. Every section below the lead is a band: a 1px ink rule across the full grid, the section name in the rail columns, the content from column 4. There are no cards, no shadows, no icons and no ornament. Hairlines separate rows.
 
-Modes per surface: Home persuades (offer, one Call button, proof of work, close). CV, Uses and Privacy are read. Semester and Job Pay are operated: labels above fields, native controls, tabular numbers. The 404 page is the one place the headline gets louder.
+Modes per surface: Home persuades (offer, one Call button, proof of work, close). CV, Uses and Privacy are read. Semester is operated: labels above fields, native controls, tabular numbers. The 404 page is the one place the headline gets louder.
 
 **Key Characteristics:**
 
@@ -203,10 +203,6 @@ Label above the field, bold 15px. Field 44px tall, 1px field-grey border, 2px ra
 ### Rows (signature)
 
 The project list, the Uses lists and the CV projects share one row: a bold title in the left 5 of 9 content columns and a mute detail in the right 4, with a #D9DADC hairline under each row. On phones the detail drops under the title.
-
-### Pay results
-
-Label left, amount right in tabular figures, hairline between rows; totals bold with an ink rule.
 
 ### Motion
 

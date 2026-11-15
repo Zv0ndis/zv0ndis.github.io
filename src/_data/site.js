@@ -25,11 +25,6 @@ export default {
             en: { url: "/en/semester", file: "en/semester.html", label: "Semester" },
         },
         {
-            key: "job-pay",
-            cs: { url: "/vyplata", file: "vyplata.html", label: "Výplata" },
-            en: { url: "/en/job-pay", file: "en/job-pay.html", label: "Job Pay" },
-        },
-        {
             key: "uses",
             cs: { url: "/vybaveni", file: "vybaveni.html", label: "Vybavení" },
             en: { url: "/en/uses", file: "en/uses.html", label: "Uses" },
@@ -41,18 +36,32 @@ export default {
         },
     ],
 
+    // Sister sites on other subdomains, listed in the nav after the pages above.
+    links: [
+        {
+            cs: { url: "https://tools.zvondis.dev/?lang=cs", label: "Nástroje" },
+            en: { url: "https://tools.zvondis.dev/?lang=en", label: "Tools" },
+        },
+        {
+            cs: { url: "https://tools.zvondis.dev/battleships/", label: "Lodě" },
+            en: { url: "https://tools.zvondis.dev/battleships/", label: "Battleships" },
+        },
+    ],
+
     // Old .html addresses (before clean URLs), kept as redirects so shared links still work.
     legacy: [
         { from: "index-en.html", to: "/en/" },
         { from: "cv-en.html", to: "/en/cv" },
         { from: "semester.html", to: "/semestr" },
         { from: "semester-en.html", to: "/en/semester" },
-        { from: "job-pay.html", to: "/vyplata" },
-        { from: "job-pay-en.html", to: "/en/job-pay" },
+        { from: "job-pay.html", to: "https://tools.zvondis.dev/job-pay/?lang=cs" },
+        { from: "job-pay-en.html", to: "https://tools.zvondis.dev/job-pay/?lang=en" },
         { from: "uses.html", to: "/vybaveni" },
         { from: "uses-en.html", to: "/en/uses" },
         { from: "privacy.html", to: "/soukromi" },
         { from: "privacy-en.html", to: "/en/privacy" },
+        { from: "vyplata.html", to: "https://tools.zvondis.dev/job-pay/?lang=cs" },
+        { from: "en/job-pay.html", to: "https://tools.zvondis.dev/job-pay/?lang=en" },
         { from: "injekce.html", to: "https://tools.zvondis.dev/injection-check/" },
         { from: "en/injection-check.html", to: "https://tools.zvondis.dev/injection-check/" },
     ],

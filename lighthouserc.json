@@ -5,7 +5,7 @@
       "url": [
         "http://localhost/index.html",
         "http://localhost/cv.html",
-        "http://localhost/vyplata.html"
+        "http://localhost/semestr.html"
       ],
       "numberOfRuns": 1
     },

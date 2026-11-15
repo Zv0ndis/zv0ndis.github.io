@@ -11,7 +11,7 @@ web
 - **Employers / HR** reading the CV to hire a student for a part-time or junior role (cybersecurity, IT infrastructure, programming).
 - **Prospective website clients** looking for someone to build them a site at a reasonable price; they act by phoning.
 - **The owner himself** using personal tools (Semester tracker with Firebase sign-in, DPP/DPČ pay calculator).
-- **Classmates and friends** who are sent links to the Semester and Job Pay tools.
+- **Classmates and friends** who are sent links to Semester and to the tools on tools.zvondis.dev.
 
 ## Product Purpose
 
@@ -24,7 +24,7 @@ A working programmer's own site that doubles as proof of craft: hand-built stati
 ## Capabilities and Constraints
 
 - Static Eleventy site deployed to GitHub Pages; bilingual (Czech default, English `-en` pages).
-- Pages: Home, CV, Semester (Firebase auth + Firestore), Job Pay calculator, Uses, Privacy, 404.
+- Pages: Home, CV, Semester (Firebase auth + Firestore), Uses, Privacy, 404.
 - Content lives in `src/_data/copy/*.js`; layouts in `src/_includes`; one stylesheet `src/assets/style.css`.
 - `npm run check` (prettier, stylelint, html-validate) must pass; every change is pushed to main automatically.
 - Self-hosted fonts only; no third-party trackers.
