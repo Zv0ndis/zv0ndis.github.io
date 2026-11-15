@@ -12,7 +12,7 @@
         {#- frame-ancestors is ignored in a meta CSP; GitHub Pages cannot send real headers. #}
         <meta
             http-equiv="Content-Security-Policy"
-            content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
+            content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://api.lanyard.rest https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="color-scheme" content="light" />
@@ -48,6 +48,7 @@
         <link rel="stylesheet" href="/assets/style.css?v={{ build.rev }}" />
         <link rel="icon" type="image/svg+xml" href="/assets/logo.svg" />
         <script src="/assets/nav.js?v={{ build.rev }}" defer></script>
+        <script src="/assets/activity.js?v={{ build.rev }}" defer></script>
     </head>
     <body data-page="{{ page_key or 'none' }}">
         {%- set home = site.pages | findPage("home") %}
@@ -75,6 +76,11 @@
                     >
                     {%- endif %}
                 </nav>
+                <p class="activity" data-activity hidden>
+                    <span class="activity-dot" aria-hidden="true"></span>
+                    <span data-activity-status></span>
+                    <span class="activity-music" data-activity-music hidden></span>
+                </p>
             </header>
             <main id="main" class="main">
                 {{ content | safe }}

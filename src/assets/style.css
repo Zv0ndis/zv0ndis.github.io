@@ -354,6 +354,43 @@ button {
     }
 }
 
+/* Discord status line under the nav; the text label carries the meaning, the dot is decoration. */
+.activity {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 8px;
+    margin-top: 12px;
+    color: var(--mute);
+    font-size: 0.8125rem;
+    line-height: 1.4;
+}
+
+.activity-dot {
+    flex: none;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--field);
+}
+
+.activity[data-status="online"] .activity-dot {
+    background: #23a55a;
+}
+
+.activity[data-status="idle"] .activity-dot {
+    background: #f0b232;
+}
+
+.activity[data-status="dnd"] .activity-dot {
+    background: #f23f43;
+}
+
+.activity-music {
+    flex-basis: 100%;
+    color: var(--ink);
+}
+
 /* =========================================================================
    Type
    ========================================================================= */
