@@ -356,10 +356,6 @@ button {
 
 /* Discord status line under the nav; the text label carries the meaning, the dot is decoration. */
 .activity {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 4px 8px;
     margin-top: 12px;
     color: var(--mute);
     font-size: 0.8125rem;
@@ -386,9 +382,79 @@ button {
     background: #f23f43;
 }
 
-.activity-music {
-    flex-basis: 100%;
-    color: var(--ink);
+.activity-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Spotify mini player: a solid ink block, flat corners like the rest of the site. */
+.player {
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr);
+    column-gap: 12px;
+    align-items: center;
+    max-width: 320px;
+    margin-top: 10px;
+    padding: 12px;
+    border-radius: var(--radius);
+    background: var(--ink);
+    color: var(--paper);
+}
+
+.player-cover {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius);
+    background: var(--mute);
+}
+
+.player-text {
+    display: grid;
+    min-width: 0;
+}
+
+.player-label {
+    color: #a8abb1;
+    font-size: 0.6875rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.player-song,
+.player-artist {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.player-song {
+    color: var(--paper);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.player-song:hover {
+    text-decoration: underline;
+}
+
+.player-artist {
+    color: #a8abb1;
+}
+
+.player-bar {
+    grid-column: 1 / -1;
+    height: 3px;
+    margin-top: 12px;
+    border-radius: var(--radius);
+    background: #3a3c40;
+}
+
+.player-bar > span {
+    display: block;
+    width: 0;
+    height: 100%;
+    background: var(--paper);
 }
 
 /* =========================================================================
