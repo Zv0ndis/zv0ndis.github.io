@@ -53,6 +53,10 @@ typography:
     fontSize: "0.8125rem"
     fontWeight: 400
     lineHeight: 1.4
+  bit-art:
+    fontFamily: "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+    fontWeight: 400
+    lineHeight: 1
 rounded:
   sm: "2px"
 spacing:
@@ -165,10 +169,11 @@ Near-white paper, near-black ink, one grey for secondary text and one cobalt acc
 - **Body** (400, 17px, line-height 1.55, fills its column): everything people read.
 - **Label** (700, 15px): band names in the rail, nav, field labels.
 - **Meta** (400, 13 to 15px, mute): fact labels, dates, row details.
+- **Bit art** (system monospace, 400): only the 0/1 drawings, the Home heart (`.heart`) and the art beside page headings (`.art`). They are pictures made of characters, so every cell, spaces included, must be the same width; Archivo's spaces are narrower than its digits and would break the grid. Never used for text people read.
 
 ### Named Rules
 
-**The Weight Clash Rule.** Emphasis is weight, not a second family, not italics, not colour (except the one accent phrase).
+**The Weight Clash Rule.** Emphasis is weight, not a second family, not italics, not colour (except the one accent phrase). The bit-art monospace is not a second text family: it draws pictures, not words.
 
 **Tabular Figures.** Dates, money and progress numbers use tabular-nums.
 
