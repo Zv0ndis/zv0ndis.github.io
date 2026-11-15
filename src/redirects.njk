@@ -7,16 +7,17 @@ permalink: "{{ r.from }}"
 eleventyExcludeFromCollections: true
 layout: null
 ---
+{%- set dest = r.to if r.to.startsWith("http") else site.url + r.to -%}
 <!doctype html>
 <html lang="cs">
     <head>
         <meta charset="utf-8" />
         <title>Tomáš Zvoníček</title>
         <meta name="robots" content="noindex" />
-        <link rel="canonical" href="{{ site.url }}{{ r.to }}" />
-        <meta http-equiv="refresh" content="0; url={{ r.to }}" />
+        <link rel="canonical" href="{{ dest }}" />
+        <meta http-equiv="refresh" content="0; url={{ dest }}" />
     </head>
     <body>
-        <p><a href="{{ r.to }}">{{ site.url }}{{ r.to }}</a></p>
+        <p><a href="{{ dest }}">{{ dest }}</a></p>
     </body>
 </html>
