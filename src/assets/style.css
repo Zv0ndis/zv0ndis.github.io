@@ -1073,6 +1073,52 @@ input[type="radio"] {
     font-size: 0.9375rem;
 }
 
+input[type="file"] {
+    width: 100%;
+    min-height: var(--target);
+    padding: 8px 0;
+    color: var(--ink);
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+.ic-file + .ic-file {
+    margin-top: 32px;
+}
+
+.ic-file h3 {
+    overflow-wrap: anywhere;
+}
+
+.ic-verdict {
+    margin-top: 4px;
+    font-weight: 700;
+}
+
+.ic-verdict[data-level="3"] {
+    color: var(--accent);
+}
+
+.ic-list {
+    margin: 12px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.ic-list li {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--rule);
+}
+
+.ic-list code {
+    display: block;
+    margin-top: 4px;
+    color: var(--mute);
+    font-size: 0.875rem;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
 /* =========================================================================
    404
    ========================================================================= */

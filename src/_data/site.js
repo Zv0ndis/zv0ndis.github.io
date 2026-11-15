@@ -30,6 +30,15 @@ export default {
             en: { url: "/en/job-pay", file: "en/job-pay.html", label: "Job Pay" },
         },
         {
+            key: "inject-check",
+            cs: { url: "/injekce", file: "injekce.html", label: "Injekce" },
+            en: {
+                url: "/en/injection-check",
+                file: "en/injection-check.html",
+                label: "Injection Check",
+            },
+        },
+        {
             key: "uses",
             cs: { url: "/vybaveni", file: "vybaveni.html", label: "Vybavení" },
             en: { url: "/en/uses", file: "en/uses.html", label: "Uses" },

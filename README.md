@@ -27,6 +27,7 @@ src/
       cv.js            # obsah CV pro CS i EN (i kontakty a projekty pro Domů)
       home.js          # texty domovské stránky
       jobpay.js        # texty kalkulačky výplaty
+      injectcheck.js   # texty kontroly prompt injection
       semester.js      # texty stránky Semestr
       uses.js          # obsah stránky Vybavení
   _includes/
@@ -35,6 +36,7 @@ src/
       home.njk         # domovská stránka (čte copy.home + copy.cv)
       cv.njk           # rozložení CV (čte copy.cv)
       job-pay.njk
+      inject-check.njk # kontrola injekce (logika v assets/inject-check.js)
       uses.njk         # čte copy.uses
       semester.njk
   cs/                  # české stránky (permalink: <slug>.html)
