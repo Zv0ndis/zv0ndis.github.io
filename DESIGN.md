@@ -230,6 +230,8 @@ Label above the field, bold 15px. Field 44px tall, 1px field-grey border, 2px ra
 
 `<site-nav>` renders a list of plain text links. Inactive links are mute, the current one is ink and bold with aria-current. On desktop they stack in the rail at a 30px rhythm for mouse users and 44px on touch; the language switch sits under them. On phones the language switch moves to the right of the wordmark and the links wrap in a row, each 44px tall.
 
+**Search** (`assets/search.js`): the script adds a Search button (`.search-open`) to the nav list; without JavaScript there is none. It opens `.search` in flow under the nav: a labelled combobox field, a `role="status"` count, the result listbox and a mute key hint. Each result is a title in bold and a mute line. The active one gets an ink bar on the left and a 2px underline, not a colour. Ctrl+K and `/` open it, arrows choose, Enter opens, Esc closes. The index is `/search.json` (`src/search.11ty.js`), pages from `site.pages` and tools from `site.tools`; matching ignores case and diacritics and covers both languages. `npm run search` copies the index and script to the tools repo, whose CSP only allows same-origin fetches.
+
 ### Rows (signature)
 
 The project list, the Uses lists and the CV projects share one row: a bold title in the left 5 of 9 content columns and a mute detail in the right 4, with a #D9DADC hairline under each row. On phones the detail drops under the title.

@@ -48,6 +48,67 @@ export default {
         },
     ],
 
+    // Every tool on tools.zvondis.dev, for the shared search (src/search.11ty.js).
+    // `npm run search` copies the index to the tools repo and fails if a tool folder is missing here.
+    tools: [
+        {
+            path: "job-pay",
+            cs: {
+                title: "Výplata",
+                text: "Čistá výplata z brigády na DPP / DPČ.",
+                keywords: "mzda plat",
+            },
+            en: {
+                title: "Job Pay",
+                text: "Net pay from a DPP / DPČ student job.",
+                keywords: "salary wage",
+            },
+        },
+        {
+            path: "injection-check",
+            cs: {
+                title: "Kontrola injekce",
+                text: "Najde v textových souborech skryté pokyny pro AI.",
+            },
+            en: { title: "Injection check", text: "Finds hidden AI instructions in text files." },
+        },
+        {
+            path: "qr",
+            cs: {
+                title: "QR kód",
+                text: "Udělá z textu nebo odkazu QR kód ke stažení jako PNG nebo SVG.",
+            },
+            en: {
+                title: "QR Code",
+                text: "Turns text or a link into a QR code to download as PNG or SVG.",
+            },
+        },
+        {
+            path: "decode",
+            cs: { title: "Dekodér", text: "Formátuje JSON, převádí Base64 a čte JWT tokeny." },
+            en: { title: "Decoder", text: "Formats JSON, converts Base64 and reads JWT tokens." },
+        },
+        {
+            path: "subnet",
+            cs: {
+                title: "Kalkulačka podsítí",
+                text: "Rozsah, maska a rozdělení sítě pro IPv4 i IPv6.",
+                keywords: "ip cidr",
+            },
+            en: {
+                title: "Subnet Calculator",
+                text: "Range, mask and network splits for IPv4 and IPv6.",
+                keywords: "ip cidr",
+            },
+        },
+        {
+            path: "battleships",
+            noLang: true,
+            cs: { title: "Lodě", text: "Hra o lodích a tipování (anglicky).", keywords: "hra" },
+            en: { title: "Battleships", text: "A game of ships and guesses.", keywords: "game" },
+        },
+    ],
+
     // Old .html addresses (before clean URLs), kept as redirects so shared links still work.
     legacy: [
         { from: "index-en.html", to: "/en/" },
