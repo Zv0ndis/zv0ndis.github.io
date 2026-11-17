@@ -127,7 +127,7 @@ Near-white paper, near-black ink, one grey for secondary text and one cobalt acc
 
 ### Primary
 
-- **Accent** (accent, #1637E0): the light phrase in the Home headline and the Call button background. 7.57:1 against paper in both directions. It is also the focus ring colour. It never marks links, headings, rules or states.
+- **Accent** (accent, #1637E0): the light phrase in the Home headline and the Call button background. 7.57:1 against paper in both directions. It is also the focus ring colour. In dark it is #8C9EFF (see Dark). It never marks links, headings, rules or states.
 
 ### Neutral
 
@@ -148,6 +148,23 @@ Near-white paper, near-black ink, one grey for secondary text and one cobalt acc
 | paper #FAFAF9  | ink #0C0C0D    | 18.72:1 | form buttons, selection  |
 | paper #FAFAF9  | mute #595C62   | 6.42:1  | form button hover        |
 | field #7A7D83  | paper #FAFAF9  | 3.95:1  | input borders (non-text) |
+
+### Dark
+
+The site follows the OS setting (`prefers-color-scheme: dark`); there is no toggle and nothing is stored. Dark is the same page inverted: the tokens keep their names and roles, only their values change, so no component has its own dark rule. The favicon mark inverts the same way.
+
+| Token  | Light   | Dark    | Dark ratio on paper     |
+| ------ | ------- | ------- | ----------------------- |
+| paper  | #FAFAF9 | #0C0C0D | page, inputs            |
+| ink    | #0C0C0D | #FAFAF9 | 18.72:1                 |
+| mute   | #595C62 | #A0A3A9 | 7.73:1                  |
+| field  | #7A7D83 | #7D8087 | 4.94:1 (non-text)       |
+| rule   | #D9DADC | #2B2D31 | decorative only         |
+| accent | #1637E0 | #8C9EFF | 7.87:1, both directions |
+
+The accent lightens to #8C9EFF so the price phrase and focus ring stay readable on dark paper and the Call button label (dark paper on accent) keeps 7.87:1.
+
+The rail player is an ink box, so its secondary text and progress track use two extra tokens that sit on ink rather than paper: `--player-mute` (#A8ABB1 light, #595C62 dark, 6.42:1 on dark ink) and `--player-track` (#3A3C40 light, #D9DADC dark).
 
 ### Named Rules
 

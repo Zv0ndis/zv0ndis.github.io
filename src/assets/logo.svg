@@ -1,4 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Zvondis">
+    <style>
+        @media (prefers-color-scheme: dark) {
+            rect {
+                fill: #0c0c0d;
+            }
+            path {
+                fill: #fafaf9;
+            }
+        }
+    </style>
     <rect width="64" height="64" fill="#fafaf9" />
     <path fill="#0c0c0d" d="M14 11h36v9L26.5 44H50v9H14v-9l23.5-24H14z" />
 </svg>

@@ -22,6 +22,24 @@
     --radius: 2px;
     --target: 44px;
     --ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+    /* the rail player is an ink box, so its greys sit on ink, not paper */
+    --player-mute: #a8abb1;
+    --player-track: #3a3c40;
+}
+
+/* Dark: the same page inverted, following the OS setting. */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --paper: #0c0c0d;
+        --ink: #fafaf9;
+        --mute: #a0a3a9; /* 7.73:1 on paper */
+        --rule: #2b2d31;
+        --field: #7d8087; /* 4.94:1 on paper */
+        --accent: #8c9eff; /* 7.87:1 on paper, both directions */
+        --player-mute: #595c62;
+        --player-track: #d9dadc;
+    }
 }
 
 @media (width >= 600px) {
@@ -80,7 +98,7 @@
 
 html {
     background: var(--paper);
-    color-scheme: light;
+    color-scheme: light dark;
     scrollbar-color: var(--mute) var(--paper);
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
@@ -393,7 +411,7 @@ button {
 }
 
 .player-label {
-    color: #a8abb1;
+    color: var(--player-mute);
 }
 
 .player-song,
@@ -444,14 +462,14 @@ button {
 }
 
 .player-artist {
-    color: #a8abb1;
+    color: var(--player-mute);
 }
 
 .player-bar {
     grid-column: 1 / -1;
     height: 3px;
     margin-top: 12px;
-    background: #3a3c40;
+    background: var(--player-track);
 }
 
 .player-bar > span {
