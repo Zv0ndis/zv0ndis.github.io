@@ -13,6 +13,7 @@ npm run serve     # Eleventy dev server na http://localhost:8080 (live reload)
 npm run build     # jednorázový build do _site/
 npm run check     # build + prettier + html-validate
 npm run pdf       # build + vygeneruje src/static/cv.pdf a en/cv.pdf (potřebuje Brave)
+npm run og        # vygeneruje náhledy pro sdílení src/assets/og/*.png (potřebuje Brave)
 ```
 
 `http://localhost:8080` musí být v Authorized domains ve Firebase konzoli,

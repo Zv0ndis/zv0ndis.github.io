@@ -13,7 +13,8 @@
     "lint:css": "stylelint \"src/assets/**/*.css\"",
     "lint:html": "html-validate \"_site/**/*.html\"",
     "check": "npm run build && npm run format:check && npm run lint:css && npm run lint:html",
-    "pdf": "node scripts/cv-pdf.mjs"
+    "pdf": "node scripts/cv-pdf.mjs",
+    "og": "node scripts/og-cards.mjs"
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.0.0",

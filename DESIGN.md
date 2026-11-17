@@ -170,6 +170,10 @@ The rail player is an ink box, so its secondary text and progress track use two 
 
 Printing (CV above all) always uses the light tokens on a white sheet, whatever the OS scheme. The rail, skip link, bit art and buttons are hidden, `@page` sets A4 margins, entries and rows never split, and band headings stay with their content. Web links print their URL after the text. `npm run pdf` regenerates `/cv.pdf` and `/en/cv.pdf` from this print view with headless Brave; rerun it whenever the CV copy or styles change.
 
+### Share cards
+
+Each page has a 1200x630 PNG card per language in `src/assets/og/` (og:image, twitter summary_large_image); 404 and the redirects use the home card. They are light only: the mark, the page headline in 800 (Home uses the offer with its accent phrase), the subtitle in mute, the page's bit art and an ink rule over the name and address. `npm run og` renders them from the site stylesheet with headless Brave; rerun it when a headline, subtitle or art changes.
+
 ### Named Rules
 
 **The One Blue Rule.** The accent appears twice on the whole site: the price phrase and the Call button. Adding it anywhere else dilutes the offer.
