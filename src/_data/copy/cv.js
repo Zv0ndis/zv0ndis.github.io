@@ -13,6 +13,7 @@ export default {
     cs: {
         subtitle: "Student FIT VUT v Brně, 21 let",
         photoAlt: "Tomáš Zvoníček v modré mikině",
+        pdfLabel: "Stáhnout PDF",
         contact: { ...contact, location: "Slavičín, Zlínský kraj" },
         aboutHeading: "O mně",
         about: [
@@ -165,6 +166,7 @@ export default {
     en: {
         subtitle: "Student at FIT BUT Brno, 21 years old",
         photoAlt: "Tomáš Zvoníček in a blue hoodie",
+        pdfLabel: "Download PDF",
         contact: { ...contact, location: "Slavičín, Zlín Region, Czechia" },
         aboutHeading: "About me",
         about: [

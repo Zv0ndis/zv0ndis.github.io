@@ -12,6 +12,7 @@ npm install
 npm run serve     # Eleventy dev server na http://localhost:8080 (live reload)
 npm run build     # jednorázový build do _site/
 npm run check     # build + prettier + html-validate
+npm run pdf       # build + vygeneruje src/static/cv.pdf a en/cv.pdf (potřebuje Brave)
 ```
 
 `http://localhost:8080` musí být v Authorized domains ve Firebase konzoli,
@@ -38,7 +39,7 @@ src/
   cs/                  # české stránky (permalink: <slug>.html)
   en/                  # anglické stránky (permalink: <slug>-en.html)
   assets/              # style.css, nav.js, logo.svg, *.js → _site/assets/
-  static/              # robots.txt, google verifikace → _site/ (root)
+  static/              # robots.txt, google verifikace, CV v PDF → _site/ (root)
   .well-known/         # discord verifikace
   sitemap.njk          # generuje sitemap.xml ze site.pages
   404.njk

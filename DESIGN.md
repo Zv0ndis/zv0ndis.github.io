@@ -166,6 +166,10 @@ The accent lightens to #8C9EFF so the price phrase and focus ring stay readable 
 
 The rail player is an ink box, so its secondary text and progress track use two extra tokens that sit on ink rather than paper: `--player-mute` (#A8ABB1 light, #595C62 dark, 6.42:1 on dark ink) and `--player-track` (#3A3C40 light, #D9DADC dark).
 
+### Print
+
+Printing (CV above all) always uses the light tokens on a white sheet, whatever the OS scheme. The rail, skip link, bit art and buttons are hidden, `@page` sets A4 margins, entries and rows never split, and band headings stay with their content. Web links print their URL after the text. `npm run pdf` regenerates `/cv.pdf` and `/en/cv.pdf` from this print view with headless Brave; rerun it whenever the CV copy or styles change.
+
 ### Named Rules
 
 **The One Blue Rule.** The accent appears twice on the whole site: the price phrase and the Call button. Adding it anywhere else dilutes the offer.

@@ -1,4 +1,5 @@
 {%- set d = copy.cv[lang] -%}
+{%- set cvPage = site.pages | findPage("cv") -%}
 <header class="lead lead-photo">
     <div>
         <h1>{{ site.author }}</h1>
@@ -9,6 +10,7 @@
             <a href="{{ d.contact.githubUrl }}" target="_blank" rel="noopener noreferrer">{{ d.contact.githubLabel }}</a>
             <span>{{ d.contact.location }}</span>
         </div>
+        <p><a class="text-cta" href="{{ cvPage[lang].url }}.pdf" download>{{ d.pdfLabel }}</a></p>
     </div>
     <img class="portrait" src="/assets/portrait.webp" width="480" height="480" alt="{{ d.photoAlt }}">
 </header>

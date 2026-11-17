@@ -1029,3 +1029,102 @@ textarea:focus-visible {
     line-height: 1;
     letter-spacing: -0.035em;
 }
+
+/* =========================================================================
+   Print: the CV on A4. Always light, no rail, entries kept whole.
+   ========================================================================= */
+
+@page {
+    size: a4;
+    margin: 16mm 16mm 18mm;
+}
+
+@media print {
+    :root {
+        --paper: #fafaf9;
+        --ink: #0c0c0d;
+        --mute: #595c62;
+        --rule: #d9dadc;
+        --field: #7a7d83;
+        --accent: #1637e0;
+        --gutter: 0;
+        --space-band: 22px;
+    }
+
+    html {
+        color-scheme: light;
+        font-size: 12px;
+    }
+
+    /* the sheet itself is the paper; a fill would stop short at the @page margins */
+    html,
+    body {
+        background: none;
+    }
+
+    body {
+        line-height: 1.45;
+    }
+
+    .skip,
+    .rail,
+    .art,
+    .heart,
+    .button,
+    [download] {
+        display: none !important;
+    }
+
+    .frame {
+        padding: 0;
+    }
+
+    .lead {
+        padding-top: 0;
+    }
+
+    .contact-info {
+        margin-top: 12px;
+    }
+
+    .contact-info a,
+    .contact-info span,
+    .text-cta {
+        min-height: 0;
+    }
+
+    /* Paper has no hover: print where the web links go. */
+    .main a[href^="http"]::after {
+        content: "(" attr(href) ")";
+        display: inline-block; /* keeps the link underline off the URL */
+        margin-left: 0.3em;
+        color: var(--mute);
+        font-size: 0.875em;
+        font-weight: 400;
+    }
+
+    .band > h2 {
+        margin-bottom: 10px;
+        break-after: avoid;
+    }
+
+    .band > * + * {
+        margin-top: 10px;
+    }
+
+    .entry,
+    .rows > li,
+    .group,
+    .lang-row,
+    .plain-list li {
+        break-inside: avoid;
+    }
+
+    .entry + .entry {
+        margin-top: 16px;
+    }
+
+    .rows > li {
+        padding: 8px 0;
+    }
+}
