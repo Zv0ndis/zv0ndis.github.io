@@ -29,6 +29,11 @@
     /* the rail player is an ink box, so its greys sit on ink, not paper */
     --player-mute: #a8abb1;
     --player-track: #3a3c40;
+
+    /* 0/1 art shade steps (heart, page art): faint blue washes out on paper, so light runs stronger */
+    --shade-0: 0.45;
+    --shade-1: 0.65;
+    --shade-2: 0.85;
 }
 
 /* Dark: the same page inverted. It follows the OS until the rail switch (assets/theme.js) stores a
@@ -43,6 +48,9 @@
         --accent: #8c9eff; /* 7.87:1 on paper, both directions */
         --player-mute: #595c62;
         --player-track: #d9dadc;
+        --shade-0: 0.22;
+        --shade-1: 0.45;
+        --shade-2: 0.72;
 
         --scrim: rgb(12 12 13 / 72%);
 
@@ -59,6 +67,9 @@
     --accent: #8c9eff; /* 7.87:1 on paper, both directions */
     --player-mute: #595c62;
     --player-track: #d9dadc;
+    --shade-0: 0.22;
+    --shade-1: 0.45;
+    --shade-2: 0.72;
 
     --scrim: rgb(12 12 13 / 72%);
 
@@ -866,17 +877,17 @@ h1 {
 
 .heart .s0,
 .art .s0 {
-    opacity: 0.22;
+    opacity: var(--shade-0);
 }
 
 .heart .s1,
 .art .s1 {
-    opacity: 0.45;
+    opacity: var(--shade-1);
 }
 
 .heart .s2,
 .art .s2 {
-    opacity: 0.72;
+    opacity: var(--shade-2);
 }
 
 @media (width >= 1200px) {
