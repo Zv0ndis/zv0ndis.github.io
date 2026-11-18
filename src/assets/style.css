@@ -28,9 +28,10 @@
     --player-track: #3a3c40;
 }
 
-/* Dark: the same page inverted, following the OS setting. */
+/* Dark: the same page inverted. It follows the OS until the rail switch (assets/theme.js) stores a
+   choice on <html data-theme>; the two blocks must stay identical. */
 @media (prefers-color-scheme: dark) {
-    :root {
+    :root:not([data-theme="light"]) {
         --paper: #0c0c0d;
         --ink: #fafaf9;
         --mute: #a0a3a9; /* 7.73:1 on paper */
@@ -39,7 +40,26 @@
         --accent: #8c9eff; /* 7.87:1 on paper, both directions */
         --player-mute: #595c62;
         --player-track: #d9dadc;
+
+        color-scheme: dark;
     }
+}
+
+:root[data-theme="dark"] {
+    --paper: #0c0c0d;
+    --ink: #fafaf9;
+    --mute: #a0a3a9; /* 7.73:1 on paper */
+    --rule: #2b2d31;
+    --field: #7d8087; /* 4.94:1 on paper */
+    --accent: #8c9eff; /* 7.87:1 on paper, both directions */
+    --player-mute: #595c62;
+    --player-track: #d9dadc;
+
+    color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+    color-scheme: light;
 }
 
 @media (width >= 600px) {
@@ -321,7 +341,8 @@ button {
 }
 
 .nav-link,
-.lang-switch {
+.lang-switch,
+.theme-switch {
     display: inline-flex;
     align-items: center;
     min-height: var(--target);
@@ -331,7 +352,8 @@ button {
 }
 
 .nav-link:hover,
-.lang-switch:hover {
+.lang-switch:hover,
+.theme-switch:hover {
     color: var(--ink);
     text-decoration: underline;
 }
@@ -341,14 +363,27 @@ button {
     font-weight: 700;
 }
 
-.lang-switch {
+/* Theme and language switches: top right of the rail, the theme word first. */
+.rail-switches {
+    display: flex;
     position: absolute;
     top: 20px;
     right: 0;
+}
+
+.lang-switch,
+.theme-switch {
     justify-content: center;
     padding-inline: 8px;
     color: var(--ink);
     font-weight: 700;
+}
+
+.theme-switch {
+    border: 0;
+    background: none;
+    font-family: inherit;
+    cursor: pointer;
 }
 
 @media (width >= 960px) {
@@ -360,7 +395,7 @@ button {
         grid-template-columns: none;
     }
 
-    .lang-switch {
+    .rail-switches {
         top: 36px;
     }
 }
@@ -1100,7 +1135,10 @@ textarea:focus-visible {
 }
 
 @media print {
-    :root {
+    /* Light whatever the OS or a stored choice says: together these match every page at the
+       specificity of the dark selectors, and come later. */
+    :root:not([data-theme="light"]),
+    :root[data-theme] {
         --paper: #fafaf9;
         --ink: #0c0c0d;
         --mute: #595c62;
@@ -1109,10 +1147,11 @@ textarea:focus-visible {
         --accent: #1637e0;
         --gutter: 0;
         --space-band: 22px;
+
+        color-scheme: light;
     }
 
     html {
-        color-scheme: light;
         font-size: 12px;
     }
 

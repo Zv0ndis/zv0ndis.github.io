@@ -53,6 +53,8 @@
             type="font/woff2"
             crossorigin
         />
+        {#- Blocking and before the stylesheet: it puts a stored theme on <html> before the first paint. #}
+        <script src="/assets/theme.js?v={{ build.rev }}"></script>
         <link rel="stylesheet" href="/assets/style.css?v={{ build.rev }}" />
         <link rel="icon" type="image/svg+xml" href="/assets/logo.svg" />
         <script src="/assets/nav.js?v={{ build.rev }}" defer></script>
@@ -78,17 +80,20 @@
                         </li>
                         {%- endfor %}
                     </ul>
-                    {%- if hasCounterpart %}
-                    {%- set other = 'cs' if lang == 'en' else 'en' %}
-                    <a
-                        href="{{ entry[other].url }}"
-                        class="lang-switch"
-                        lang="{{ other }}"
-                        data-set-lang="{{ other }}"
-                        aria-label="{{ 'Přepnout do češtiny' if lang == 'en' else 'Switch to English' }}"
-                        >{{ 'CZ' if lang == 'en' else 'EN' }}</a
-                    >
-                    {%- endif %}
+                    <div class="rail-switches">
+                        <button type="button" class="theme-switch" data-theme-toggle hidden>{{ "Dark" if lang == "en" else "Tmavý" }}</button>
+                        {%- if hasCounterpart %}
+                        {%- set other = 'cs' if lang == 'en' else 'en' %}
+                        <a
+                            href="{{ entry[other].url }}"
+                            class="lang-switch"
+                            lang="{{ other }}"
+                            data-set-lang="{{ other }}"
+                            aria-label="{{ 'Přepnout do češtiny' if lang == 'en' else 'Switch to English' }}"
+                            >{{ 'CZ' if lang == 'en' else 'EN' }}</a
+                        >
+                        {%- endif %}
+                    </div>
                 </nav>
                 <div class="activity" data-activity hidden>
                     <p data-activity-status></p>

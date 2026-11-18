@@ -117,7 +117,7 @@ Modes per surface: Home persuades (offer, one Call button, proof of work, close)
 
 - One family (Archivo, variable, latin and latin-ext), contrast by weight: 800 against 300.
 - One accent, #1637E0, used only for the price phrase on Home and the Call button.
-- Rail nav in columns 1 to 3 on desktop; on phones the wordmark and language switch share a top line and the page links wrap below.
+- Rail nav in columns 1 to 3 on desktop; the theme and language switches sit at its top right; on phones they share a top line with the wordmark and the page links wrap below.
 - Bands with a 1px ink rule, rows with 1px #D9DADC hairlines.
 - 2px corners on the only filled shapes (buttons, inputs). Nothing else is rounded.
 
@@ -151,7 +151,9 @@ Near-white paper, near-black ink, one grey for secondary text and one cobalt acc
 
 ### Dark
 
-The site follows the OS setting (`prefers-color-scheme: dark`); there is no toggle and nothing is stored. Dark is the same page inverted: the tokens keep their names and roles, only their values change, so no component has its own dark rule. The favicon mark inverts the same way.
+The site follows the OS setting (`prefers-color-scheme: dark`) until the visitor picks a theme with the rail switch, which stores `theme` (`light` or `dark`) in local storage and puts it on `<html data-theme>`. Dark is the same page inverted: the tokens keep their names and roles, only their values change, so no component has its own dark rule. The dark values sit in two identical blocks, `@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) }` and `:root[data-theme="dark"]`; keep them in step. The favicon mark keeps following the OS; the rail wordmark is text, so it follows the switch.
+
+`assets/theme.js` is a classic blocking script in `<head>`, before the stylesheet, so a stored choice is applied before the first paint (the CSP allows it because it is same-origin; an inline script would be blocked). It also wires the switch on `DOMContentLoaded`. Without JavaScript the switch stays hidden and the OS decides.
 
 | Token  | Light   | Dark    | Dark ratio on paper     |
 | ------ | ------- | ------- | ----------------------- |
@@ -168,7 +170,7 @@ The rail player is an ink box, so its secondary text and progress track use two 
 
 ### Print
 
-Printing (CV above all) always uses the light tokens on a white sheet, whatever the OS scheme. The rail, skip link, bit art and buttons are hidden, `@page` sets A4 margins, entries and rows never split, and band headings stay with their content. Web links print their URL after the text. `npm run pdf` regenerates `/cv.pdf` and `/en/cv.pdf` from this print view with headless Brave; rerun it whenever the CV copy or styles change.
+Printing (CV above all) always uses the light tokens on a white sheet, whatever the OS scheme or the stored theme (the print selectors match the dark ones' specificity and come later). The rail, skip link, bit art and buttons are hidden, `@page` sets A4 margins, entries and rows never split, and band headings stay with their content. Web links print their URL after the text. `npm run pdf` regenerates `/cv.pdf` and `/en/cv.pdf` from this print view with headless Brave; rerun it whenever the CV copy or styles change.
 
 ### Share cards
 
@@ -228,7 +230,9 @@ Label above the field, bold 15px. Field 44px tall, 1px field-grey border, 2px ra
 
 ### Navigation
 
-`<site-nav>` renders a list of plain text links. Inactive links are mute, the current one is ink and bold with aria-current. On desktop they stack in the rail at a 30px rhythm for mouse users and 44px on touch; the language switch sits under them. On phones the language switch moves to the right of the wordmark and the links wrap in a row, each 44px tall.
+`<site-nav>` renders a list of plain text links. Inactive links are mute, the current one is ink and bold with aria-current. On desktop they stack in the rail at a 30px rhythm for mouse users and 44px on touch; the theme and language switches sit at the top right of the rail. On phones they stay to the right of the wordmark and the links wrap in a row, each 44px tall.
+
+**Theme switch** (`.theme-switch`, `[data-theme-toggle]`): a button left of the language switch, in the same 15px bold ink, 44px tall; both sit in `.rail-switches` at the top right of the rail, so the theme switch is there even on pages without a language counterpart (404). Like CZ / EN it names where it goes, not where you are: "Tmavý" / "Dark" on a light page, "Světlý" / "Light" on a dark one, with an aria-label that starts with the same word ("Tmavý, přepnout na tmavý vzhled"). The state is in the words, never in a colour.
 
 **Search** (`assets/search.js`): the script adds a Search button (`.search-open`) to the nav list; without JavaScript there is none. It opens `.search` in flow under the nav: a labelled combobox field, a `role="status"` count, the result listbox and a mute key hint. Each result is a title in bold and a mute line. The active one gets an ink bar on the left and a 2px underline, not a colour. Ctrl+K and `/` open it, arrows choose, Enter opens, Esc closes. The index is `/search.json` (`src/search.11ty.js`), pages from `site.pages` and tools from `site.tools`; matching ignores case and diacritics and covers both languages. `npm run search` copies the index and script to the tools repo, whose CSP only allows same-origin fetches.
 
