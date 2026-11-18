@@ -65,17 +65,22 @@
     still.addEventListener("change", sync);
     sync();
 
-    // Wide layout: fill the art's column, like the home page heart.
+    // Wide layout: fill the art's column, like the home page heart, but no taller than the CSS
+    // max-height (set in the one-screen layout; "none" otherwise).
     const header = pre.parentElement;
     const wide = matchMedia("(width >= 1200px)");
     const fit = () => {
         pre.style.fontSize = "";
         if (!wide.matches) return;
-        const base = parseFloat(getComputedStyle(pre).fontSize);
+        const style = getComputedStyle(pre);
+        const base = parseFloat(style.fontSize);
         const box = pre.getBoundingClientRect(); // max-content wide, so this is the art's own width
-        const column = header.getBoundingClientRect().right - box.left;
-        pre.style.fontSize = `${column / (box.width / base)}px`;
+        const column = parseFloat(getComputedStyle(header).gridTemplateColumns.split(" ").pop()); // the art's column, wherever it sits in it
+        const byWidth = column / (box.width / base);
+        const byHeight = parseFloat(style.maxHeight) / (pre.scrollHeight / base); // NaN without a cap
+        pre.style.fontSize = `${Math.min(byWidth, byHeight || byWidth)}px`;
     };
     new ResizeObserver(fit).observe(header);
     wide.addEventListener("change", fit);
+    addEventListener("resize", fit); // the cap follows the window height, which the header may not
 })();

@@ -79,6 +79,7 @@
             list.replaceChildren(...upcoming.map(row));
             tick();
             setInterval(tick, 60 * 1000);
+            list.hidden = !upcoming.length; // an empty list would still be a tab stop
             status.textContent = upcoming.length ? "" : section.dataset.empty;
             status.hidden = upcoming.length > 0;
         })

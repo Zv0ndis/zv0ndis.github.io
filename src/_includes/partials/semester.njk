@@ -20,7 +20,7 @@
     {% include "partials/art.njk" %}
 </header>
 
-<div class="bands">
+<div class="bands bands-sem">
     <section class="band">
         <h2>{{ s.datesHeading }}</h2>
         <p id="semesterRangeText" class="range-text">{{ s.rangeLoading }}</p>
@@ -66,8 +66,8 @@
         data-empty="{{ s.schoolEmpty }}"
         data-error="{{ s.schoolError }}"
     >
-        <h2>{{ s.schoolHeading }}</h2>
-        <ul class="rows" id="schoolList"></ul>
+        <h2 id="schoolHeading">{{ s.schoolHeading }}</h2>
+        <ul class="rows" id="schoolList" tabindex="0" aria-labelledby="schoolHeading" hidden></ul>
         <p class="range-text" id="schoolStatus">{{ s.rangeLoading }}</p>
     </section>
     <section class="band" id="semesterProgress" hidden>

@@ -1211,6 +1211,528 @@ textarea:focus-visible {
 /* Job Pay */
 
 /* =========================================================================
+   One screen: from 1200x940 (the tools.zvondis.dev gate) the pages switch to
+   a layout made to fit the window with no page scroll. Bands sit side by side
+   under the lead with their names on top; what can outgrow the window (the
+   Semester school list, the CV on narrower windows) scrolls in its own panel,
+   never sideways. Smaller windows keep the stacked layout above.
+   ========================================================================= */
+
+/* The CV wraps its bands in a main flow and a side group; elsewhere the wrappers are not boxes. */
+.cv-flow,
+.cv-side {
+    display: contents;
+}
+
+.cv-side > .band:first-child {
+    margin-top: var(--space-band);
+}
+
+@media screen and (width >= 1200px) and (height >= 940px) {
+    :root {
+        --space-band: 40px;
+    }
+
+    .frame {
+        min-height: 100dvh;
+        padding-bottom: 32px;
+        grid-template-rows: auto minmax(0, 1fr);
+    }
+
+    /* the school list panel needs a window-high frame to scroll inside */
+    .frame:has(.bands-sem) {
+        height: 100dvh;
+    }
+
+    /* an open login or date form makes the lead taller: let the page grow and scroll instead */
+    .frame:has(.bands-sem):has(#loginForm:not([hidden]), #semesterRangeForm:not([hidden])) {
+        height: auto;
+    }
+
+    .rows > li {
+        padding: 10px 0;
+    }
+
+    /* Home on windows under 1100 high or 1920 wide: the lead tightens below the band gap, the offer
+       follows the width. */
+    @media (height < 1100px), (width < 1920px) {
+        .offer {
+            font-size: min(5.5rem, 4.4vw);
+        }
+
+        .home-lead .lede {
+            margin-top: 16px;
+            font-size: min(1.25rem, 1.5vw);
+        }
+
+        .home-lead .actions,
+        .home-lead .facts {
+            margin-top: 24px;
+        }
+
+        .home-lead .facts {
+            column-gap: 24px;
+        }
+
+        .rows > li {
+            padding: 6px 0;
+        }
+    }
+
+    /* tall, wide windows keep the stacked rhythm */
+    @media (height >= 1300px) and (width >= 1760px) {
+        :root {
+            --space-band: 88px;
+        }
+
+        .rows > li {
+            padding: 14px 0;
+        }
+    }
+
+    /* Inner pages: the lead no longer shares a row with the rail, so the bands start right under it. */
+    .main:has(> .lead-art, > .lead-photo) {
+        grid-row: 1 / -1;
+        grid-template-rows: auto minmax(0, 1fr);
+        row-gap: 32px;
+    }
+
+    .main:has(> .lead-art, > .lead-photo) > .bands {
+        grid-column: 4 / -1;
+        grid-row: 2;
+        grid-template-columns: repeat(9, minmax(0, 1fr));
+        gap: 32px var(--col-gap);
+        min-height: 0;
+        margin-top: 0;
+    }
+
+    .main:has(> .lead-art, > .lead-photo) .band {
+        display: block;
+        margin-top: 0;
+    }
+
+    .main:has(> .lead-art, > .lead-photo) .band > h2 {
+        margin-bottom: 14px;
+    }
+
+    /* The art beside the heading stops at this height; bits.js reads it. */
+    .lead-art > .art {
+        justify-self: end;
+        max-height: 24vh;
+    }
+
+    /* Privacy: the five short texts run on through three columns, paragraphs kept whole. */
+    .main:has(> .lead-art) > .bands-privacy {
+        display: block;
+        align-self: start;
+        columns: 3;
+        column-gap: var(--col-gap);
+    }
+
+    .bands-privacy > .band + .band {
+        margin-top: 32px;
+    }
+
+    .bands-privacy > .band {
+        break-inside: avoid;
+    }
+
+    /* Uses: three groups in a row, hardware below in three columns; names and notes keep one shared
+       name column per list, so short names leave the room to their notes. */
+    .bands-uses > .band {
+        grid-column: span 3;
+    }
+
+    .bands-uses .rows {
+        display: grid;
+        grid-template-columns: 10.5rem minmax(0, 1fr);
+    }
+
+    .bands-uses .rows > li {
+        grid-column: 1 / -1;
+        grid-template-columns: subgrid;
+        padding: 8px 0;
+    }
+
+    .bands-uses > .band:last-child {
+        grid-column: 1 / -1;
+    }
+
+    .bands-uses > .band:last-child .rows {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        column-gap: var(--col-gap);
+    }
+
+    /* hardware columns hang from the same grid lines as the groups above */
+    .bands-uses > .band:last-child .rows > li {
+        grid-column: auto;
+        grid-template-columns: 10.5rem minmax(0, 1fr);
+    }
+
+    .bands-uses .rows > li:first-child,
+    .bands-uses > .band:last-child .rows > li:nth-child(-n + 3) {
+        padding-top: 0;
+    }
+
+    /* Semester: dates over progress on the left, the school list on the right scrolls in place. */
+    .bands-sem {
+        grid-template-rows: auto minmax(0, 1fr);
+    }
+
+    .bands-sem > .band {
+        grid-column: 1 / span 4;
+    }
+
+    .progress-headline {
+        text-wrap: balance;
+    }
+
+    .bands-sem > #school {
+        display: flex;
+        flex-direction: column;
+        grid-column: 5 / -1;
+        grid-row: 1 / span 2;
+        min-height: 0;
+    }
+
+    #schoolList {
+        min-height: 0;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+    }
+
+    /* CV: a one-page résumé. The main flow runs in three columns under the lead; languages,
+       interests and leisure sit at the foot of the rail columns. No inner panel: if the bands ever
+       outgrow the window, the page scrolls. */
+    .main:has(> .lead-photo) {
+        row-gap: 16px;
+    }
+
+    .main:has(> .lead-photo) > .bands-cv {
+        grid-column: 1 / -1;
+        grid-template-columns: subgrid;
+        grid-template-rows: minmax(0, 1fr);
+        margin-top: -8px;
+        font-size: 0.875rem;
+        line-height: 1.35;
+    }
+
+    .cv-flow {
+        display: block;
+        grid-area: 1 / 4 / 2 / -1;
+        align-self: start; /* natural height: if it ever outgrows the window it scrolls down, never sideways */
+        columns: 3;
+        column-gap: var(--col-gap);
+    }
+
+    .cv-side {
+        display: block;
+        grid-area: 1 / 1 / 2 / 4;
+        align-self: end;
+    }
+
+    .cv-flow > .band + .band,
+    .cv-side > .band + .band {
+        margin-top: 12px;
+    }
+
+    /* a band continued in the next column repeats its ink rule at the column head */
+    .bands-cv .band {
+        padding-top: 8px;
+        box-decoration-break: clone;
+    }
+
+    .bands-cv .band > h2 {
+        margin-bottom: 6px;
+        break-after: avoid;
+    }
+
+    .bands-cv .band > * + * {
+        margin-top: 6px;
+    }
+
+    .bands-cv .entry-title,
+    .bands-cv .row-title {
+        font-size: 0.9375rem;
+    }
+
+    .bands-cv .entry-date,
+    .bands-cv .row-detail,
+    .bands-cv .group-label {
+        font-size: 0.8125rem;
+    }
+
+    .bands-cv .entry + .entry {
+        margin-top: 8px;
+    }
+
+    /* a heading stays with its text */
+    .bands-cv .entry-header,
+    .bands-cv .entry-role {
+        break-after: avoid;
+    }
+
+    .bands-cv .entry p {
+        margin-top: 2px;
+        orphans: 3;
+        widows: 3;
+    }
+
+    /* a project's tech joins its title line when there is room */
+    .bands-cv .rows > li {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        column-gap: 12px;
+        padding: 4px 0;
+    }
+
+    .bands-cv .row-text {
+        flex-basis: 100%;
+        margin-top: 2px;
+        font-size: 0.8125rem;
+    }
+
+    /* skills read as one run, like the technology lists */
+    .bands-cv .plain-list li {
+        display: inline;
+    }
+
+    .bands-cv .plain-list li:not(:last-child)::after {
+        content: ", ";
+    }
+
+    .bands-cv .group + .group {
+        margin-top: 10px;
+    }
+
+    .bands-cv .entry,
+    .bands-cv .rows > li,
+    .bands-cv .group,
+    .bands-cv .plain-list li,
+    .bands-cv .band > p {
+        break-inside: avoid;
+    }
+
+    /* A compact header: the subtitle beside the name, the PDF link on the contact line. */
+    .lead-photo {
+        grid-template-columns: auto 180px;
+    }
+
+    .lead-photo > div {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        column-gap: 32px;
+    }
+
+    .lead-photo > div::after {
+        content: "";
+        flex-basis: 100%;
+        order: 1;
+    }
+
+    .lead-photo .subtitle {
+        margin-top: 0;
+    }
+
+    .lead-photo .contact-info,
+    .lead-photo .contact-info + p {
+        order: 2;
+        margin-top: 12px;
+    }
+}
+
+/* Windows under 1060 high: smaller page art, tighter uses rows. */
+@media screen and (width >= 1200px) and (940px <= height < 1060px) {
+    .lead-art > .art {
+        max-height: 18vh;
+    }
+
+    .bands-uses .rows > li {
+        padding: 5px 0;
+    }
+}
+
+/* CV from 1920x1060: the spare height goes to a larger text size. */
+@media screen and (width >= 1920px) and (height >= 1060px) {
+    .main:has(> .lead-photo) > .bands-cv {
+        font-size: 0.9375rem;
+    }
+
+    .bands-cv .row-text {
+        font-size: 0.875rem;
+    }
+}
+
+/* Narrower desktops (1200 to 1600 wide) keep the one-screen layout with fewer columns. */
+@media screen and (1200px <= width < 1600px) and (height >= 940px) {
+    .bands-privacy p {
+        font-size: 0.9375rem;
+        line-height: 1.45;
+    }
+
+    .bands-sem .range-text,
+    .exam-text {
+        text-wrap: balance;
+    }
+
+    .progress-headline {
+        font-size: clamp(2rem, 3.2vw, 3.25rem);
+    }
+
+    #schoolList > li {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* CV from 1760 to 1920 wide under 1060 high: three columns still fit at 13px. */
+@media screen and (1760px <= width < 1920px) and (940px <= height < 1060px) {
+    .main:has(> .lead-photo) > .bands-cv {
+        font-size: 0.8125rem;
+    }
+}
+
+/* CV under 1760 wide: the same three columns at 13px under a smaller header and photo. */
+@media screen and (1200px <= width < 1760px) and (height >= 940px) {
+    .main:has(> .lead-photo) > .bands-cv {
+        font-size: 0.8125rem;
+        line-height: 1.3;
+    }
+
+    .bands-cv .entry-title,
+    .bands-cv .row-title {
+        font-size: 0.875rem;
+    }
+
+    .lead-photo {
+        grid-template-columns: auto 120px;
+    }
+
+    .lead-photo h1 {
+        font-size: 3rem;
+    }
+}
+
+/* CV under 1536 wide: a one-line header and hyphenated, tighter text keep the page whole. */
+@media screen and (1200px <= width < 1536px) and (height >= 940px) {
+    .main:has(> .lead-photo) > .bands-cv {
+        line-height: 1.25;
+        hyphens: auto;
+    }
+
+    .lead-photo {
+        column-gap: 24px;
+    }
+
+    .lead-photo h1 {
+        font-size: 2.5rem;
+    }
+
+    .lead-photo > div {
+        column-gap: 20px;
+    }
+
+    .lead-photo .subtitle {
+        font-size: 1.0625rem;
+    }
+
+    .lead-photo .contact-info {
+        column-gap: 20px;
+        font-size: 0.9375rem;
+    }
+
+    .lead-photo .contact-info,
+    .lead-photo .contact-info + p {
+        margin-top: 4px;
+    }
+}
+
+/* CV under 1440 wide: three columns at 13px outgrow a 940-high window, so the bands run in
+   columns 4 to 12 with the side group in three columns under the flow, and the page scrolls
+   (the CV is the one page allowed to). */
+@media screen and (1200px <= width < 1440px) and (height >= 940px) {
+    .main:has(> .lead-photo) > .bands-cv {
+        display: block;
+        grid-column: 4 / -1;
+    }
+
+    .cv-side {
+        margin-top: 12px;
+        columns: 3;
+        column-gap: var(--col-gap);
+    }
+}
+
+/* Uses under 1920 wide: the four groups run on through three columns, like Privacy. */
+@media screen and (1200px <= width < 1920px) and (height >= 940px) {
+    .main:has(> .lead-art) > .bands-uses {
+        display: block;
+        align-self: start;
+        columns: 3;
+        column-gap: var(--col-gap);
+    }
+
+    .bands-uses > .band + .band {
+        margin-top: 24px;
+    }
+
+    .bands-uses .band > h2 {
+        break-after: avoid;
+    }
+
+    .bands-uses .rows {
+        display: block;
+    }
+
+    .bands-uses .rows > li,
+    .bands-uses > .band:last-child .rows > li,
+    .bands-uses > .band:last-child .rows > li:nth-child(-n + 3) {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        column-gap: 12px;
+        padding: 6px 0;
+        break-inside: avoid;
+    }
+
+    .bands-uses .rows > li:first-child,
+    .bands-uses > .band:last-child .rows > li:first-child {
+        padding-top: 0;
+    }
+
+    .lead-art > .art {
+        max-height: 18vh;
+    }
+}
+
+/* Uses under 1440 wide: the note goes under its name. */
+@media screen and (1200px <= width < 1440px) and (height >= 940px) {
+    .bands-uses .rows > li,
+    .bands-uses > .band:last-child .rows > li,
+    .bands-uses > .band:last-child .rows > li:nth-child(-n + 3) {
+        grid-template-columns: minmax(0, 1fr);
+        padding: 4px 0;
+    }
+
+    .bands-uses .rows > li:first-child,
+    .bands-uses > .band:last-child .rows > li:first-child {
+        padding-top: 0;
+    }
+
+    .bands-uses .row-title {
+        font-size: 1rem;
+    }
+
+    .bands-uses .row-detail {
+        font-size: 0.875rem;
+        line-height: 1.4;
+    }
+
+    .bands-uses > .band + .band {
+        margin-top: 16px;
+    }
+}
+
+/* =========================================================================
    404
    ========================================================================= */
 
