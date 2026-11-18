@@ -6,6 +6,9 @@
  * The button ([data-theme-toggle], hidden without JavaScript) names the theme it switches to,
  * like the CZ / EN switch names the other language.
  *
+ * Storage is per subdomain, so links to the other zvondis.dev sites carry the choice as ?theme=
+ * (like ?lang=), and a page opened with ?theme= stores it.
+ *
  * The tools site carries a copy of this file: edit it in the zvondis.dev repo and run
  * `npm run search` there.
  */
@@ -15,12 +18,32 @@
     var KEY = "theme";
     var root = document.documentElement;
 
+    var asked = new URLSearchParams(location.search).get(KEY);
+    try {
+        if (asked === "light" || asked === "dark") localStorage.setItem(KEY, asked);
+    } catch (err) {
+        /* storage blocked: the choice holds for this page only */
+    }
     try {
         var saved = localStorage.getItem(KEY);
         if (saved === "light" || saved === "dark") root.setAttribute("data-theme", saved);
     } catch (err) {
         /* storage blocked: follow the OS */
     }
+    if (asked === "light" || asked === "dark") root.setAttribute("data-theme", asked);
+
+    // Hand a stored choice on to the sister site the visitor is leaving for.
+    function carry(e) {
+        var a = e.target.closest && e.target.closest("a[href]");
+        var theme = root.getAttribute("data-theme");
+        if (!a || !theme || a.hostname === location.hostname) return;
+        if (a.hostname !== "zvondis.dev" && !a.hostname.endsWith(".zvondis.dev")) return;
+        var url = new URL(a.href);
+        url.searchParams.set(KEY, theme);
+        a.href = url.href;
+    }
+    document.addEventListener("click", carry, true);
+    document.addEventListener("auxclick", carry, true);
 
     var COPY = {
         cs: {
