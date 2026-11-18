@@ -210,11 +210,11 @@ Each page has a 1200x630 PNG card per language in `src/assets/og/` (og:image, tw
 
 ## Elevation & Depth
 
-Flat. No shadows, no blur, no layered surfaces. Hierarchy comes from scale, weight and the ink band rules.
+Flat. No shadows, no blur. The one layered surface is the search switcher, a flat panel framed by a 1px ink rule over a `--scrim` dim; everything else is one plane. Hierarchy comes from scale, weight and the ink band rules.
 
 ## Shapes
 
-Square by default. Buttons and inputs take a 2px radius so they do not read as sharp-edged boxes; nothing else is rounded.
+Square by default. Buttons and inputs take a 2px radius so they do not read as sharp-edged boxes; nothing else is rounded (the search panel and its key boxes stay square).
 
 ## Components
 
@@ -234,7 +234,7 @@ Label above the field, bold 15px. Field 44px tall, 1px field-grey border, 2px ra
 
 **Theme switch** (`.theme-switch`, `[data-theme-toggle]`): a button left of the language switch, in the same 15px bold ink, 44px tall; both sit in `.rail-switches` at the top right of the rail, so the theme switch is there even on pages without a language counterpart (404). Like CZ / EN it names where it goes, not where you are: "Tmavý" / "Dark" on a light page, "Světlý" / "Light" on a dark one, with an aria-label that starts with the same word ("Tmavý, přepnout na tmavý vzhled"). The state is in the words, never in a colour.
 
-**Search** (`assets/search.js`): the script adds a Search button (`.search-open`) to the nav list; without JavaScript there is none. It opens `.search` in flow under the nav: a labelled combobox field, a `role="status"` count, the result listbox and a mute key hint. Each result is a title in bold and a mute line. The active one gets an ink bar on the left and a 2px underline, not a colour. Ctrl+K and `/` open it, arrows choose, Enter opens, Esc closes. The index is `/search.json` (`src/search.11ty.js`), pages from `site.pages` and tools from `site.tools`; matching ignores case and diacritics and covers both languages. `npm run search` copies the index and script to the tools repo, whose CSP only allows same-origin fetches.
+**Search** (`assets/search.js`): a quick switcher. The script adds a Search button (`.search-open`) to the nav list; without JavaScript there is none. The button, Ctrl+K or Cmd+K and `/` (when not typing in a field) open `.switcher`, a native `<dialog>` opened with `showModal()`, so focus stays inside and Esc closes it. Ctrl+K again, Esc and a click on the backdrop close it, and focus goes back where it was. The panel is centred 12vh from the top (16px on phones), at most 640px wide (the full width less 16px gutters on phones), paper with a 1px ink frame and no shadow; behind it the page is dimmed by `--scrim`, the dark paper value at 45% (72% in dark). At the top is a 56px field at 20px with a 2px radius, the only rounded shape, its placeholder "Kam chceš jít?" / "Where to?". Under it a scrolling listbox groups results under mute bold headings, "Stránky" / "Pages" and "Nástroje" / "Tools"; an empty query lists everything. Each row is the name (500) over a one-line mute description cut with an ellipsis, with the site, "zvondis.dev" or "tools", right-aligned in small uppercase, the one all-caps label on the site. The active row gets an ink-tinted band (ink at 8%), a 2px ink bar on the left and a bold name, so it never depends on colour; arrows move it, hovering moves it, Enter opens it. A footer line under a hairline shows the keys in 1px field-bordered square boxes: ↑ ↓, Enter, Esc, Ctrl K (⌘ K on Apple). ARIA: the field is a combobox with `aria-activedescendant`, the list a listbox of `role="group"` sections labelled by their headings, and a visually hidden `role="status"` reads the count. The index is `/search.json` (`src/search.11ty.js`), pages from `site.pages` and tools from `site.tools`; the group and site label come from each URL's host. Matching ignores case and diacritics and covers both languages, so "vyplata" finds Výplata on either. `npm run search` copies the index, `search.js` and `theme.js` to the tools repo, whose CSP only allows same-origin fetches.
 
 ### Rows (signature)
 

@@ -23,6 +23,9 @@
     --target: 44px;
     --ease: cubic-bezier(0.16, 1, 0.3, 1);
 
+    /* behind the search panel: the dark paper value, dimming the page in both themes */
+    --scrim: rgb(12 12 13 / 45%);
+
     /* the rail player is an ink box, so its greys sit on ink, not paper */
     --player-mute: #a8abb1;
     --player-track: #3a3c40;
@@ -41,6 +44,8 @@
         --player-mute: #595c62;
         --player-track: #d9dadc;
 
+        --scrim: rgb(12 12 13 / 72%);
+
         color-scheme: dark;
     }
 }
@@ -54,6 +59,8 @@
     --accent: #8c9eff; /* 7.87:1 on paper, both directions */
     --player-mute: #595c62;
     --player-track: #d9dadc;
+
+    --scrim: rgb(12 12 13 / 72%);
 
     color-scheme: dark;
 }
@@ -407,8 +414,9 @@ button {
     }
 }
 
-/* Search (assets/search.js): a button in the nav opens a field with results in flow under it.
-   The active result is marked by an ink bar and a heavier underline, not by colour. */
+/* Search (assets/search.js): a quick switcher in a modal <dialog> near the top of the page. A 1px ink
+   frame on paper over a scrim, no shadow; only the field is rounded. The active row is a filled
+   ink-tinted band with an ink bar and a bolder name, so it never relies on colour alone. */
 .search-open {
     padding: 0;
     border: 0;
@@ -421,49 +429,133 @@ button {
     font-weight: 700;
 }
 
-.search {
-    display: grid;
-    gap: 8px;
-    max-width: 480px;
-    margin-top: 12px;
+.switcher {
+    width: calc(100% - 32px);
+    max-width: 640px;
+    max-height: calc(100dvh - 32px);
+    margin: 16px auto auto;
+    padding: 0;
+    border: 1px solid var(--ink);
+    background: var(--paper);
+    color: var(--ink);
 }
 
-.search-note {
+.switcher[open] {
+    display: flex;
+    flex-direction: column;
+}
+
+.switcher::backdrop {
+    background: var(--scrim);
+}
+
+.switcher input[type="text"] {
+    flex: none;
+    width: auto;
+    min-height: 56px;
+    margin: 16px 16px 8px;
+    font-size: 1.25rem;
+}
+
+.switcher-list {
+    flex: 1 1 auto;
+    min-height: 0;
+    padding: 0 8px 8px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+.switcher-heading {
+    padding: 14px 8px 6px;
     color: var(--mute);
     font-size: 0.8125rem;
+    font-weight: 700;
 }
 
-.search-list a {
+.switcher-option {
     display: grid;
-    gap: 2px;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 16px;
+    align-items: center;
     min-height: var(--target);
-    padding: 10px 0 10px 10px;
-    border-bottom: 1px solid var(--rule);
+    padding: 8px 8px 8px 10px;
     border-left: 2px solid transparent;
     text-decoration: none;
 }
 
-.search-list b {
-    font-size: 0.9375rem;
-    text-decoration: underline;
-    text-decoration-color: var(--mute);
-    text-decoration-thickness: 1px;
-    text-underline-offset: 0.22em;
+.switcher-name {
+    font-weight: 500;
 }
 
-.search-list span {
+.switcher-text {
+    grid-row: 2;
+    overflow: hidden;
+    color: var(--mute);
+    font-size: 0.8125rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.switcher-site {
+    grid-row: 1 / span 2;
+    grid-column: 2;
+    color: var(--mute);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.switcher-option[aria-selected="true"] {
+    border-left-color: var(--ink);
+    background: color-mix(in srgb, var(--ink) 8%, transparent);
+}
+
+.switcher-option[aria-selected="true"] .switcher-name {
+    font-weight: 700;
+}
+
+.switcher-empty {
+    padding: 14px 8px;
+    color: var(--mute);
+}
+
+.switcher-status {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+.switcher-tips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 16px;
+    padding: 10px 16px;
+    border-top: 1px solid var(--rule);
     color: var(--mute);
     font-size: 0.8125rem;
 }
 
-.search-list [aria-selected="true"] a {
-    border-left-color: var(--ink);
+.switcher-tips kbd {
+    display: inline-block;
+    min-width: 1.6em;
+    margin-right: 3px;
+    padding: 0 4px;
+    border: 1px solid var(--field);
+    color: var(--ink);
+    font: inherit;
+    font-weight: 700;
+    text-align: center;
 }
 
-.search-list [aria-selected="true"] b,
-.search-list a:hover b {
-    text-decoration-color: currentcolor;
-    text-decoration-thickness: 2px;
+@media (width >= 600px) {
+    .switcher {
+        max-height: calc(100dvh - 12vh - 32px);
+        margin-top: 12vh;
+    }
 }
 
 /* Discord status line under the nav; the text label carries the meaning, the dot is decoration. */
