@@ -344,6 +344,14 @@ button {
     }
 }
 
+/* From 1200px the rail stops growing with the screen (3 x 64px + gaps = 240px), so on a wide
+   monitor the content starts near the left instead of a third of the way in. */
+@media (width >= 1200px) {
+    .frame {
+        grid-template-columns: repeat(3, minmax(0, 64px)) repeat(9, minmax(0, 1fr));
+    }
+}
+
 /* =========================================================================
    Nav: vertical rail on desktop, a wrapped row on phones.
    ========================================================================= */
