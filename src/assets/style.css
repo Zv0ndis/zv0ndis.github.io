@@ -1444,8 +1444,9 @@ textarea:focus-visible {
         margin-top: 12px;
     }
 
-    /* a group (Languages / Tools, Hobbies / Off topic) stays in one column with its label */
-    .bands-cv .group {
+    /* a short band of groups (Technology, Interests) stays whole in one column */
+    .bands-cv .group,
+    .bands-cv .band:has(.group) {
         break-inside: avoid;
     }
 
@@ -1565,6 +1566,10 @@ textarea:focus-visible {
     .bands-uses .rows > li {
         padding: 5px 0;
     }
+
+    .main:has(> .lead-photo) > .bands-cv {
+        line-height: 1.25;
+    }
 }
 
 /* CV from 1920x1060: the spare height goes to a larger text size. */
@@ -1574,6 +1579,30 @@ textarea:focus-visible {
     }
 
     .bands-cv .row-text {
+        font-size: 0.875rem;
+    }
+}
+
+/* CV from 2200 wide: four wide columns leave room for body text at 16px and labels one step up. */
+@media screen and (width >= 2200px) and (height >= 1060px) {
+    .main:has(> .lead-photo) > .bands-cv {
+        font-size: 1rem;
+        line-height: 1.4;
+    }
+
+    .bands-cv .band > h2 {
+        font-size: 1.0625rem;
+    }
+
+    .bands-cv .entry-title,
+    .bands-cv .row-title {
+        font-size: 1rem;
+    }
+
+    .bands-cv .row-text,
+    .bands-cv .entry-date,
+    .bands-cv .row-detail,
+    .bands-cv .group-label {
         font-size: 0.875rem;
     }
 }
