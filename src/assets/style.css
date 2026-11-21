@@ -1409,8 +1409,8 @@ textarea:focus-visible {
         overscroll-behavior: contain;
     }
 
-    /* CV: a one-page résumé. The main flow runs in three columns under the lead; languages,
-       interests and leisure sit at the foot of the rail columns. No inner panel: if the bands ever
+    /* CV: a one-page résumé. Every band, languages, interests and leisure last, runs in columns
+       under the lead. No inner panel: if the bands ever
        outgrow the window, the page scrolls. */
     .main:has(> .lead-photo) {
         row-gap: 16px;
@@ -1429,19 +1429,24 @@ textarea:focus-visible {
         display: block;
         grid-area: 1 / 4 / 2 / -1;
         align-self: start; /* natural height: if it ever outgrows the window it scrolls down, never sideways */
-        columns: 3;
+        columns: 4;
         column-gap: var(--col-gap);
     }
 
+    /* languages, interests and leisure run on at the end of the flow, after the main bands */
     .cv-side {
         display: block;
-        grid-area: 1 / 1 / 2 / 4;
-        align-self: end;
     }
 
     .cv-flow > .band + .band,
-    .cv-side > .band + .band {
+    .cv-side > .band + .band,
+    .cv-side > .band:first-child {
         margin-top: 12px;
+    }
+
+    /* a group (Languages / Tools, Hobbies / Off topic) stays in one column with its label */
+    .bands-cv .group {
+        break-inside: avoid;
     }
 
     /* a band continued in the next column repeats its ink rule at the column head */
@@ -1657,18 +1662,11 @@ textarea:focus-visible {
 }
 
 /* CV under 1440 wide: three columns at 13px outgrow a 940-high window, so the bands run in
-   columns 4 to 12 with the side group in three columns under the flow, and the page scrolls
-   (the CV is the one page allowed to). */
+   columns 4 to 12 and the page scrolls (the CV is the one page allowed to). */
 @media screen and (1200px <= width < 1440px) and (height >= 940px) {
     .main:has(> .lead-photo) > .bands-cv {
         display: block;
         grid-column: 4 / -1;
-    }
-
-    .cv-side {
-        margin-top: 12px;
-        columns: 3;
-        column-gap: var(--col-gap);
     }
 }
 

@@ -103,47 +103,47 @@
                 {%- endfor %}
             </ul>
         </section>
-    </div>
 
-    <div class="cv-side">
-        <section class="band">
-            <h2>{{ d.languages.heading }}</h2>
-            <div>
-                {%- for l in d.languages.items %}
-                <p class="lang-row">
-                    <strong>{{ l.name }}</strong>
-                    <span class="lang-level">{{ l.level }}</span>
-                </p>
-                {%- endfor %}
-            </div>
-        </section>
-
-        <section class="band">
-            <h2>{{ d.interests.heading }}</h2>
-            <div>
-                {%- for g in d.interests.groups %}
-                <div class="group">
-                    <p class="group-label">{{ g.label }}</p>
-                    <ul class="inline-list">
-                        {%- for item in g.value | commaList %}
-                        <li>{{ item }}</li>
-                        {%- endfor %}
-                    </ul>
+        <div class="cv-side">
+            <section class="band">
+                <h2>{{ d.languages.heading }}</h2>
+                <div>
+                    {%- for l in d.languages.items %}
+                    <p class="lang-row">
+                        <strong>{{ l.name }}</strong>
+                        <span class="lang-level">{{ l.level }}</span>
+                    </p>
+                    {%- endfor %}
                 </div>
-                {%- endfor %}
-            </div>
-        </section>
+            </section>
 
-        <section class="band">
-            <h2>{{ d.leisure.heading }}</h2>
-            <div>
-                {%- for e in d.leisure.entries %}
-                <div class="entry">
-                    <span class="entry-title">{{ e.title }}</span>
-                    <p>{{ e.text }}</p>
+            <section class="band">
+                <h2>{{ d.interests.heading }}</h2>
+                <div>
+                    {%- for g in d.interests.groups %}
+                    <div class="group">
+                        <p class="group-label">{{ g.label }}</p>
+                        <ul class="inline-list">
+                            {%- for item in g.value | commaList %}
+                            <li>{{ item }}</li>
+                            {%- endfor %}
+                        </ul>
+                    </div>
+                    {%- endfor %}
                 </div>
-                {%- endfor %}
-            </div>
-        </section>
+            </section>
+
+            <section class="band">
+                <h2>{{ d.leisure.heading }}</h2>
+                <div>
+                    {%- for e in d.leisure.entries %}
+                    <div class="entry">
+                        <span class="entry-title">{{ e.title }}</span>
+                        <p>{{ e.text }}</p>
+                    </div>
+                    {%- endfor %}
+                </div>
+            </section>
+        </div>
     </div>
 </div>
