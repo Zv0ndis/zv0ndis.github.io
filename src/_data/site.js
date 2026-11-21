@@ -102,6 +102,19 @@ export default {
             },
         },
         {
+            path: "invoice",
+            cs: {
+                title: "Faktura",
+                text: "Vytvoří fakturu v prohlížeči a uloží ji jako PDF.",
+                keywords: "faktura pdf šablona",
+            },
+            en: {
+                title: "Invoice",
+                text: "Makes an invoice in your browser and saves it as a PDF.",
+                keywords: "invoice bill pdf template",
+            },
+        },
+        {
             path: "battleships",
             noLang: true,
             cs: { title: "Lodě", text: "Hra o lodích a tipování (anglicky).", keywords: "hra" },
