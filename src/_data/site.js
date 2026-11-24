@@ -43,8 +43,8 @@ export default {
             en: { url: "https://tools.zvondis.dev/?lang=en", label: "Tools" },
         },
         {
-            cs: { url: "https://tools.zvondis.dev/battleships/", label: "Lodě" },
-            en: { url: "https://tools.zvondis.dev/battleships/", label: "Battleships" },
+            cs: { url: "https://tools.zvondis.dev/battleships/?lang=cs", label: "Lodě" },
+            en: { url: "https://tools.zvondis.dev/battleships/?lang=en", label: "Battleships" },
         },
     ],
 
@@ -116,8 +116,7 @@ export default {
         },
         {
             path: "battleships",
-            noLang: true,
-            cs: { title: "Lodě", text: "Hra o lodích a tipování (anglicky).", keywords: "hra" },
+            cs: { title: "Lodě", text: "Hra o lodích a tipování.", keywords: "hra" },
             en: { title: "Battleships", text: "A game of ships and guesses.", keywords: "game" },
         },
     ],
