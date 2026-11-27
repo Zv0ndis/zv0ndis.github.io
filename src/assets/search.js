@@ -219,7 +219,9 @@
 
     function load() {
         if (loading) return;
-        loading = fetch("/search.json")
+        // Private pages (zvondis.dev/hub, /invoice) point at their own index with private entries added.
+        var index = document.querySelector('meta[name="search-index"]');
+        loading = fetch((index && index.content) || "/search.json")
             .then(function (r) {
                 if (!r.ok) throw new Error(r.status);
                 return r.json();

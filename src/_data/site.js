@@ -30,6 +30,11 @@ export default {
             en: { url: "/en/uses", file: "en/uses.html", label: "Uses" },
         },
         {
+            key: "contact",
+            cs: { url: "/kontakt", file: "kontakt.html", label: "Kontakt" },
+            en: { url: "/en/contact", file: "en/contact.html", label: "Contact" },
+        },
+        {
             key: "privacy",
             cs: { url: "/soukromi", file: "soukromi.html", label: "Soukromí" },
             en: { url: "/en/privacy", file: "en/privacy.html", label: "Privacy" },

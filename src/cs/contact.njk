@@ -1,0 +1,50 @@
+---
+page_key: contact
+title: Kontakt | Tomáš Zvoníček
+description: Napište Tomáši Zvoníčkovi zprávu přes formulář nebo e-mailem.
+scripts:
+    - contact.js
+---
+
+<header class="lead lead-art">
+    <h1>Kontakt</h1>
+    <p class="subtitle">Napište mi, odpovím e-mailem</p>
+    {% include "partials/art.njk" %}
+</header>
+
+<div class="bands bands-contact">
+    <section class="band">
+        <h2>Zpráva</h2>
+        <form class="fields contact-form" method="post" action="/api/contact">
+            <input type="hidden" name="lang" value="cs" />
+            <div class="fields fields-2">
+                <label class="field"
+                    ><span>Jméno</span>
+                    <input type="text" name="name" required maxlength="100" autocomplete="name" />
+                </label>
+                <label class="field"
+                    ><span>Váš e-mail</span>
+                    <input type="email" name="email" required maxlength="254" autocomplete="email" />
+                </label>
+            </div>
+            <label class="field"
+                ><span>Zpráva</span>
+                <textarea name="message" rows="6" required minlength="2" maxlength="5000"></textarea>
+            </label>
+            <label class="contact-trap" aria-hidden="true"
+                >Nechte prázdné <input type="text" name="website" tabindex="-1" autocomplete="off"
+            /></label>
+            <button type="submit" class="button">Odeslat</button>
+            <p class="contact-status" role="status" data-contact-status></p>
+        </form>
+    </section>
+
+    <section class="band">
+        <h2>E-mail</h2>
+        <p>Nebo pište přímo na <a href="mailto:contact@zvondis.dev">contact@zvondis.dev</a>.</p>
+        <p class="contact-note">
+            Formulář pošle vaše jméno, e-mail a zprávu do mé schránky a nic dalšího. Na tomto webu se
+            neukládá. Podrobnosti jsou v <a href="/soukromi">zásadách ochrany soukromí</a>.
+        </p>
+    </section>
+</div>

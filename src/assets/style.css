@@ -1329,6 +1329,15 @@ textarea:focus-visible {
         max-height: 24vh;
     }
 
+    /* Contact: the form takes five columns, the email note the other four. */
+    .bands-contact > .band:first-child {
+        grid-column: span 5;
+    }
+
+    .bands-contact > .band:last-child {
+        grid-column: span 4;
+    }
+
     /* Privacy: the five short texts run on through three columns, paragraphs kept whole. */
     .main:has(> .lead-art) > .bands-privacy {
         display: block;
@@ -1886,4 +1895,27 @@ textarea:focus-visible {
     .rows > li {
         padding: 8px 0;
     }
+}
+
+/* Contact form. The trap field is for bots only: off-screen, out of the tab order, hidden from screen readers. */
+.contact-trap {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+.contact-status:empty {
+    display: none;
+}
+
+.contact-status {
+    font-weight: 700;
+}
+
+.contact-note {
+    margin-top: 16px;
+    color: var(--mute);
+    font-size: 0.9375rem;
 }

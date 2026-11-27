@@ -1,0 +1,50 @@
+---
+page_key: contact
+title: Contact | Tomáš Zvoníček
+description: Send Tomáš Zvoníček a message through the form or by email.
+scripts:
+    - contact.js
+---
+
+<header class="lead lead-art">
+    <h1>Contact</h1>
+    <p class="subtitle">Write to me, I'll reply by email</p>
+    {% include "partials/art.njk" %}
+</header>
+
+<div class="bands bands-contact">
+    <section class="band">
+        <h2>Message</h2>
+        <form class="fields contact-form" method="post" action="/api/contact">
+            <input type="hidden" name="lang" value="en" />
+            <div class="fields fields-2">
+                <label class="field"
+                    ><span>Name</span>
+                    <input type="text" name="name" required maxlength="100" autocomplete="name" />
+                </label>
+                <label class="field"
+                    ><span>Your email</span>
+                    <input type="email" name="email" required maxlength="254" autocomplete="email" />
+                </label>
+            </div>
+            <label class="field"
+                ><span>Message</span>
+                <textarea name="message" rows="6" required minlength="2" maxlength="5000"></textarea>
+            </label>
+            <label class="contact-trap" aria-hidden="true"
+                >Leave this empty <input type="text" name="website" tabindex="-1" autocomplete="off"
+            /></label>
+            <button type="submit" class="button">Send</button>
+            <p class="contact-status" role="status" data-contact-status></p>
+        </form>
+    </section>
+
+    <section class="band">
+        <h2>Email</h2>
+        <p>Or write directly to <a href="mailto:contact@zvondis.dev">contact@zvondis.dev</a>.</p>
+        <p class="contact-note">
+            The form sends your name, email and message to my inbox and nothing else. It isn't
+            stored on this site. Details are in the <a href="/en/privacy">privacy policy</a>.
+        </p>
+    </section>
+</div>
