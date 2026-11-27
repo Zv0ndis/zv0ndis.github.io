@@ -29,6 +29,10 @@ const cards = {
         l === "en"
             ? ["Privacy Policy", "What this site stores and what it does not."]
             : ["Zásady ochrany soukromí", "Co tento web ukládá a co ne."],
+    contact: (l) =>
+        l === "en"
+            ? ["Contact", "Write to me, I'll reply by email"]
+            : ["Kontakt", "Napište mi, odpovím e-mailem"],
 };
 
 // Same 0/1 drawing as the bitArt filter in eleventy.config.js, without the animation.
